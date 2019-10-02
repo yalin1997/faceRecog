@@ -1,0 +1,51 @@
+{% extends "baseUser.html" %}
+{% block head %}
+    {{ super() }}
+    <link href="{{ url_for('static', filename = 'css/videoManage.css') }}" rel="stylesheet">
+{% endblock %}
+{% block page_content %}
+<div>
+    <form id="filterForm" class="filterArea" method="POST" enctype=multipart/form-data><br>
+        {{ form.hidden_tag() }}
+        <div>
+            <div class="row theRow">
+                <p class="Size">
+                    篩選
+                </p>   
+            </div>
+            <div class="row theRow">
+                <p class="">
+                    日期: 
+                    {{ form.sdate }} ~  {{ form.edate }}
+                </p>
+            </div>
+            <div class="row theRow">
+                節數: 
+                {{ form.lesson }}
+            </div>
+        </div>
+        <div class="row theRow">
+                <a href="#" id="startFilter" class="btn btn-primary my-btn ">篩選</a>
+        </div>
+    </form>
+</div>
+<div id="renderVideoArea">
+    {% for video in videoData %}
+        <div class='card' id="card_{{video.id}}" style='width:92%;max-width:300px;' onclick='CardClickedEvent(id)'>
+            {% if video.videoUrl%}
+                <img src="{{video.videoUrl}}" alt='Avatar' style='width:100%;opacity:0.85'>
+            {% else %}
+                <img src="/upload/others/img_avatar.jpg" alt='Avatar' style='width:100%;opacity:0.85'>
+            {% endif %}
+            <div class='container'>
+                <h5><b>{{video.title}}</b></h5>
+                <p>{{video.people}}</p>  
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% endblock page_content %}
+{% block scripts %}
+{{ super() }}
+<script src="{{ url_for('static', filename = 'javascript/videoManage.js') }}" type="text/javascript"></script>
+{% endblock scripts %}

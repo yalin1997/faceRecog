@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block head %}
+    {{ super() }}
+    <link href="{{ url_for('static', filename = 'css/upload.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block page_content %}
+<div id= "uploadPanel" class="container">
+    <form method="POST" action="{{ url_for('upload') }}" enctype=multipart/form-data id="uploadForm">
+        {{ form.hidden_tag() }}
+        <div class="row">
+            <p class="theCol">{{ form.uploaded_file }}
+                {% for error in form.uploaded_file.errors %}
+                <span style="color: red;">{{ error }}</span>
+                {% endfor %}
+            </p>
+        </div>
+        <div id="picUploadMsg" style="display:none">
+            <div class="row">
+                <p class="theCol">
+                    <input type="text" name="lastName" id="lastName" placeholder="姓"/>
+                </p>   
+            </div>
+            <div class="row">
+                <p class="theCol">
+                    <input type="text" name="firstName" id="firstName" placeholder="名"/>
+                </p>
+            </div>
+        </div>
+        <div id="videoUploadMsg" style="display:none">
+                <div class="row">
+                    <p class="theCol">
+                        <input type="text" name="className" id="className" placeholder="班級"/>
+                    </p>   
+                </div>
+                <div class="row">
+                    <p class="theCol">
+                        <input type="date" name="dateTime" id="dateTime" placeholder="日期"/>
+                    </p>
+                </div>
+                <div class="row">
+                    <p class="theCol">
+                        <input type="time" name="time" id="time" placeholder="時間"/>
+                    </p>
+                </div>
+        </div>
+        <a href="#" class="btn btn-primary my-btn" id="confirm">上傳</a>
+    </form>
+</div>
+{% endblock page_content %}
+{% block scripts %}
+{{ super() }}
+<script src="{{ url_for('static', filename = 'javascript/upload.js') }}" type="text/javascript"></script>
+{% endblock scripts %}

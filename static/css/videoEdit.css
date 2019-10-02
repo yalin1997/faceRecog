@@ -1,0 +1,21 @@
+.videoPanel{
+    margin: 0 auto;
+    display: block;
+    width: 550px;
+    min-width: 500px;
+    max-width: 600px;
+}
+.theRow{
+    margin-left: 15px;
+}
+.editPanel{
+    margin: 0 auto;
+    padding-top: 10px;
+    min-width: 500px;
+    max-width: 600px;
+    width: 550px; 
+    height:280px;
+}
+#editPanel{
+    padding-top: 10px;
+}

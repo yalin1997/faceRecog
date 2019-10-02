@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block head %}
+    {{ super() }}
+    <link href="{{ url_for('static', filename = 'css/upload.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block page_content %}
+<div id= "uploadPanel" class="container">
+    <form method="POST" action="{{ url_for('upload') }}" enctype=multipart/form-data id="uploadForm">
+        {{ form.hidden_tag() }}
+        <div class="row">
+            <p class="theCol">{{ form.face.label }}{{ form.face }}
+                {% for error in form.face.errors %}
+                <span style="color: red;">{{ error }}</span>
+                {% endfor %}
+            </p>
+        </div>
+        <div class="row">
+            <p class="theCol">{{ form.leftFace.label }}{{ form.leftFace }}
+                {% for error in form.leftFace.errors %}
+                <span style="color: red;">{{ error }}</span>
+                {% endfor %}
+            </p>
+        </div>
+        <div class="row">
+            <p class="theCol">{{ form.rightFace.label }}{{ form.rightFace }}
+                {% for error in form.rightFace.errors %}
+                <span style="color: red;">{{ error }}</span>
+                {% endfor %}
+            </p>
+        </div>
+        <div class="row">
+            <p class="theCol">{{ form.upFace.label }}{{ form.upFace }}
+                {% for error in form.upFace.errors %}
+                <span style="color: red;">{{ error }}</span>
+                {% endfor %}
+            </p>
+        </div>
+        <div class="row">
+            <p class="theCol">{{ form.downFace.label }}{{ form.downFace }}
+                {% for error in form.downFace.errors %}
+                <span style="color: red;">{{ error }}</span>
+                {% endfor %}
+            </p>
+        </div>
+        <a href="#" class="btn btn-primary my-btn" id="confirm">上傳</a>
+    </form>
+</div>
+{% endblock page_content %}
+{% block scripts %}
+{{ super() }}
+<script src="{{ url_for('static', filename = 'javascript/upload.js') }}" type="text/javascript"></script>
+{% endblock scripts %}

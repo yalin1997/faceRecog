@@ -1,0 +1,6 @@
+{
+    "python.pythonPath": "C:\\Users\\HungYun\\Anaconda3\\envs\\faceRecog\\python.exe",
+    "python.linting.pylintEnabled": true,
+    "python.linting.banditEnabled": false,
+    "python.linting.enabled": true
+}

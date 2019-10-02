@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block head %}
+    {{ super() }}
+    <link href="{{ url_for('static', filename = 'css/addClassGroup.css') }}" rel="stylesheet">
+{% endblock %}
+{% block page_content %}
+<div id= "classGroupForm" class="container">
+    <form method="POST" action="{{ url_for('addClassGroup') }}" id='addClassGroupForm' >
+        {{ form.hidden_tag() }}
+        <div class="row">
+            <p class="joinCol">{{ form.className.label }} {{ form.className }}
+                {% if form.className.errors %}
+                    {% for error in form.classNam.errors %}
+                        {{ error }}
+                    {% endfor %}
+                {% endif %}
+            </p>
+        </div>
+        <div class="row">
+            <p class="joinCol">{{ form.classDepartment.label }} {{ form.classDepartment }}</p>
+        </div>
+        <div class="row">
+            <p class="joinCol">{{ form.classYear.label }} {{ form.classYear }}</p>
+        </div>
+        <div class="row">
+            <p class="joinCol">{{ form.classDay.label }} {{ form.classDay }}</p>
+        </div>
+        <div class="row">
+            <p class="joinCol">{{ form.classStime.label }} {{form.classStime}}</p>
+        </div>
+        <div class="row">
+            <p class="joinCol">{{ form.classEtime.label }} {{form.classEtime}}</p>
+        </div>
+        <div class="row theRow">
+            <button href="#" id="addClassGroup" class="btn btn-primary my-btn ">建立班群</button>
+        </div>
+    </form>
+</div>
+{% endblock page_content %}
+{% block scripts %}
+{{ super() }}
+<script src="{{ url_for('static', filename = 'javascript/addClassGroup.js') }}" type="text/javascript"></script>
+{% endblock scripts %}

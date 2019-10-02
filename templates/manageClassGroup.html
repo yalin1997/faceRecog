@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block head %}
+    {{ super() }}
+    <link href="{{ url_for('static', filename = 'css/manageClassGroup.css') }}" rel="stylesheet">
+{% endblock %}
+{% block page_content %}
+<form id="filterForm" class="filterArea" method="POST" enctype=multipart/form-data><br>
+    {{ form.hidden_tag() }}
+    <div>
+        <div class="row theRow">
+            <p class="Size">
+                篩選
+            </p>   
+        </div>
+        <div class="row theRow">
+            <p class="">
+                課程名稱: 
+                {{ form.className }}
+            </p>   
+        </div>
+        <div class="row theRow">
+            <p class="">
+                系別: 
+                {{ form.classDepartment }}
+            </p>
+        </div>
+        <div class="row theRow">
+            <p class="">
+                學年: 
+                {{ form.classYear }}
+            </p>
+        </div>
+        <div class="row theRow">
+            <p class="">
+                星期: 
+                {{ form.classDay }}
+            </p>
+        </div>
+    </div>
+    <div class="row theRow">
+            <a href="#" id="startFilter" class="btn btn-primary my-btn ">篩選</a>
+    </div>
+</form>
+<div id="renderClassGroupArea">
+{% for classGroup in classGroupList %}
+    <div class="panel panel-primary classGroupPanel" style="width: 18rem;">
+        <div class="panel-heading">
+            <h5 class="panel-title">{{ classGroup.className }}</h5>
+        </div>
+        <div class="panel-body">
+            
+            <a href="/editClassGroup?classGroupId={{ classGroup.id }}" class="btn btn-primary my-btn">編輯</a>
+            <a href="#" id="delete_{{ classGroup.id }}" class="btn btn-primary my-btn" onclick="deleteEvent(id)">刪除</a>
+        </div> 
+    </div>
+{% endfor %}
+</div>
+{% endblock page_content %}
+{% block scripts %}
+{{ super() }}
+<script src="{{ url_for('static', filename = 'javascript/manageClassGroup.js') }}" type="text/javascript"></script>
+{% endblock scripts %}
