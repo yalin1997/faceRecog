@@ -69,7 +69,7 @@ def deleteFaceInfo(pid):
     return True
 
 # 註冊
-def insertRegisterInfo(SID , email,hashPassword,lastName,firstName,permission):
+def insertRegisterInfo(SID,email,hashPassword,lastName,firstName,permission):
     Connector.connect()
     sql = "INSERT INTO user_data(account,password,email,last_name,first_name,permission) VALUES('{}','{}','{}','{}','{}','{}')".format(SID,hashPassword,email,lastName,firstName,permission)
     Connector.sqlExecute(sql)

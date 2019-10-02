@@ -12,10 +12,10 @@ class User(UserMixin):
         self.permission = permission
         
     @staticmethod
-    def registerr_by_email(account,password,lastName,firstName,className,permission):
+    def registerr_by_email(account,email,password,lastName,firstName,className,permission):
         hashPassword = generate_password_hash(password)
         # 把 hashPassword 存資料庫
-        insertService.insertRegisterInfo(account,hashPassword,lastName,firstName,permission)
+        insertService.insertRegisterInfo(account,email,hashPassword,lastName,firstName,permission)
 
         return True
 

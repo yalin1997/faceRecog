@@ -21,8 +21,8 @@ def getModelPath():
     Connector.quit()
     return queryResult
 
-def getSelectFieldItem(labelName):
-    sql = "SELECT item FROM select_field_item WHERE label_name = '{}'".format(labelName)
+def getClassList(uid):
+    sql = "SELECT className FROM class_group WHERE user_id= '{}'".format(uid)
     Connector.connect()
     queryResult = Connector.sqlQuery(sql)
     return queryResult
@@ -74,20 +74,42 @@ def getPictureById(pictureId):
     return queryResult
 
 # 篩選影片
-def getVideo(lastName,firstName,sDate,eDate,lesson):
+def getVideo(lastName,firstName,sTime,eTime,lesson):
     Connector.connect()
-    sql = "SELECT * FROM video_face WHERE True"
-    if not lastName == "0" or not firstName == "0":
-        sql = sql + " AND  recog_name LIKE '%{}%'".format(lastName+firstName)
-    if not sDate == "0" and not eDate == "0":
-        sql = sql + " AND date BETWEEN '{}' AND '{}'".format(sDate,eDate)
+    sql = '''SELECT video_face.video_id , cover
+            FROM (  
+                    video_face 
+                        INNER JOIN 
+                    recoged_user 
+                        ON  
+                    video_face.video_id = recoged_user.video_id
+                )  
+                    INNER JOIN 
+                user_data 
+                    ON 
+                recoged_user.user_id = user_data.user.user_id 
+                    INNER JOIN
+                class_group
+                    ON
+                video_face.class_id = class_group.class_id
+            WHERE True'''
+    if not lastName == "0":
+        sql = sql + " AND  lastname LIKE '%{}%'".format(lastName)
+    if not firstName == "0":
+        sql = sql + " AND  firstName LIKE '%{}%'".format(firstName)
+    if not sTime == "0":
+        sql = sql + " AND class_stime >= {}".format(sTime)
+    if not eTime == "0":
+        sql = sql + " AND class_stime <= {}".format(eTime)
+    if not lesson == "0":
+        sql = sql + " AND className = '{}'".format(lesson)
     queryResult = Connector.sqlQuery(sql)
     Connector.quit()
     return queryResult
 
 def getAllVideo():
     Connector.connect()
-    sql = "SELECT * FROM video_face;"
+    sql = "SELECT video_id , cover  FROM video_face;"
     queryResult = Connector.sqlQuery(sql)
     Connector.quit()
     return queryResult

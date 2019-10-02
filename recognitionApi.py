@@ -176,7 +176,8 @@ def join():
     #  flask_wtf類中提供判斷是否表單提交過來的method，不需要自行利用request.method來做判斷
 
     if request.method == 'POST':
-        account = flask.request.form['email']
+        account =  flask.request.form['SID']
+        email = flask.request.form['email']
         password = flask.request.form['password']
         lastName = flask.request.form['lastName']
         firstName = flask.request.form['firstName']
@@ -185,7 +186,7 @@ def join():
 
         isVaildate = form.validate_account(account)
         if isVaildate :
-            registerResult = User.registerr_by_email(account,password,lastName,firstName,className,permission)
+            registerResult = User.registerr_by_email(account,email,password,lastName,firstName,className,permission)
             if registerResult :
                 return render_template('/registerResult/registerSuccess.html')
             else:
@@ -196,7 +197,7 @@ def join():
         currentUserId = current_user.id
         currentPermission = current_user.permission
         if currentPermission == "manager":
-            selectFieldItem = getDataService.getSelectFieldItem('className')
+            selectFieldItem = getDataService.getClassList(current_user.id)
             form.className.choices = []
             if len(selectFieldItem) > 0:
                 for i in range(len(selectFieldItem)):
@@ -273,7 +274,8 @@ def addManager():
     form = addManagerForm()
      #  flask_wtf類中提供判斷是否表單提交過來的method，不需要自行利用request.method來做判斷
     if request.method == 'POST' :
-        account = flask.request.form['email']
+        account = flask.request.form['SID']
+        email = flask.request.form['email']
         password = flask.request.form['password']
         lastName = flask.request.form['lastName']
         firstName = flask.request.form['firstName']
@@ -281,7 +283,7 @@ def addManager():
 
         isVaildate = form.validate_account(account)
         if isVaildate :
-            registerResult = User.registerr_by_email(account,password,lastName,firstName,"管理員",permission)
+            registerResult = User.registerr_by_email(account,email,password,lastName,firstName,"管理員",permission)
             if registerResult :
                 return render_template('/registerResult/registerSuccess.html')
             else:
@@ -308,7 +310,7 @@ def videoManage():
         videoCover = str(allVideo[i][-1])
         if allVideo[i][-1] == None :
             videoCover = "/upload/others/img_avatar.jpg"
-        videoList.append(video(str(allVideo[i][0]),videoCover, str(allVideo[i][2]) , str(allVideo[i][3])))
+        videoList.append(video(str(allVideo[i][0]),videoCover)))
     
     if request.method == 'POST' and videoFilterForm.validate_on_submit():
         if current_user.permission == 'manager':
@@ -330,7 +332,7 @@ def videoManage():
             cover = str(result[i][-1])
             if result[i][-1] == None :
                 cover = "/upload/others/img_avatar.jpg"
-            matchData.append( {'id':str(result[i][0]),'pictureUrl': cover, 'title': str(result[i][2]),"people" : str(result[i][3])})
+            matchData.append( {'id':str(result[i][0]),'pictureUrl': cover})
         return jsonify({'allMatchData':matchData})
     else:
         if permission == "manager":
