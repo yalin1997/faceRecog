@@ -233,7 +233,8 @@ def addClassGroup():
         if permission == 'manager':
             form.classDepartment.choices = []
             departmentList = getDataService.getDepartment()
-            form.classDepartment.choices.append()
+            for department in range(len(departmentList)):
+                form.classDepartment.choices.append(str(department))
             return render_template('/addClassGroup.html',form = form)
         else:
             flask.redirect('/pictureManage')
