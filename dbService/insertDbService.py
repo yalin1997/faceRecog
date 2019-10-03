@@ -15,13 +15,9 @@ def InsertVideoInfo(date,time,cid,videoPath,nameList,coverPath):
     Connector.quit()
     return True
 # 修改影片
-def editVideoInfo(vid,videoPath , nameList):
+def editVideoInfo(vid,videoPath):
     Connector.connect()
-    nameStr = ""
-    for name in nameList:
-        nameStr = nameStr+name+','
-    nameStr.rstrip(',')
-    sql = "UPDATE video_face SET video_url = '{}' , recog_name = '{}' , video_is_recoged = {} WHERE video_id = {}".format(videoPath,nameStr,True,vid)
+    sql = "UPDATE video_face SET video_url = '{}'  , video_is_recoged = {} WHERE video_id = {}".format(videoPath,True,vid)
     Connector.sqlExecute(sql)
     Connector.quit()
     return True

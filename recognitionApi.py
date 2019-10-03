@@ -359,8 +359,8 @@ def videoEdit():
             return "發生異常"
     else:
         videoData = getDataService.getVideoById(videoId)
-        matchData = {'id':videoId ,'videoUrl': str(videoData[0][5]), 'title': str(videoData[0][2]),"people" :str(videoData[0][3])}
-        editVideo = video(videoId, str(videoData[0][5]), str(videoData[0][2]) ,str(videoData[0][3]))
+        matchData = {'id':videoId ,'videoUrl': str(videoData[0][1])}
+        editVideo = video(videoId,str(videoData[0][1]))
         permission = current_user.permission
         return render_template('videoEdit.html',editVideo=editVideo,form=editVideoForm,permission = permission)
 
@@ -393,7 +393,7 @@ def pictureManage():
         pictureSerchResult = getDataService.getPicture(lastName,firstName)
         matchData = []
         for i in range(len(pictureSerchResult)):
-            matchData.append( {'id':str(pictureSerchResult[i][0]),'pictureUrl': str(pictureSerchResult[i][3]), 'lastname': str(pictureSerchResult[i][1]),"firstname" : str(pictureSerchResult[i][2])})
+            matchData.append( {'id':str(pictureSerchResult[i][0]),'pictureUrl': str(pictureSerchResult[i][1]), 'lastname': str(pictureSerchResult[i][2]),"firstname" : str(pictureSerchResult[i][3])})
         return jsonify({'allMatchData':matchData})
     else:
         currentUserId = current_user.id
@@ -404,7 +404,7 @@ def pictureManage():
         else:
             pictureList = getDataService.getPicture(current_user.lastname,current_user.firstname)
             return render_template('pictureManageUser.html',form=pictureFilterForm,pictureList=pictureList)
-
+# todo
 @app.route('/pictureEdit',methods=['GET','POST'])
 @login_required
 def pictureEdit():
@@ -456,6 +456,7 @@ def pictureDelete():
     
 
 # 取得上傳檔案後將路徑與其他資訊存到 DB
+# todo
 @app.route('/upload',methods=['GET','POST'])
 @login_required
 def upload():

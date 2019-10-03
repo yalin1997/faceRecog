@@ -49,26 +49,26 @@ def getPictureTmp():
     return pictureList
 def getAllPicture():
     Connector.connect()
-    sql = "SELECT * FROM face_data LIMIT 20"
+    sql = "SELECT face_id , face_url , last_name , first_name FROM face_data INNER JOIN ON face_data.user_id = user_data.user_id LIMIT 20"
     queryResult = Connector.sqlQuery(sql)
     Connector.quit()
     pictureList = []
     for i in range(len(queryResult)):
-        pictureList.append(picture(queryResult[i][3],queryResult[i][1],queryResult[i][2],queryResult[i][0]))
+        pictureList.append(picture(queryResult[i][0],str(queryResult[i][1]),str(queryResult[i][2]),str(queryResult[i][3])))
     return pictureList
 
 
 # 篩選圖片
 def getPicture(lastName,firstName):
     Connector.connect()
-    sql = "SELECT * FROM face_data WHERE last_name = '{}' AND first_name = '{}'".format(lastName,firstName)
+    sql = "SELECT face_id , face_url , last_name , first_name FROM face_data INNER JOIN ON face_data.user_id = user_data.user_id WHERE last_name = '{}' AND first_name = '{}'".format(lastName,firstName)
     queryResult = Connector.sqlQuery(sql)
     Connector.quit()
     return queryResult
 
 def getPictureById(pictureId):
     Connector.connect()
-    sql = "SELECT * FROM face_data WHERE face_id = '{}'".format(pictureId)
+    sql = "SELECT face_id , face_url , last_name , first_name FROM face_data INNER JOIN ON face_data.user_id = user_data.user_id WHERE face_id = '{}'".format(pictureId)
     queryResult = Connector.sqlQuery(sql)
     Connector.quit()
     return queryResult
@@ -109,14 +109,14 @@ def getVideo(lastName,firstName,sTime,eTime,lesson):
 
 def getAllVideo():
     Connector.connect()
-    sql = "SELECT video_id , cover  FROM video_face;"
+    sql = "SELECT video_id , cover  FROM video_face INNER JOIN user_data ON video_face.manager_id = user_data.user_id WHERE video_is_recoged = True"
     queryResult = Connector.sqlQuery(sql)
     Connector.quit()
     return queryResult
 
 def getVideoById(vid):
     Connector.connect()
-    sql = "SELECT * FROM video_face WHERE video_id = {}".format(vid)
+    sql = "SELECT video_id , video_url FROM video_face WHERE video_id = {}".format(vid)
     queryResult = Connector.sqlQuery(sql)
     Connector.quit()
     return queryResult
