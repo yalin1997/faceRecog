@@ -27,7 +27,7 @@ import os
 import getEmb
 import base64
 from datetime import timedelta
-form datetime import datetime
+from datetime import datetime
 import calculate_dection_face as faceDetect
 import os.path
 import uuid
