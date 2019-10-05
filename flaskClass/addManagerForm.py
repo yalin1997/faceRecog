@@ -4,7 +4,7 @@ from wtforms.validators import DataRequired, Email
 import dbService.loginService as loginService
 
 class addManagerForm(FlaskForm):
-    SID = StringField('學號', validators=[DataRequired()])
+    account = StringField('帳號', validators=[DataRequired()])
     email = StringField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
     lastName =  StringField('姓', validators=[DataRequired()])

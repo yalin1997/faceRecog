@@ -3,10 +3,11 @@ import dbService.insertDbService as insertService
 from werkzeug.security import generate_password_hash
 
 class User(UserMixin):
-    def __init__(self,uid,account,password,lastname,firstname,permission):
+    def __init__(self,uid,account,password,email,lastname,firstname,permission):
         self.account = account
         self.password = password
         self.id = uid
+        self.email = email
         self.lastname = lastname
         self.firstname = firstname
         self.permission = permission

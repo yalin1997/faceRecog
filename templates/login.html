@@ -11,9 +11,9 @@
     <form  id="loginForm" method="POST" >
         {{ form.hidden_tag() }}
         <div class="row">
-            <p class="loginCol">{{ form.email.label }} {{ form.email }}
-                {% if form.email.errors %}
-                    {% for error in form.email.errors %}
+            <p class="loginCol">{{ form.account.label }} {{ form.account }}
+                {% if form.account.errors %}
+                    {% for error in form.account.errors %}
                         {{ error }}
                     {% endfor %}
                 {% endif %}

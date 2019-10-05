@@ -48,8 +48,19 @@
             <h5 class="panel-title">{{ classGroup.className }}</h5>
         </div>
         <div class="panel-body">
-            
-            <a href="/editClassGroup?classGroupId={{ classGroup.id }}" class="btn btn-primary my-btn">編輯</a>
+            <p>系所: {{ classGroup.classDepartment }}</p>
+            <p>學年: {{ classGroup.classYear }}</p>
+            <p>星期: {{ classGroup.classDay }}</p>
+            <div class="btn-group">
+                <button type="button" class="btn btn-primary my-btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  編輯
+                </button>
+                <div class="dropdown-menu">
+                  <li><a class="dropdown-item" href="/studentsManage">管理學生</a></li>
+                  <li><a class="dropdown-item" href="/upload">上傳影片</a></li>
+                  <li><div class="dropdown-divider"></div></li>
+                </div>
+              </div>
             <a href="#" id="delete_{{ classGroup.id }}" class="btn btn-primary my-btn" onclick="deleteEvent(id)">刪除</a>
         </div> 
     </div>

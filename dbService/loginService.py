@@ -8,14 +8,14 @@ Connector = dbConnector.postgresConnector("face_recog","Ya1in410477023")# 替換
 def checkLogin(account,password):
     Connector.connect()
     # todo 替換成正確sql
-    sql = "SELECT * FROM user_data WHERE account = '{}'".format(account)
+    sql = "SELECT user_id,password,email,last_name , first_name,permission FROM user_data WHERE account = '{}'".format(account)
     queryResult = Connector.sqlQuery(sql)
     Connector.quit()
     if len(queryResult) > 0:
-        uid = queryResult[0][0]
-        dataBasePassword = queryResult[0][2]
+        uid = str(queryResult[0][0])
+        dataBasePassword = str(queryResult[0][1])
         if check_password_hash(dataBasePassword , password):
-            return User(uid,account,dataBasePassword,queryResult[0][4],queryResult[0][5],queryResult[0][3])
+            return User(uid,account,dataBasePassword,str(queryResult[0][2]),str(queryResult[0][3]),str(queryResult[0][4]),str(queryResult[0][5]))
     # 回傳list
     return False
 
@@ -43,10 +43,10 @@ def getUserById(uid):
     Connector.connect()
     # todo 替換成正確sql
     print(uid)
-    sql = "SELECT account , password , last_name , first_name , permission FROM user_data WHERE user_id = {}".format(uid)
+    sql = "SELECT account , password , email , last_name , first_name , permission FROM user_data WHERE user_id = {}".format(uid)
     queryResult = Connector.sqlQuery(sql)
     Connector.quit()
-    return User(uid,queryResult[0][0],queryResult[0][1],queryResult[0][2],queryResult[0][3],queryResult[0][4])
+    return User(uid,str(queryResult[0][0]),str(queryResult[0][1]),str(queryResult[0][2]),str(queryResult[0][3]),str(queryResult[0][4]),str(queryResult[0][5]))
 
 def InsertEmbInfo(name,embList):
     Connector.connect()

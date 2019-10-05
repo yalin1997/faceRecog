@@ -139,7 +139,7 @@ def login():
     #  flask_wtf類中提供判斷是否表單提交過來的method，不需要自行利用request.method來做判斷
     if  request.method == 'POST' and form.validate_on_submit():
         
-        account = form.email.data
+        account = form.account.data
         password = form.password.data
 
         # 確認帳號是否存在
@@ -165,8 +165,7 @@ def login():
     return True
 
 def next_is_valid(url):
-    validList = ['/videoManage','/pictureManage','/upload','/videoEdit','/videoEdit/delete','/pictureEdit/delete','/pictureEdit','/upload/result']
-    print(url)
+    validList = ['/videoManage','/pictureManage','/upload','/videoEdit','/videoEdit/delete','/pictureEdit/delete','/pictureEdit','/upload/result','/addClassGroup' , '/manageClassGroup']
     return url in validList
 
 @app.route('/join',methods=['GET','POST'])
@@ -217,6 +216,7 @@ def addNewClass():
 
 # 加入班群
 @app.route('/addClassGroup',methods = ['GET','POST'])
+@login_required
 def addClassGroup():
     form = addClassGroupForm()
     permission = current_user.permission
@@ -227,20 +227,24 @@ def addClassGroup():
         classDay = flask.request.form['classDay']
         classStime =  flask.request.form['classStime']
         classEtime = flask.request.form['classEtime']
-        result = insertService.insertClassName(className , classDepartment , classYear , classDay , classStime , classEtime)
+        result = insertService.insertClassName(className , classDepartment , classYear , classDay , classStime , classEtime , current_user.id)
         if result :
             return render_template('/addClassGroupResult/success.html')
     else:
         if permission == 'manager':
             form.classDepartment.choices = []
             departmentList = getDataService.getDepartment()
-            for department in range(len(departmentList)):
-                form.classDepartment.choices.append(str(department))
+            for department in departmentList:
+                form.classDepartment.choices.append((str(department),str(department)))
+            form.classYear.choices = []
+            for i in range(5):
+                form.classYear.choices.append((datetime.now().year-i-1911,datetime.now().year-i-1911))
             return render_template('/addClassGroup.html',form = form)
         else:
             flask.redirect('/pictureManage')
 # 管理班群
 @app.route('/manageClassGroup',methods = ['GET','POST'])
+@login_required
 def manageClassGroup():
     permission = current_user.permission
     if permission != "manager":
@@ -261,20 +265,37 @@ def manageClassGroup():
         classGroupList = []
         classGroupResult = getDataService.getClassGroup(None , None , datetime.now().year - 1911 , None , current_user.id)
         for i in range(len(classGroupResult)):
-            classGroupList.append(classGroup(str(classGroupResult[i][0]),str(classGroupResult[i][1]), str(classGroupResult[i][2]) , str(classGroupResult[i][3])))
+            classGroupList.append(classGroup(str(classGroupResult[i][0]),str(classGroupResult[i][1]), str(classGroupResult[i][2]) , str(classGroupResult[i][3]),str(classGroupResult[i][4])))
 
         # 產生學年
         classGroupFilterForm.classYear.choices = []
         for i in range(5):
-            classGroupFilterForm.classYear.choices.append(datetime.now().year - i)
+            classGroupFilterForm.classYear.choices.append((datetime.now().year-i-1911,datetime.now().year-i-1911))
+        print("LIST="+ str(classGroupList))
         return render_template('/manageClassGroup.html',form = classGroupFilterForm , classGroupList = classGroupList)
+
+@app.route('/editClassGroup/delete',methods=['POST'])
+@login_required
+def deleteClassGroup():
+    classGroupData = request.get_json()
+    cid = classGroupData['id']
+    if current_user.permission == 'manager':
+        result = {'result': insertService.deleteClassGroup(cid)}
+        return jsonify(result)
+    else:
+        return '權限不足'
+
+@app.route('/studentsManage' , methods = ['GET','POST'])
+@login_required
+def studentsEdit():
+    return flask.redirect('/addClassGroup')
 
 @app.route('/addManager',methods = ['GET','POST'])
 def addManager():
     form = addManagerForm()
      #  flask_wtf類中提供判斷是否表單提交過來的method，不需要自行利用request.method來做判斷
     if request.method == 'POST' :
-        account = flask.request.form['SID']
+        account = flask.request.form['account']
         email = flask.request.form['email']
         password = flask.request.form['password']
         lastName = flask.request.form['lastName']
@@ -304,13 +325,13 @@ def videoManage():
         allVideo = getDataService.getVideo(lastname,firstname,"0","0","0")
         videoFilterForm = videoFilterUser()
     else:
-        allVideo = getDataService.getAllVideo()
+        allVideo = getDataService.getAllVideo(current_user.id)
     videoList = []
     for i in range(len(allVideo)):
         videoCover = str(allVideo[i][-1])
         if allVideo[i][-1] == None :
             videoCover = "/upload/others/img_avatar.jpg"
-        videoList.append(video(str(allVideo[i][0]),videoCover)))
+        videoList.append(video(str(allVideo[i][0]),videoCover))
     
     if request.method == 'POST' and videoFilterForm.validate_on_submit():
         if current_user.permission == 'manager':

@@ -73,13 +73,25 @@ def insertRegisterInfo(SID,email,hashPassword,lastName,firstName,permission):
     return True
 
 # 建立班群
-def insertClassName(className , classDepartment , classYear , classDay , classStime , classEtime):
+def insertClassName(className , classDepartment , classYear , classDay , classStime , classEtime , managerId):
     Connector.connect()
-    sql = "INSERT INTO class_group (class_name , class_department , class_year , class_day , class_sdate , class_edate) VALUES('{}','{}','{}','{}','{}','{}')".format(className , classDepartment , classYear , classDay , classStime , classEtime)
+    sql = "INSERT INTO class_group (class_name , class_department , class_year , class_day , class_stime , class_etime , manager_id) VALUES('{}','{}','{}','{}','{}','{}',{})".format(className ,
+        classDepartment ,
+        classYear ,
+        classDay ,
+        classStime ,
+        classEtime,
+        managerId)
     Connector.sqlExecute(sql)
     Connector.quit()
     return True
-
+# 刪除班群
+def deleteClassGroup(cid):
+    Connector.connect()
+    sql = "DELETE FROM class_group WHERE class_id = {}".format(cid)
+    Connector.sqlExecute(sql)
+    Connector.quit()
+    return True
 # 加入班群成員
 def insertClassMember(uid , cid ):
     Connector.connect()

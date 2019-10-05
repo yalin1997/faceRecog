@@ -26,7 +26,7 @@ class pictureFilter(FlaskForm):
 class classGroupFilter(FlaskForm):
     className = StringField('課程名稱')
     classDepartment = SelectField(
-        '系名'',
+        '系名',
         choices=[]
     )
     classYear = classYear =  SelectField(
@@ -35,7 +35,7 @@ class classGroupFilter(FlaskForm):
     )
     classDay =  SelectField(
         '星期',
-        choices=[('星期一','星期一') , ('星期二' , '星期二') , ('星期三', '星期三') , ('星期四','星期四') , ('星期五','星期五') ]
+        choices=[(1,'一') , (2 , '二') , (3, '三') , (4,'四') , (5,'五') ]
     )
     
 

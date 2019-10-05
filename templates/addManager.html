@@ -11,6 +11,9 @@
     <form method="POST" action="{{ url_for('addManager') }}" >
         {{ form.hidden_tag() }}
         <div class="row">
+            <p class="joinCol">{{ form.account.label }} {{ form.account }}</p>
+        </div>
+        <div class="row">
             <p class="joinCol">{{ form.email.label }} {{ form.email }}
                 {% if form.email.errors %}
                     {% for error in form.email.errors %}

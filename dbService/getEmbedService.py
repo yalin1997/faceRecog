@@ -31,7 +31,10 @@ def getDepartment():
     sql = "SELECT department_name FROM department"
     Connector.connect()
     queryResult = Connector.sqlQuery(sql)
-    return queryResult
+    resultList = []
+    for i in range(len(queryResult)):
+        resultList.append(queryResult[i][0])
+    return resultList
 
 def getNameList():
     # 取得所以資料庫內的人名
@@ -45,7 +48,7 @@ def getPictureTmp():
     # 假資料 之後改為讀取 DB
     pictureList = []
     for  i in range(27):
-    pictureList.append(picture("/upload/3Yaun_0001.jpg","三原","惠晤",i))
+        pictureList.append(picture("/upload/3Yaun_0001.jpg","三原","惠晤",i))
     return pictureList
 def getAllPicture():
     Connector.connect()
@@ -107,9 +110,9 @@ def getVideo(lastName,firstName,sTime,eTime,lesson):
     Connector.quit()
     return queryResult
 
-def getAllVideo():
+def getAllVideo(uid):
     Connector.connect()
-    sql = "SELECT video_id , cover  FROM video_face INNER JOIN user_data ON video_face.manager_id = user_data.user_id WHERE video_is_recoged = True"
+    sql = "SELECT video_id , cover  FROM video_face INNER JOIN class_group ON video_face.class_id = class_group.class_id WHERE video_is_recoged = True AND manager_id = {}".format(uid)
     queryResult = Connector.sqlQuery(sql)
     Connector.quit()
     return queryResult
@@ -123,15 +126,15 @@ def getVideoById(vid):
 
 def getClassGroup(className , classDepartment , classYear , classDay , id):
     Connector.connect()
-    sql = "SELECT * FROM class_group WHERE user_id = {}".format(id)
-    if not className:
-        sql = sql + "className = '{}' ".format(className)
-    if not classDepartment:
-        sql = sql + "classDepartment = '{}' ".format(classDepartment)
-    if not classYear:  
-        sql = sql + "classYear = {} ".format(classYear)
-    if not classDay:
-        sql = sql + "classDay = '{}' ".format(classDay)
+    sql = "SELECT * FROM class_group WHERE manager_id = {}".format(id)
+    if className:
+        sql = sql + " AND class_name = '{}' ".format(className)
+    if classDepartment:
+        sql = sql + " AND class_department = '{}' ".format(classDepartment)
+    if classYear:  
+        sql = sql + " AND class_year = {} ".format(classYear)
+    if classDay:
+        sql = sql + " AND class_day = '{}' ".format(classDay)
     queryResult = Connector.sqlQuery(sql)
     Connector.quit()
     return queryResult
