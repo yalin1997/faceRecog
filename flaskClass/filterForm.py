@@ -23,6 +23,10 @@ class pictureFilter(FlaskForm):
     lastName = StringField('lastName', validators=[],render_kw={'placeholder': u'姓'})
     firstName = StringField('firstName', validators=[],render_kw={'placeholder': u'名'})
 
+class studentsFilter(FlaskForm):
+    lastName = StringField('lastName', validators=[],render_kw={'placeholder': u'姓'})
+    firstName = StringField('firstName', validators=[],render_kw={'placeholder': u'名'})
+
 class classGroupFilter(FlaskForm):
     className = StringField('課程名稱')
     classDepartment = SelectField(
@@ -37,5 +41,6 @@ class classGroupFilter(FlaskForm):
         '星期',
         choices=[(1,'一') , (2 , '二') , (3, '三') , (4,'四') , (5,'五') ]
     )
+
     
 

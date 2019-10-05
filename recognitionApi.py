@@ -2,7 +2,7 @@ import flask # api 依賴
 from flask import request,jsonify,render_template,redirect,send_from_directory,g,session
 from flaskClass.loginForm import EmailPasswordForm
 from flaskClass.uploadForm import uploadForm,videoEditForm,userUploadForm
-from flaskClass.filterForm import videoFilter,pictureFilter,videoFilterUser,classGroupFilter
+from flaskClass.filterForm import videoFilter,pictureFilter,videoFilterUser,classGroupFilter,studentsFilter
 from flaskClass.PictureEditForm import pictureEditForm
 from flaskClass.joinForm import joinForm
 from flaskClass.addManagerForm import addManagerForm
@@ -11,6 +11,7 @@ from flaskClass.videoClass import video
 from flaskClass.User import User
 from flaskClass.ClassGroupClass import classGroup
 from flaskClass.ClassForm import addClassGroupForm
+from flaskClass.ClassMemberForm import addClassMemberForm
 from flask_nav import Nav
 from flask_nav.elements import *
 from flask_bootstrap import Bootstrap
@@ -165,7 +166,19 @@ def login():
     return True
 
 def next_is_valid(url):
-    validList = ['/videoManage','/pictureManage','/upload','/videoEdit','/videoEdit/delete','/pictureEdit/delete','/pictureEdit','/upload/result','/addClassGroup' , '/manageClassGroup']
+    validList = ['/videoManage',
+    '/pictureManage',
+    '/upload',
+    '/videoEdit',
+    '/videoEdit/delete',
+    '/pictureEdit/delete',
+    '/pictureEdit',
+    '/upload/result',
+    '/addClassGroup' ,
+     '/manageClassGroup' ,
+      '/studentsManage' ,
+       '/studentsEdit',
+       '/addClassMember']
     return url in validList
 
 @app.route('/join',methods=['GET','POST'])
@@ -287,8 +300,53 @@ def deleteClassGroup():
 
 @app.route('/studentsManage' , methods = ['GET','POST'])
 @login_required
+def studentsManage():
+    studentsFilterForm = studentsFilter()
+    
+    if request.method == 'POST':
+        if current_user.permission == 'manager':
+            filterData =  request.get_json()
+            lastName = filterData['lastName']
+            firstName = filterData['firstName']
+        else:
+            return False
+
+        studentsSerchResult = getDataService.getStudents(lastName,firstName)
+        matchData = []
+        for i in range(len(studentsSerchResult)):
+            matchData.append( {'id':str(studentsSerchResult[i].id),
+            'faceUrl': str(studentsSerchResult[i].faceUrl), 
+            'lastname': str(studentsSerchResult[i].lastname),
+            "firstname" : str(studentsSerchResult[i].firstname),
+            "email": str(studentsSerchResult[i].email),
+            "account":str(studentsSerchResult[i].account)
+            })
+        return jsonify({'allMatchData':matchData})
+    else:
+        currentUserId = current_user.id
+        currentPermission = current_user.permission
+        if currentPermission == 'manager':
+            studentsList = getDataService.getAllStudents()
+            return render_template('studentsManage.html',form=studentsFilterForm,studentsList=studentsList)
+        else:
+            return redirect('/videoManage')
+
+@app.route('/studentsEdit' , methods = ['GET' , 'POST'])
+@login_required
 def studentsEdit():
-    return flask.redirect('/addClassGroup')
+    if request.method == 'POST':
+        return True
+    else:
+        return False
+
+@app.route('/addClassMember' , methods = ['GET' , 'POST'])
+@login_required
+def addClassMember():
+    form = addClassMemberForm()
+    if request.method == 'POST':
+         return True
+    else:
+        return render_template('/addClassMember.html',form = form)
 
 @app.route('/addManager',methods = ['GET','POST'])
 def addManager():

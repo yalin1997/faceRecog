@@ -1,0 +1,59 @@
+<!-- templates/login.html -->
+{% extends "base.html" %}
+{% block title %}faceRecog{% endblock %}
+{% block head %}
+    {{ super() }}
+    <link href="{{ url_for('static', filename = 'css/addClassMember.css') }}" rel="stylesheet">
+{% endblock %}
+{% block page_content %}
+
+<div id= "joinForm" class="container">
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        <div class="row">
+            <p class="joinCol">
+                {{ form.lastName.label }} {{ form.lastName }}
+            </p>
+        </div>
+        <div class="row">
+            <p class="joinCol">
+                {{ form.firstName.label }} {{ form.firstName }}
+            </p>
+        </div>
+        <div class="row">
+            <p class="joinCol">
+                {{ form.account.label }} {{ form.account }}
+            </p>
+        </div>
+        <div class="row">
+            <p  class="joinCol">
+                {{ form.email.label }} {{ form.email }}
+            </p>
+        </div>
+        <div class="row">
+            <p class="joinCol"> <button type="button" class="btn btn-primary" onclick = "addClassMemberList()">加入班級名單</button></p>
+        </div>
+    </form>
+</div>
+<div id="classMemberList">
+        <table class="table" id="classMemberTable">
+            <thead>
+                <tr>
+                    <th scope="col">編號</th>
+                    <th scope="col">姓</th>
+                    <th scope="col">名</th>
+                    <th scope="col">學號</th>
+                    <th scope="col">信箱</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+        <button type="button" class="btn btn-primary" onclick = "sentConfirmClassMember()">送出班級成員</button>
+</div>
+{% endblock page_content %}
+{% block scripts %}
+{{ super() }}
+<script src="{{ url_for('static', filename = 'javascript/addClassMember.js') }}" type="text/javascript"></script>
+{% endblock scripts %}

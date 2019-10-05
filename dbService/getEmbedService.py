@@ -1,5 +1,6 @@
 import dbConnector.connectPostgre as dbConnector
 from flaskClass.pictureClass import picture
+from flaskClass.studentsClass import students
 
 Connector = dbConnector.postgresConnector("face_recog","Ya1in410477023")
 
@@ -138,3 +139,48 @@ def getClassGroup(className , classDepartment , classYear , classDay , id):
     queryResult = Connector.sqlQuery(sql)
     Connector.quit()
     return queryResult
+
+
+def getAllStudents():
+    Connector.connect()
+    sql = '''SELECT DISTINCT class_member.user_id , last_name , first_name , account , email 
+    FROM (class_member INNER JOIN user_data ON class_member.user_id = user_data.user_id) '''
+    queryResult = Connector.sqlQuery(sql)
+    faceUrlList = []
+    for i in range(len(queryResult)):
+        sql2 = "SELECT face_url FROM face_data WHERE user_id = {}".format(queryResult[0][0])
+        faceResult = Connector.sqlQuery(sql)
+        faceUrlList.append(faceResult[0][0])
+    Connector.quit()
+    studentsList = []
+    for i in range(len(queryResult)):
+        studentsList.append(students(queryResult[i][0] , str(queryResult[i][1]) , str(queryResult[i][2]) , str(queryResult[i][3]) , str(queryResult[i][4]) , str(faceUrlList[i])))
+    return studentsList
+
+
+def getStudents(lastname , firstname):
+    Connector.connect()
+    sql = '''SELECT DISTINCT class_member.user_id , last_name , first_name , account , email 
+    FROM (class_member INNER JOIN user_id ON class_member.user_id = user_data.user_id)
+    WHERE True '''
+    if lastname:
+        sql = sql + "AND last_name = '{}' ".format(lastname)
+    if firstname:
+        sql = sql + " AND first_name = '{} '".format(firstname)
+    queryResult = Connector.sqlQuery(sql)
+    faceUrlList = []
+    for i in range(len(queryResult)):
+        sql2 = "SELECT face_url FROM face_data WHERE user_id = {}".format(queryResult[0][0])
+        faceResult = Connector.sqlQuery(sql)
+        faceUrlList.append(faceResult[0][0])
+    Connector.quit()
+    studentsList = []
+    for i in range(len(queryResult)):
+        studentsList.append(students(queryResult[i][0] , str(queryResult[i][1]) , str(queryResult[i][2]) , str(queryResult[i][3]) , str(queryResult[i][4]) , str(faceUrlList[i])))
+    return studentsList
+
+
+
+
+
+
