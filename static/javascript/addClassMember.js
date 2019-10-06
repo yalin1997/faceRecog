@@ -14,7 +14,7 @@ function addClassMemberList(){
     newCell3.innerHTML = $('input[name="firstName"]').val();
     newCell4.innerHTML = $('input[name="account"]').val();
     newCell5.innerHTML = $('input[name="email"]').val();
-    newCell6.innerHTML = "<button class='btn btn-primary'></button>"
+    newCell6.innerHTML = "<button class='btn btn-primary' id = 'btn_"+studentCounter+"' onclick = 'editMemberData(id)'></button>"
 }
 function sentConfirmClassMember(){
     $.ajax({
@@ -42,4 +42,14 @@ function getTableData(){
         dataList.append({'lastName': lastName , 'firstName':firstName , 'account':account , 'email':email});
     });
     return dataList;
+}
+
+function editMemberData(id){
+    var currentRow = $("#"+id).closest('tr');
+    var $tds = currentRow.find('td');
+    $('input[name="lastName"]').val($tds.eq(0).text());
+    $('input[name="firstName"]').val($tds.eq(1).text());
+    $('input[name="account"]').val($tds.eq(2).text());
+    $('input[name="email"]').val($tds.eq(3).text());
+    currentRow.remove();
 }
