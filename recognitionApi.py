@@ -302,7 +302,7 @@ def deleteClassGroup():
 @login_required
 def studentsManage():
     studentsFilterForm = studentsFilter()
-    
+    classId = request.args.get('classId')
     if request.method == 'POST':
         if current_user.permission == 'manager':
             filterData =  request.get_json()
@@ -311,7 +311,7 @@ def studentsManage():
         else:
             return False
 
-        studentsSerchResult = getDataService.getStudents(lastName,firstName)
+        studentsSerchResult = getDataService.getStudents(classId,lastName,firstName)
         matchData = []
         for i in range(len(studentsSerchResult)):
             matchData.append( {'id':str(studentsSerchResult[i].id),
@@ -326,8 +326,8 @@ def studentsManage():
         currentUserId = current_user.id
         currentPermission = current_user.permission
         if currentPermission == 'manager':
-            studentsList = getDataService.getAllStudents()
-            return render_template('studentsManage.html',form=studentsFilterForm,studentsList=studentsList)
+            studentsList = getDataService.getAllStudents(classId)
+            return render_template('studentsManage.html',form=studentsFilterForm,studentsList=studentsList,classId = classId)
         else:
             return redirect('/videoManage')
 
@@ -343,8 +343,20 @@ def studentsEdit():
 @login_required
 def addClassMember():
     form = addClassMemberForm()
+    classId = request.args.get('classId')
     if request.method == 'POST':
-         return True
+        classMemberData = request.get_json()
+        MemberList = classMemberData["data"]
+        for member in MemberList:
+            if getDataService.SearchUser(member["account"]):
+                insertService.insertRegisterInfo(member["account"],member["email"],"1234" , member["lastName"] , member["firstName"],"user")
+                uid = getDataService.getUserIdByAccount(member["account"])
+                insertService.insertClassMember(classId , uid)
+            else:
+                uid = getDataService.getUserIdByAccount(member["account"])
+                insertService.insertClassMember(classId , uid)
+        return jsonify({'result': True})
+
     else:
         return render_template('/addClassMember.html',form = form)
 

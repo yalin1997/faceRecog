@@ -15,8 +15,8 @@ function deleteEvent(targetId){
         dataType: 'json'
     });
 }
-function addClassMember(){
-    window.location = "/addClassMember";
+function addClassMember(id){
+    window.location = "/addClassMember?classId=" + id;
 }
 function clickFacePicture(facePictureId){
     window.location = "/studentsEdit?faceId=" + facePictureId.split("_")[1];

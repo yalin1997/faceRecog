@@ -7,20 +7,22 @@ function addClassMemberList(){
     var newCell3  = newRow.insertCell(2);
     var newCell4  = newRow.insertCell(3);
     var newCell5  = newRow.insertCell(4);
+    var newCell6  = newRow.insertCell(5);
     newCell.innerHTML = studentCounter
     studentCounter++;
     newCell2.innerHTML = $('input[name="lastName"]').val();
     newCell3.innerHTML = $('input[name="firstName"]').val();
     newCell4.innerHTML = $('input[name="account"]').val();
     newCell5.innerHTML = $('input[name="email"]').val();
+    newCell6.innerHTML = "<button class='btn btn-primary'></button>"
 }
 function sentConfirmClassMember(){
     $.ajax({
         type: 'POST',
         url: '/addClassMember',
-        data:JSON.stringify (getTableData()),
+        data:JSON.stringify ({'data':getTableData()}),
         success: function(data){
-            if (data){
+            if (data.result){
                 alert('新增完成!');
             }
         },
@@ -39,6 +41,5 @@ function getTableData(){
             email = $tds.eq(3).text();
         dataList.append({'lastName': lastName , 'firstName':firstName , 'account':account , 'email':email});
     });
-    console.log(JSON.stringify({'data':dataList}));
     return dataList;
 }

@@ -100,3 +100,4 @@ def insertClassMember(uid , cid ):
     Connector.quit()
     return True
 
+

@@ -42,7 +42,7 @@
         </div> 
     </div>
 {% endfor %}
-<button class="btn btn-primary my-btn" onclick="addClassMember()">加入學生</button>
+<button class="btn btn-primary my-btn" id="{{ classId}}" onclick='addClassMember(id)'>加入學生</button>
 </div>
 {% endblock page_content %}
 {% block scripts %}

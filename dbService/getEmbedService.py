@@ -141,10 +141,10 @@ def getClassGroup(className , classDepartment , classYear , classDay , id):
     return queryResult
 
 
-def getAllStudents():
+def getAllStudents(classId):
     Connector.connect()
     sql = '''SELECT DISTINCT class_member.user_id , last_name , first_name , account , email 
-    FROM (class_member INNER JOIN user_data ON class_member.user_id = user_data.user_id) '''
+    FROM (class_member INNER JOIN user_data ON class_member.user_id = user_data.user_id) WHERE class_id = {} '''.format(classId)
     queryResult = Connector.sqlQuery(sql)
     faceUrlList = []
     for i in range(len(queryResult)):
@@ -158,11 +158,11 @@ def getAllStudents():
     return studentsList
 
 
-def getStudents(lastname , firstname):
+def getStudents(classId , lastname , firstname):
     Connector.connect()
     sql = '''SELECT DISTINCT class_member.user_id , last_name , first_name , account , email 
     FROM (class_member INNER JOIN user_id ON class_member.user_id = user_data.user_id)
-    WHERE True '''
+    WHERE class_id = {} '''.format(classId)
     if lastname:
         sql = sql + "AND last_name = '{}' ".format(lastname)
     if firstname:
@@ -180,7 +180,18 @@ def getStudents(lastname , firstname):
     return studentsList
 
 
+def SearchUser(account):
+    Connector.connect()
+    sql = "SELECT COUNT(user_id) FROM user_data WHERE account = '{}'".format(account)
+    queryResult = Connector.sqlQuery(sql)
+    return int(queryResult[0][0]) == 0
 
+def getUserIdByAccount(account):
+    Connector.connect()
+    sql = "SELECT user_id FROM user_data WHERE account = '{}'".format(account)
+    queryResult = Connector.sqlQuery(sql)
+    return int(queryResult[0][0])
+    
 
 
 
