@@ -14,7 +14,7 @@ function addClassMemberList(){
     newCell3.innerHTML = $('input[name="firstName"]').val();
     newCell4.innerHTML = $('input[name="account"]').val();
     newCell5.innerHTML = $('input[name="email"]').val();
-    newCell6.innerHTML = "<button class='btn btn-primary' id = 'btn_"+studentCounter+"' onclick = 'editMemberData(id)'></button>"
+    newCell6.innerHTML = "<button class='btn btn-primary' id = 'btn_"+studentCounter+"' onclick = 'editMemberData(id)'>編輯</button>"
 }
 function sentConfirmClassMember(){
     $.ajax({
@@ -33,13 +33,15 @@ function sentConfirmClassMember(){
 function getTableData(){
     var table = document.getElementById("classMemberTable");
     dataList = [];
-    table.find('tr').each(function (i) {
+    $(table).find('tr').each(function (i) {
         var $tds = $(this).find('td'),
-            lastName = $tds.eq(0).text(),
-            firstName = $tds.eq(1).text(),
-            account = $tds.eq(2).text(),
-            email = $tds.eq(3).text();
-        dataList.append({'lastName': lastName , 'firstName':firstName , 'account':account , 'email':email});
+            lastName = $tds.eq(1).text(),
+            firstName = $tds.eq(2).text(),
+            account = $tds.eq(3).text(),
+            email = $tds.eq(4).text();
+        if(!(lastName == "" && firstName == "" && account == "" && email == "")){
+            dataList.push({'classId': location.search.split('=')[1],'lastName': lastName , 'firstName':firstName , 'account':account , 'email':email});
+        }
     });
     return dataList;
 }
@@ -47,9 +49,10 @@ function getTableData(){
 function editMemberData(id){
     var currentRow = $("#"+id).closest('tr');
     var $tds = currentRow.find('td');
-    $('input[name="lastName"]').val($tds.eq(0).text());
-    $('input[name="firstName"]').val($tds.eq(1).text());
-    $('input[name="account"]').val($tds.eq(2).text());
-    $('input[name="email"]').val($tds.eq(3).text());
+    $('input[name="lastName"]').val($tds.eq(1).text());
+    $('input[name="firstName"]').val($tds.eq(2).text());
+    $('input[name="account"]').val($tds.eq(3).text());
+    $('input[name="email"]').val($tds.eq(4).text());
     currentRow.remove();
+    studentCounter--;
 }

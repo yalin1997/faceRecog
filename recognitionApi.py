@@ -348,13 +348,15 @@ def addClassMember():
         classMemberData = request.get_json()
         MemberList = classMemberData["data"]
         for member in MemberList:
+            
             if getDataService.SearchUser(member["account"]):
                 insertService.insertRegisterInfo(member["account"],member["email"],"1234" , member["lastName"] , member["firstName"],"user")
                 uid = getDataService.getUserIdByAccount(member["account"])
-                insertService.insertClassMember(classId , uid)
+                insertService.insertClassMember(uid , classId )
             else:
                 uid = getDataService.getUserIdByAccount(member["account"])
-                insertService.insertClassMember(classId , uid)
+                
+                insertService.insertClassMember(uid , int(member["classId"]) )
         return jsonify({'result': True})
 
     else:
