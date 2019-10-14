@@ -1,5 +1,5 @@
 import flask # api 依賴
-from flask import request,jsonify,render_template,redirect,send_from_directory,g,session
+from flask import request,jsonify,render_template,redirect,send_from_directory,g,session,flash
 from flaskClass.loginForm import EmailPasswordForm
 from flaskClass.uploadForm import uploadForm,videoEditForm,userUploadForm
 from flaskClass.filterForm import videoFilter,pictureFilter,videoFilterUser,classGroupFilter,studentsFilter
@@ -164,6 +164,12 @@ def login():
         #  如果不是提交過來的表單，就是GET，這時候就回傳user.html網頁
         return render_template('login.html', form=form)
     return True
+
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('login'))
 
 def next_is_valid(url):
     validList = ['/videoManage',
