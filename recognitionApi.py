@@ -155,7 +155,7 @@ def login():
                 # permission to access the `next` url
                 if nextUrl and not next_is_valid(nextUrl):
                     return flask.abort(400)
-                return flask.redirect(nextUrl or flask.url_for('videoManage'))
+                return flask.redirect(nextUrl or flask.url_for('manageClassGroup'))
             else:
                 return "帳號密碼錯誤"
         else:
@@ -185,7 +185,7 @@ def next_is_valid(url):
       '/studentsManage' ,
        '/studentsEdit',
        '/addClassMember']
-    return url in validList
+    return url.split('?')[0] in validList
 
 @app.route('/join',methods=['GET','POST'])
 @login_required
@@ -391,21 +391,6 @@ def addManager():
 @login_required
 def videoManage():
     videoFilterForm = videoFilter()
-    permission = current_user.permission
-    lastname = current_user.lastname
-    firstname = current_user.firstname
-    if permission != "manager":
-        allVideo = getDataService.getVideo(lastname,firstname,"0","0","0")
-        videoFilterForm = videoFilterUser()
-    else:
-        allVideo = getDataService.getAllVideo(current_user.id)
-    videoList = []
-    for i in range(len(allVideo)):
-        videoCover = str(allVideo[i][-1])
-        if allVideo[i][-1] == None :
-            videoCover = "/upload/others/img_avatar.jpg"
-        videoList.append(video(str(allVideo[i][0]),videoCover))
-    
     if request.method == 'POST' and videoFilterForm.validate_on_submit():
         if current_user.permission == 'manager':
             filterData = request.get_json()
@@ -429,6 +414,23 @@ def videoManage():
             matchData.append( {'id':str(result[i][0]),'pictureUrl': cover})
         return jsonify({'allMatchData':matchData})
     else:
+        permission = current_user.permission
+        lastname = current_user.lastname
+        firstname = current_user.firstname
+        classId = request.args.get('classId')
+        if permission != "manager":
+            allVideo = getDataService.getVideo(lastname,firstname,"0","0","0",classId)
+            videoFilterForm = videoFilterUser()
+        else:
+            allVideo = getDataService.getAllVideo(current_user.id , classId)
+        videoList = []
+        
+        for i in range(len(allVideo)):
+            videoCover = str(allVideo[i][-1])
+            if allVideo[i][-1] == None :
+                videoCover = "/upload/others/img_avatar.jpg"
+            videoList.append(video(str(allVideo[i][0]),videoCover , str(allVideo[i][2])))
+
         if permission == "manager":
             return render_template('videoManage.html',form = videoFilterForm , videoData = videoList)
         else:
@@ -492,6 +494,7 @@ def pictureManage():
     else:
         currentUserId = current_user.id
         currentPermission = current_user.permission
+        classId = request.args.get('classId') # todo
         if currentPermission == 'manager':
             pictureList = getDataService.getAllPicture()
             return render_template('pictureManage.html',form=pictureFilterForm,pictureList=pictureList)
@@ -579,10 +582,11 @@ def upload():
                 elif allowed_video(filename):
                     filePath = os.path.join(app.config["UPLOAD_FOLDER"]+videoPath, filename)
                     file.save(filePath)
+                    classId = flask.request.form['classId']
                     className = flask.request.form['className']
                     dateTime = flask.request.form['dateTime']
                     time = flask.request.form['time']
-                    insertService.InsertVideoInfo(dateTime,time,className,"/upload/"+filename,"",False)
+                    insertService.InsertVideoInfo(dateTime,time,classId,"/upload/"+filename,"",False)
                     #recog.main(filePath,filename,embList,model_Path[0][0],nameList,dateTime,time,className)
                 return redirect('/upload/result')
         else:
@@ -604,9 +608,6 @@ def upload():
                         insertService.insertFaceInfo(current_user.lastname,current_user.firstname,"/upload/"+pictureName)
                         faceDict[key] = "/upload/"+pictureName
             insertService.updateUserFace(faceDict)
-
-
-
     else:
         if permission == 'manager':
             classId = request.args.get('classId')

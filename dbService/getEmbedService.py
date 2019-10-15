@@ -70,9 +70,9 @@ def getPictureById(pictureId):
     return queryResult
 
 # 篩選影片
-def getVideo(lastName,firstName,sTime,eTime,lesson):
+def getVideo(lastName,firstName,sTime,eTime,lesson , cid):
     Connector.connect()
-    sql = '''SELECT video_face.video_id , cover
+    sql = '''SELECT video_face.video_id , cover , video_is_recoged
             FROM (  
                     video_face 
                         INNER JOIN 
@@ -88,7 +88,7 @@ def getVideo(lastName,firstName,sTime,eTime,lesson):
                 class_group
                     ON
                 video_face.class_id = class_group.class_id
-            WHERE True'''
+            WHERE True AND video_face.class_id = {}'''.format(cid)
     if not lastName == "0":
         sql = sql + " AND  lastname LIKE '%{}%'".format(lastName)
     if not firstName == "0":
@@ -103,9 +103,9 @@ def getVideo(lastName,firstName,sTime,eTime,lesson):
     Connector.quit()
     return queryResult
 
-def getAllVideo(uid):
+def getAllVideo(uid , cid):
     Connector.connect()
-    sql = "SELECT video_id , cover  FROM video_face INNER JOIN class_group ON video_face.class_id = class_group.class_id WHERE video_is_recoged = True AND manager_id = {}".format(uid)
+    sql = "SELECT video_id , cover , video_is_recoged FROM video_face INNER JOIN class_group ON video_face.class_id = class_group.class_id WHERE manager_id = {} AND video_face.class_id = {}".format(uid , cid)
     queryResult = Connector.sqlQuery(sql)
     Connector.quit()
     return queryResult
