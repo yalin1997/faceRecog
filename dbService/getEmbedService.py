@@ -42,9 +42,10 @@ def getPictureTmp():
     for  i in range(27):
         pictureList.append(picture("/upload/3Yaun_0001.jpg","三原","惠晤",i))
     return pictureList
+
 def getAllPicture():
     Connector.connect()
-    sql = "SELECT face_id , face_url , last_name , first_name FROM face_data INNER JOIN ON face_data.user_id = user_data.user_id LIMIT 20"
+    sql = "SELECT face_id , face_url , last_name , first_name FROM face_data INNER JOIN user_data ON face_data.user_id = user_data.user_id LIMIT 20"
     queryResult = Connector.sqlQuery(sql)
     Connector.quit()
     pictureList = []
