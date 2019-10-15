@@ -241,20 +241,15 @@ def addClassGroup():
     permission = current_user.permission
     if request.method == 'POST':
         className = flask.request.form['className']
-        classDepartment = flask.request.form['classDepartment']
         classYear = flask.request.form['classYear']
         classDay = flask.request.form['classDay']
         classStime =  flask.request.form['classStime']
         classEtime = flask.request.form['classEtime']
-        result = insertService.insertClassName(className , classDepartment , classYear , classDay , classStime , classEtime , current_user.id)
+        result = insertService.insertClassName(className  , classYear , classDay , classStime , classEtime , current_user.id)
         if result :
             return redirect('/addClassMember')
     else:
         if permission == 'manager':
-            form.classDepartment.choices = []
-            departmentList = getDataService.getDepartment()
-            for department in departmentList:
-                form.classDepartment.choices.append((str(department),str(department)))
             form.classYear.choices = []
             for i in range(5):
                 form.classYear.choices.append((datetime.now().year-i-1911,datetime.now().year-i-1911))
@@ -272,10 +267,9 @@ def manageClassGroup():
     if request.method == 'POST':
         filterData = request.get_json()
         className = filterData['className']
-        classDepartment = filterData['classDepartment']
         classYear = filterData['classYear']
         classDay = filterData['classDay']
-        classGroupResult = getDataService.getClassGroup(className , classDepartment , classYear , classDay , current_user.id)
+        classGroupResult = getDataService.getClassGroup(className , classYear , classDay , current_user.id)
         matchData = []
         for i in range(len(classGroupResult)):
             matchData.append( {'id':str(classGroupResult[i][0]),'className': str(classGroupResult[i][1]), 'classDepartment': str(classGroupResult[i][2]),"classDay" : str(classGroupResult[i][3])})
@@ -284,7 +278,7 @@ def manageClassGroup():
         classGroupList = []
         classGroupResult = getDataService.getClassGroup(None , None , datetime.now().year - 1911 , None , current_user.id)
         for i in range(len(classGroupResult)):
-            classGroupList.append(classGroup(str(classGroupResult[i][0]),str(classGroupResult[i][1]), str(classGroupResult[i][2]) , str(classGroupResult[i][3]),str(classGroupResult[i][4])))
+            classGroupList.append(classGroup(str(classGroupResult[i][0]) , str(classGroupResult[i][2]) , str(classGroupResult[i][3]),str(classGroupResult[i][4])))
 
         # 產生學年
         classGroupFilterForm.classYear.choices = []

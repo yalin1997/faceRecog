@@ -6,10 +6,6 @@ from wtforms.validators import DataRequired, Email
 
 class addClassGroupForm(FlaskForm):
     className = StringField('課程名稱', validators=[DataRequired()])
-    classDepartment = SelectField(
-        '系名',
-        choices=[]
-    )
     classYear =  SelectField(
         '學年',
         choices=[],

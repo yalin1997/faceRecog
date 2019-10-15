@@ -27,15 +27,6 @@ def getClassList(uid):
     Connector.connect()
     queryResult = Connector.sqlQuery(sql)
     return queryResult
-# 取得學系
-def getDepartment():
-    sql = "SELECT department_name FROM department"
-    Connector.connect()
-    queryResult = Connector.sqlQuery(sql)
-    resultList = []
-    for i in range(len(queryResult)):
-        resultList.append(queryResult[i][0])
-    return resultList
 
 def getNameList():
     # 取得所以資料庫內的人名
@@ -125,13 +116,11 @@ def getVideoById(vid):
     Connector.quit()
     return queryResult
 
-def getClassGroup(className , classDepartment , classYear , classDay , id):
+def getClassGroup(className , classYear , classDay , id):
     Connector.connect()
     sql = "SELECT * FROM class_group WHERE manager_id = {}".format(id)
     if className:
         sql = sql + " AND class_name = '{}' ".format(className)
-    if classDepartment:
-        sql = sql + " AND class_department = '{}' ".format(classDepartment)
     if classYear:  
         sql = sql + " AND class_year = {} ".format(classYear)
     if classDay:

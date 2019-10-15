@@ -73,10 +73,9 @@ def insertRegisterInfo(SID,email,hashPassword,lastName,firstName,permission):
     return True
 
 # 建立班群
-def insertClassName(className , classDepartment , classYear , classDay , classStime , classEtime , managerId):
+def insertClassName(className  , classYear , classDay , classStime , classEtime , managerId):
     Connector.connect()
-    sql = "INSERT INTO class_group (class_name , class_department , class_year , class_day , class_stime , class_etime , manager_id) VALUES('{}','{}','{}','{}','{}','{}',{})".format(className ,
-        classDepartment ,
+    sql = "INSERT INTO class_group (class_name  , class_year , class_day , class_stime , class_etime , manager_id) VALUES('{}','{}','{}','{}','{}',{})".format(className ,
         classYear ,
         classDay ,
         classStime ,
