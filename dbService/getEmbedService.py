@@ -118,7 +118,7 @@ def getVideoById(vid):
 
 def getClassGroup(className , classYear , classDay , id):
     Connector.connect()
-    sql = "SELECT * FROM class_group WHERE manager_id = {}".format(id)
+    sql = "SELECT class_id , class_name , class_year , class_day FROM class_group WHERE manager_id = {}".format(id)
     if className:
         sql = sql + " AND class_name = '{}' ".format(className)
     if classYear:  
