@@ -14,7 +14,7 @@ class postgresConnector:
         self.connector.commit()
     # 執行插入後會有回傳值
     def sqlExecuteWithReturn(self,sql):
-         self.cur = self.connector.cursor()
+        self.cur = self.connector.cursor()
         self.cur.execute(sql)
         rows = self.cur.fetchall()
         self.connector.commit()
