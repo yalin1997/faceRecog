@@ -131,7 +131,7 @@ def getClassGroup(className , classYear , classDay , id):
     return queryResult
 
 def getClassGroupById(cid):
-    Connectot.connect()
+    Connector.connect()
     sql = "SELECT class_id , class_name , class_year , class_day FROM class_group WHERE class_id = {}".format(cid)
     queryResult = Connector.sqlQuery(sql)
     Connector.quit()
