@@ -81,7 +81,7 @@ def insertClassName(className  , classYear , classDay , classStime , classEtime 
         classStime ,
         classEtime,
         managerId)
-    result = Connector.sqlQuery(sql)
+    result = Connector.sqlExecuteWithReturn(sql)
     Connector.quit()
     return result
 # 刪除班群

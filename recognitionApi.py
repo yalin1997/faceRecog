@@ -248,7 +248,7 @@ def addClassGroup():
         result = insertService.insertClassName(className  , classYear , classDay , classStime , classEtime , current_user.id)
         if result :
             print(result[0][0])
-            return redirect('/addClassMember?'+ str(result[0][0]))
+            return redirect('/addClassMember?classId='+ str(result[0][0]))
     else:
         if permission == 'manager':
             form.classYear.choices = []
