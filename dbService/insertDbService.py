@@ -75,15 +75,15 @@ def insertRegisterInfo(SID,email,hashPassword,lastName,firstName,permission):
 # 建立班群
 def insertClassName(className  , classYear , classDay , classStime , classEtime , managerId):
     Connector.connect()
-    sql = "INSERT INTO class_group (class_name  , class_year , class_day , class_stime , class_etime , manager_id) VALUES('{}','{}','{}','{}','{}',{})".format(className ,
+    sql = "INSERT INTO class_group (class_name  , class_year , class_day , class_stime , class_etime , manager_id) VALUES('{}','{}','{}','{}','{}',{}) RETURNING class_id;".format(className ,
         classYear ,
         classDay ,
         classStime ,
         classEtime,
         managerId)
-    Connector.sqlExecute(sql)
+    result = Connector.sqlQuery(sql)
     Connector.quit()
-    return True
+    return result
 # 刪除班群
 def deleteClassGroup(cid):
     Connector.connect()
