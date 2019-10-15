@@ -276,9 +276,9 @@ def manageClassGroup():
         return jsonify({'allMatchData':matchData})
     else:
         classGroupList = []
-        classGroupResult = getDataService.getClassGroup(None , None , datetime.now().year - 1911 , None , current_user.id)
+        classGroupResult = getDataService.getClassGroup(None , datetime.now().year - 1911 , None , current_user.id)
         for i in range(len(classGroupResult)):
-            classGroupList.append(classGroup(str(classGroupResult[i][0]) , str(classGroupResult[i][2]) , str(classGroupResult[i][3]),str(classGroupResult[i][4])))
+            classGroupList.append(classGroup(str(classGroupResult[i][0]) , str(classGroupResult[i][1]) , str(classGroupResult[i][2]),str(classGroupResult[i][3])))
 
         # 產生學年
         classGroupFilterForm.classYear.choices = []
