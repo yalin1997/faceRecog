@@ -2,5 +2,6 @@
 *.avi
 *.jpg
 *.png
+*.pyc
 /2018Model
 /2017
