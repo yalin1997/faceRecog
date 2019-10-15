@@ -28,9 +28,10 @@
             </div>
         </div>
         <div id="videoUploadMsg" style="display:none">
-            {% if classGroup.className %}
+            {% if classGroup %}
                 <div class="row">
                     <p class="theCol">
+                        <input type="hidden" name="classId" value="{{ classGroup.classId }}">
                         <input type="text" name="className" id="className" placeholder="班級" value="{{ classGroup.className }}"/>
                     </p>   
                 </div>
