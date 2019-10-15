@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 import flask # api 依賴
 from flask import request,jsonify,render_template,redirect,send_from_directory,g,session,flash
 from flaskClass.loginForm import EmailPasswordForm
