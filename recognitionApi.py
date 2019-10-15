@@ -248,7 +248,7 @@ def addClassGroup():
         classEtime = flask.request.form['classEtime']
         result = insertService.insertClassName(className , classDepartment , classYear , classDay , classStime , classEtime , current_user.id)
         if result :
-            return render_template('/addClassGroupResult/success.html')
+            return redirect('/addClassMember')
     else:
         if permission == 'manager':
             form.classDepartment.choices = []
