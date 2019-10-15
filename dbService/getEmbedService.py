@@ -130,6 +130,12 @@ def getClassGroup(className , classYear , classDay , id):
     Connector.quit()
     return queryResult
 
+def getClassGroupById(cid):
+    Connectot.connect()
+    sql = "SELECT class_id , class_name , class_year , class_day FROM class_group WHERE class_id = {}".format(cid)
+    queryResult = Connector.sqlQuery(sql)
+    Connector.quit()
+    return queryResult
 
 def getAllStudents(classId):
     Connector.connect()
@@ -181,6 +187,7 @@ def getUserIdByAccount(account):
     sql = "SELECT user_id FROM user_data WHERE account = '{}'".format(account)
     queryResult = Connector.sqlQuery(sql)
     return int(queryResult[0][0])
+
     
 
 

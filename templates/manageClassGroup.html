@@ -20,12 +20,6 @@
         </div>
         <div class="row theRow">
             <p class="">
-                系別: 
-                {{ form.classDepartment }}
-            </p>
-        </div>
-        <div class="row theRow">
-            <p class="">
                 學年: 
                 {{ form.classYear }}
             </p>
@@ -56,7 +50,7 @@
                 </button>
                 <div class="dropdown-menu">
                   <li><a class="dropdown-item" href="/studentsManage?classId={{ classGroup.id }}">管理學生</a></li>
-                  <li><a class="dropdown-item" href="/upload">上傳影片</a></li>
+                  <li><a class="dropdown-item" href="/upload?classId={{ classGroup.id }}">上傳影片</a></li>
                   <li><div class="dropdown-divider"></div></li>
                 </div>
               </div>

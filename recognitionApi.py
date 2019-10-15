@@ -582,8 +582,8 @@ def upload():
                     className = flask.request.form['className']
                     dateTime = flask.request.form['dateTime']
                     time = flask.request.form['time']
-                    insertService.InsertVideoInfo(dateTime,time,className,"/upload/"+filename,"","")
-                    recog.main(filePath,filename,embList,model_Path[0][0],nameList,dateTime,time,className)
+                    insertService.InsertVideoInfo(dateTime,time,className,"/upload/"+filename,"",False)
+                    #recog.main(filePath,filename,embList,model_Path[0][0],nameList,dateTime,time,className)
                 return redirect('/upload/result')
         else:
             face = flask.request.file['face']
@@ -609,7 +609,12 @@ def upload():
 
     else:
         if permission == 'manager':
-            return render_template('upload.html', form=uploadform)
+            classId = request.args.get('classId')
+            if classId:
+                classGroupResult = getDataService.getClassGroupById(int(classId))
+                return render_template('upload.html', form=uploadform , classGroup = classGroup(str(classGroupResult[0][0]) , str(classGroupResult[0][1]) , str(classGroupResult[0][2]),str(classGroupResult[0][3])))
+            else:
+                return render_template('upload.html', form=uploadform)
         else:
              return render_template('uploadUser.html', form=uploadform)
 

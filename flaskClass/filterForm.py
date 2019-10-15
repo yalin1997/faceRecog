@@ -29,10 +29,6 @@ class studentsFilter(FlaskForm):
 
 class classGroupFilter(FlaskForm):
     className = StringField('課程名稱')
-    classDepartment = SelectField(
-        '系名',
-        choices=[]
-    )
     classYear = classYear =  SelectField(
         '學年',
         choices=[]
