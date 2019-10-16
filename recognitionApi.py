@@ -394,18 +394,20 @@ def videoManage():
     if request.method == 'POST' and videoFilterForm.validate_on_submit():
         if current_user.permission == 'manager':
             filterData = request.get_json()
+            classId = filterData['classId']
             lastName = filterData['lastName']
             firstName = filterData['firstName']
             sDate = filterData['sdate']
             eDate = filterData['edate']
             lesson = filterData['lesson']
-            result = getDataService.getVideo(lastName , firstName , sDate , eDate , lesson)
+            result = getDataService.getVideo(lastName , firstName , sDate , eDate , lesson , classId)
         else:
             filterData = request.get_json()
+            classId = filterData['classId']
             sDate = filterData['sdate']
             eDate = filterData['edate']
             lesson = filterData['lesson']
-            result = getDataService.getVideo(lastname , firstname , sDate , eDate , lesson)
+            result = getDataService.getVideo(lastname , firstname , sDate , eDate , lesson , classId)
         matchData = []
         for i in range(len(result)):
             cover = str(result[i][-1])
@@ -429,7 +431,7 @@ def videoManage():
             videoCover = str(allVideo[i][-1])
             if allVideo[i][-1] == None :
                 videoCover = "/upload/others/img_avatar.jpg"
-            videoList.append(video(str(allVideo[i][0]),videoCover , str(allVideo[i][2])))
+            videoList.append(video(str(allVideo[i][0]) , videoCover , str(allVideo[i][2])))
 
         if permission == "manager":
             return render_template('videoManage.html',form = videoFilterForm , videoData = videoList)
@@ -446,7 +448,7 @@ def videoEdit():
         newVideo = flask.request.files['newVideo']
         videoId = request.form.get('videoId')
         saveResult = saveUploadFile(newVideo)
-        print(str(saveResult))
+
         if saveResult :
             insertService.editVideoInfo(videoId,'/upload/'+newVideo.filename,"")
             result = {'result': True}

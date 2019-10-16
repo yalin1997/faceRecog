@@ -17,7 +17,7 @@ def main(args):
 def dection():
     # 将目标图片文件夹下的图片地址append进list,传入load_and_align_data(),对图片进行切割（因为其图片参数为list）
     # 这里的位置改为test_img文件夹的相對路徑
-    img_dir='/home/nknu/文件/faceRecog_V1.1/static/upload/picture'
+    img_dir='/home/nknu/文件/faceRecog/static/upload/picture'
     img_path_set=[]
     for file in os.listdir(img_dir):
         single_img=os.path.join(img_dir,file)
@@ -30,7 +30,7 @@ def dection():
 
     
     # 改为emb_img文件夹的绝对路径  
-    emb_dir='/home/nknu/文件/faceRecog_V1.1/static/upload/face'
+    emb_dir='/home/nknu/文件/faceRecog/static/upload/face'
     
     if(os.path.exists(emb_dir)==False):
         os.mkdir(emb_dir)
