@@ -100,7 +100,6 @@ def deleteClassMember(cid):
     Connector.connect()
     sql = "DELETE FROM class_member WHERE class_id = {}".format(cid)
     Connector.sqlExecute(sql)
-    Connector.quit()
     return True
 
 # 加入班群成員
