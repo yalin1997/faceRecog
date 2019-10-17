@@ -45,7 +45,7 @@
     {% else %}
         <div class="panel panel-danger studentPanel" style="width: 18rem;">
             <div class="panel-heading">
-                <h5 class="panel-title">{{ student.lastname }}{{ student.firstname }} (尚未完成資料))</h5>
+                <h5 class="panel-title">{{ student.lastname }}{{ student.firstname }} (尚未完成資料)</h5>
             </div>
             <div class="panel-body">
                 <img src="{{ student.url }}" title = "點選來編輯" alt="Responsive image" class="img-circle studentManage" id="facePicture_{{ student.id }}" onclick="clickFacePicture(id)">
