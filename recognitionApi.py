@@ -9,6 +9,7 @@ from flaskClass.addManagerForm import addManagerForm
 from flaskClass.pictureClass import picture
 from flaskClass.videoClass import video
 from flaskClass.User import User
+from flaskClass.studentsClass import students
 from flaskClass.ClassGroupClass import classGroup
 from flaskClass.ClassForm import addClassGroupForm
 from flaskClass.ClassMemberForm import addClassMemberForm
@@ -334,7 +335,31 @@ def studentsManage():
 
 @app.route('/studentInfo' , methods = ['GET'])
 def studentInfo():
-    return render_template('studentInfo.html')
+    faceDirectDic = {"positive" : "正面" , "left" : "左側臉" , "right" : "右側臉" , "up" : "上側臉" , "down" : "下側臉"}
+    faceUrlDic = {}
+    studentId = request.args.get('studentId')
+    studentData = getDataService.getUserDataById(studentId)
+    studentFace = getDataService.getFaceById(studentId)
+    faceList = []
+    userFaceSet = []
+    faceSet = set(['positive' , 'left' , 'right' , 'up' , 'down'])
+    for i in range(len(studentFace))):
+        faceList.append(str(studentFace[i][0]))
+        userFaceSet.append(str(studentFace[i][1]))
+        faceUrlDic[str(studentFace[i][1])] = str(studentFace[i][0]
+    remainSet = faceSet - set(userFaceSet)
+    if len(remainSet) > 0 :
+        flashMsg = "缺少"
+        isDataComplete = False
+        for faceMsg in remainSet:
+            flashMsg = flashMsg + faceDirectDic[faceMsg]
+    else:
+        flashMsg = "資料完整"
+        isDataComplete = True
+    flash(flashMsg)
+
+    return render_template('studentInfo.html' , student = students(queryResult[i][0] , str(queryResult[i][1]) , str(queryResult[i][2]) , str(queryResult[i][3]) , str(queryResult[i][4]) , "" , isDataComplete) ,
+      faceUrlDic = faceUrlDic)
 
 @app.route('/studentsEdit' , methods = ['GET' , 'POST'])
 @login_required

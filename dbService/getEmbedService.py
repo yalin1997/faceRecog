@@ -145,7 +145,7 @@ def getAllStudents(classId):
     faceUrlList = []
     isDataCompleteList = []
     for i in range(len(queryResult)):
-        sql2 = "SELECT face_url , type FROM face_data WHERE user_id = {}".format(queryResult[0][0])
+        sql2 = "SELECT face_url , face_type FROM face_data WHERE user_id = {}".format(queryResult[0][0])
         faceResult = Connector.sqlQuery(sql)
         faceCover = ""
         isDataCompleteList.append(len(faceResult) == 5)
@@ -159,6 +159,11 @@ def getAllStudents(classId):
         studentsList.append(students(queryResult[i][0] , str(queryResult[i][1]) , str(queryResult[i][2]) , str(queryResult[i][3]) , str(queryResult[i][4]) , str(faceUrlList[i]) , isDataCompleteList[i]))
     return studentsList
 
+def getUserDataById(uid):
+    Connector.connect()
+    sql = "SELECT user_id , last_name , first_name , account , email FROM user_data WHERE user_id = {}".format(uid)
+    queryResult = Connector.sqlQuery(sql)
+    return queryResult
 
 def getStudents(classId , lastname , firstname):
     Connector.connect()
@@ -181,6 +186,11 @@ def getStudents(classId , lastname , firstname):
         studentsList.append(students(queryResult[i][0] , str(queryResult[i][1]) , str(queryResult[i][2]) , str(queryResult[i][3]) , str(queryResult[i][4]) , str(faceUrlList[i])))
     return studentsList
 
+def getFaceById(uid):
+    Connector.connect()
+    sql = "SELECT face_url , face_type FROM face_data WHERE user_id = {}".format(uid)
+    queryResult = Connector.sqlQuery(sql)
+    return queryResult
 
 def SearchUser(account):
     Connector.connect()

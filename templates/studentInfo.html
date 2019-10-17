@@ -6,15 +6,20 @@
     <link href="{{ url_for('static', filename = 'css/studentInfo.css') }}" rel="stylesheet">
 {% endblock %}
 {% block page_content %}
-<fieldset style="margin:0px auto;">
+<div style="margin:0px auto;">
     <table>
         <tr>
             <th>
-                
             </th>
             <td>
-                <h1 style="padding-top: 60px;">CSS Slider</h1>
-                <h2>Pure CSS Slider. No JS. Because it's possieble!</h2>
+                <h1 style="padding-top: 60px;">{{ student.lastname}}{{ student.firstname}}</h1>
+                <h2>
+                    <div class="alert alert-warning" role="alert">
+                        {% for message in get_flashed_messages() %}
+                            {{ message }}
+                        {% endfor %}
+                    </div>
+                </h2>
                 <div id="slider1" class="csslider infinity inside">
                     <input type="radio" name="slides" id="slides_1" checked="">
                     <input type="radio" name="slides" id="slides_2">
@@ -23,44 +28,39 @@
                     <input type="radio" name="slides" id="slides_5">
                     <ul>
                         <li>
-                            <h1>Say hello to CSS3</h1>
-                            <p>CSSlider is lightweight &amp; easy to use slider. No JS - pure CSS.</p>
+                            {% if 'positive' in faceUrlDic.keys() %}
+                                <img src="{{ faceUrlDic['positive'] }}">
+                            {% else %}
+                                <img src="/upload/others/img_avatar.jpg">
+                            {% endif %}
                         </li>
                         <li>
-                            <img src="./themes/stones.jpg">
+                            {% if 'up' in faceUrlDic.keys() %}
+                                <img src="{{ faceUrlDic['up'] }}">
+                            {% else %}
+                                <img src="/upload/others/img_avatar.jpg">
+                            {% endif %}
                         </li>
                         <li>
-                            <div id="bg">
-                                <div>
-                                    <h1>CSS Events</h1>
-                                    <p>When slide 3 is reached - play CSS animation!</p>
-                                </div>
-                            </div>
+                            {% if 'down' in faceUrlDic.keys() %}
+                                <img src="{{ faceUrlDic['down'] }}">
+                            {% else %}
+                                <img src="/upload/others/img_avatar.jpg">
+                            {% endif %}
                         </li>
                         <li class="scrollable">
-                            <h1>Lots of text</h1>
-                            <h2>Scrollable one</h2>
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit fusce vel sapien elit in malesuada mi,
-                                semper id sollicitudin urna fermentum ut fusce varius nisl ac ipsum gravida vel pretium tellus.
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit fusce vel sapien elit in malesuada mi,
-                                semper id sollicitudin urna fermentum ut fusce varius nisl ac ipsum gravida vel pretium tellus.
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit fusce vel sapien elit in malesuada mi,
-                                semper id sollicitudin urna fermentum ut fusce varius nisl ac ipsum gravida vel pretium tellus.
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit fusce vel sapien elit in malesuada mi,
-                                semper id sollicitudin urna fermentum ut fusce varius nisl ac ipsum gravida vel pretium tellus.
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit fusce vel sapien elit in malesuada mi,
-                                semper id sollicitudin urna fermentum ut fusce varius nisl ac ipsum gravida vel pretium tellus.
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit fusce vel sapien elit in malesuada mi,
-                                semper id sollicitudin urna fermentum ut fusce varius nisl ac ipsum gravida vel pretium tellus.
-                            </p>
+                            {% if 'left' in faceUrlDic.keys() %}
+                                <img src="{{ faceUrlDic['left'] }}">
+                            {% else %}
+                                <img src="/upload/others/img_avatar.jpg">
+                            {% endif %}
                         </li>
                         <li class="scrollable">
-                                <h1>Lots of text</h1>
-                                <h2>Scrollable one</h2>
-                                <p>
-                                    嗨
-                                </p>
+                            {% if 'right' in faceUrlDic.keys() %}
+                                <img src="{{ faceUrlDic['right'] }}">
+                            {% else %}
+                                <img src="/upload/others/img_avatar.jpg">
+                            {% endif %}
                         </li>
                     </ul>
                     <div class="arrows">
@@ -85,18 +85,10 @@
         </tr>
         <tr>
             <th style="text-align: center;">
-                姓名
-            </th>
-            <td>
-                陳洪允
-            </td>
-        </tr>
-        <tr>
-            <th style="text-align: center;">
                 學號
             </th>
             <td>
-                410477025
+                {{ student.account }}
             </td>
         </tr>
         <tr>
@@ -104,11 +96,11 @@
                 信箱
             </th>
             <td>
-                y4lin410477023@gmail.com
+                {{ student.email }}
             </td>
         </tr>
     </table>
-</fieldset>
+</div>
 {% endblock page_content %}
 {% block scripts %}
 {{ super() }}
