@@ -39,17 +39,37 @@
             <div class="panel-body">
                 <img src="{{ student.url }}" title = "點選來編輯" alt="Responsive image" class="img-circle studentManage" id="facePicture_{{ student.id }}" onclick="clickFacePicture(id)">
                 <a href="/pictureEdit?pictureId={{ student.id }}" class="btn btn-primary my-btn">詳細</a>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-primary my-btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        功能
+                    </button>
+                    <div class="dropdown-menu">
+                      <li><a class="dropdown-item" href="/studentInfo?studentId={{ classGroup.id }}">查看資料</a></li>
+                      <li><a class="dropdown-item" href="/studentVideo?studentId={{ classGroup.id }}">上課影片</a></li>
+                      <li><div class="dropdown-divider"></div></li>
+                    </div>
+                </div>
                 <a href="#" id="delete_{{ student.id }}" class="btn btn-primary my-btn" onclick="deleteEvent(id)">刪除</a>
             </div> 
         </div>
     {% else %}
         <div class="panel panel-danger studentPanel" style="width: 18rem;">
             <div class="panel-heading">
-                <h5 class="panel-title">{{ student.lastname }}{{ student.firstname }} (尚未完成資料)</h5>
+                <h5 class="panel-title">{{ student.lastname }}{{ student.firstname }}</h5>
             </div>
             <div class="panel-body">
                 <img src="{{ student.url }}" title = "點選來編輯" alt="Responsive image" class="img-circle studentManage" id="facePicture_{{ student.id }}" onclick="clickFacePicture(id)">
                 <a href="/pictureEdit?pictureId={{ student.id }}" class="btn btn-primary my-btn">詳細</a>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-primary my-btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        功能
+                    </button>
+                    <div class="dropdown-menu">
+                    <li><a class="dropdown-item" href="/studentInfo?studentId={{ classGroup.id }}">查看資料</a></li>
+                    <li><a class="dropdown-item" href="/studentVideo?studentId={{ classGroup.id }}">上課影片</a></li>
+                    <li><div class="dropdown-divider"></div></li>
+                    </div>
+                </div>
                 <a href="#" id="delete_{{ student.id }}" class="btn btn-primary my-btn" onclick="deleteEvent(id)">刪除</a>
             </div> 
         </div>

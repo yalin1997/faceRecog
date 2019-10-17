@@ -1,0 +1,84 @@
+<!-- templates/login.html -->
+{% extends "base.html" %}
+{% block title %}faceRecog{% endblock %}
+{% block head %}
+    {{ super() }}
+    <link href="{{ url_for('static', filename = 'css/studentInfo.css') }}" rel="stylesheet">
+{% endblock %}
+{% block page_content %}
+<fieldset>
+    <table>
+        <tr>
+            <th>
+                
+            </th>
+            <td>
+                <h1 style="padding-top: 60px;">CSS Slider</h1>
+                <h2>Pure CSS Slider. No JS. Because it's possieble!</h2>
+            
+            
+                <div id="slider1" class="csslider infinity inside">
+                    <input type="radio" name="slides" id="slides_1" checked="">
+                    <input type="radio" name="slides" id="slides_2">
+                    <input type="radio" name="slides" id="slides_3">
+                    <input type="radio" name="slides" id="slides_4">
+                    <ul>
+                        <li>
+                            <h1>Say hello to CSS3</h1>
+                            <p>CSSlider is lightweight &amp; easy to use slider. No JS - pure CSS.</p>
+                        </li>
+                        <li>
+                            <img src="./themes/stones.jpg">
+                        </li>
+                        <li>
+                            <div id="bg">
+                                <div>
+                                    <h1>CSS Events</h1>
+                                    <p>When slide 3 is reached - play CSS animation!</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="scrollable">
+                            <h1>Lots of text</h1>
+                            <h2>Scrollable one</h2>
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit fusce vel sapien elit in malesuada mi,
+                                semper id sollicitudin urna fermentum ut fusce varius nisl ac ipsum gravida vel pretium tellus.
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit fusce vel sapien elit in malesuada mi,
+                                semper id sollicitudin urna fermentum ut fusce varius nisl ac ipsum gravida vel pretium tellus.
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit fusce vel sapien elit in malesuada mi,
+                                semper id sollicitudin urna fermentum ut fusce varius nisl ac ipsum gravida vel pretium tellus.
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit fusce vel sapien elit in malesuada mi,
+                                semper id sollicitudin urna fermentum ut fusce varius nisl ac ipsum gravida vel pretium tellus.
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit fusce vel sapien elit in malesuada mi,
+                                semper id sollicitudin urna fermentum ut fusce varius nisl ac ipsum gravida vel pretium tellus.
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit fusce vel sapien elit in malesuada mi,
+                                semper id sollicitudin urna fermentum ut fusce varius nisl ac ipsum gravida vel pretium tellus.
+                            </p>
+                        </li>
+                    </ul>
+                    <div class="arrows">
+                        <label for="slides_1"></label>
+                        <label for="slides_2"></label>
+                        <label for="slides_3"></label>
+                        <label for="slides_4"></label>
+                    </div>
+                    <div class="navigation">
+                        <div>
+                            <label for="slides_1"></label>
+                            <label for="slides_2"></label>
+                            <label for="slides_3"></label>
+                            <label for="slides_4"></label>
+                        </div>
+                    </div>
+                </div>
+
+            </td>
+        </tr>
+    </table>
+</fieldset>
+{% endblock page_content %}
+{% block scripts %}
+{{ super() }}
+<script src="{{ url_for('static', filename = 'javascript/studentInfo.js') }}" type="text/javascript"></script>
+{% endblock scripts %}

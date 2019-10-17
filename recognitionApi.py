@@ -332,6 +332,10 @@ def studentsManage():
         else:
             return redirect('/videoManage')
 
+@app.route('/studentInfo' , methods = ['GET'])
+def studentInfo():
+    return render_template('studentInfo.html')
+
 @app.route('/studentsEdit' , methods = ['GET' , 'POST'])
 @login_required
 def studentsEdit():
