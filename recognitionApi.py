@@ -358,7 +358,7 @@ def studentInfo():
         isDataComplete = True
     flash(flashMsg)
 
-    return render_template('studentInfo.html' , student = students(queryResult[i][0] , str(queryResult[i][1]) , str(queryResult[i][2]) , str(queryResult[i][3]) , str(queryResult[i][4]) , "" , isDataComplete) ,
+    return render_template('studentInfo.html' , student = students(studentData[i][0] , str(studentData[i][1]) , str(studentData[i][2]) , str(studentData[i][3]) , str(studentData[i][4]) , "" , isDataComplete) ,
       faceUrlDic = faceUrlDic)
 
 @app.route('/studentsEdit' , methods = ['GET' , 'POST'])
