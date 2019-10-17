@@ -37,7 +37,7 @@
                 <h5 class="panel-title">{{ student.lastname }}{{ student.firstname }}</h5>
             </div>
             <div class="panel-body">
-                <img src="{{ student.url }}" title = "點選來編輯" alt="Responsive image" class="img-circle studentManage" id="facePicture_{{ student.id }}" onclick="clickFacePicture(id)">
+                <img src="{{ student.url }}" title = "點選來編輯" alt="Responsive image" class="img-circle studentManage" id="facePicture_{{ student.id }}">
                 <div class="btn-group">
                     <button type="button" class="btn btn-primary my-btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         功能
@@ -58,7 +58,7 @@
                 <h5 class="panel-title">{{ student.lastname }}{{ student.firstname }}</h5>
             </div>
             <div class="panel-body">
-                <img src="{{ student.url }}" title = "點選來編輯" alt="Responsive image" class="img-circle studentManage" id="facePicture_{{ student.id }}" onclick="clickFacePicture(id)">
+                <img src="{{ student.url }}" title = "點選來編輯" alt="Responsive image" class="img-circle studentManage" id="facePicture_{{ student.id }}">
                 <div class="btn-group">
                     <button type="button" class="btn btn-primary my-btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         功能
@@ -75,7 +75,7 @@
     {% endif %}
        
 {% endfor %}
-<button class="btn btn-primary addMemeber-btn" id="{{ classId}}" onclick='addClassMember(id)'>加入學生</button>
+<button class="btn btn-primary addMember-btn" id="{{ classId}}" onclick='addClassMember(id)'>加入學生</button>
 </div>
 {% endblock page_content %}
 {% block scripts %}
