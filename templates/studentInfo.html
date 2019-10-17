@@ -6,7 +6,7 @@
     <link href="{{ url_for('static', filename = 'css/studentInfo.css') }}" rel="stylesheet">
 {% endblock %}
 {% block page_content %}
-    <div style="margin:0px auto;" class="tableDiv">
+    <div style="margin:0px auto;">
         <h1 style="padding-top: 60px;">{{ student.lastname}}{{ student.firstname}}</h1>
         <h2>
             <div class="alert alert-warning" role="alert">
@@ -73,7 +73,7 @@
                 </div>
             </div>
     </div>
-    <table>
+    <table style="width: 100%;">
         <tr>
             <th style="text-align: center;">
                 學號
