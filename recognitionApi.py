@@ -359,8 +359,7 @@ def studentInfo():
     else:
         flashMsg = "資料完整"
         isDataComplete = True
-    flash(flashMsg)
-'''
+    flash(flashMsg)'''
     return render_template('studentInfo.html' , student = students(queryResult[i][0] , str(queryResult[i][1]) , str(queryResult[i][2]) , str(queryResult[i][3]) , str(queryResult[i][4]) , "" , isDataComplete) ,
       faceUrlDic = faceUrlDic)
 
