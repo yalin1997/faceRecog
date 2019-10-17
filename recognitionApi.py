@@ -185,7 +185,8 @@ def next_is_valid(url):
      '/manageClassGroup' ,
       '/studentsManage' ,
        '/studentsEdit',
-       '/addClassMember']
+       '/addClassMember',
+       '/studentInfo']
     return url.split('?')[0] in validList
 
 @app.route('/join',methods=['GET','POST'])
@@ -358,7 +359,7 @@ def studentInfo():
         isDataComplete = True
     flash(flashMsg)
 
-    return render_template('studentInfo.html' , student = students(studentData[i][0] , str(studentData[i][1]) , str(studentData[i][2]) , str(studentData[i][3]) , str(studentData[i][4]) , "" , isDataComplete) ,
+    return render_template('studentInfo.html' , student = students(studentData[0][0] , str(studentData[0][1]) , str(studentData[0][2]) , str(studentData[0][3]) , str(studentData[0][4]) , "" , isDataComplete) ,
       faceUrlDic = faceUrlDic)
 
 @app.route('/studentsEdit' , methods = ['GET' , 'POST'])
