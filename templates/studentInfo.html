@@ -15,9 +15,7 @@
                 <h1 style="padding-top: 60px;">{{ student.lastname}}{{ student.firstname}}</h1>
                 <h2>
                     <div class="alert alert-warning" role="alert">
-                        {% for message in get_flashed_messages() %}
-                            {{ message }}
-                        {% endfor %}
+                        {{ msg }}
                     </div>
                 </h2>
                 <div id="slider1" class="csslider infinity inside">

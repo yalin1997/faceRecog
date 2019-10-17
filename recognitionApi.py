@@ -357,10 +357,8 @@ def studentInfo():
     else:
         flashMsg = "資料完整"
         isDataComplete = True
-    flash(flashMsg)
-
     return render_template('studentInfo.html' , student = students(studentData[0][0] , str(studentData[0][1]) , str(studentData[0][2]) , str(studentData[0][3]) , str(studentData[0][4]) , "" , isDataComplete) ,
-      faceUrlDic = faceUrlDic)
+      faceUrlDic = faceUrlDic , msg = msg)
 
 @app.route('/studentsEdit' , methods = ['GET' , 'POST'])
 @login_required
