@@ -33,20 +33,30 @@
 {% for student in studentsList %}
     {% if student.isDataComplete %}
         <div class="panel panel-primary studentPanel" style="width: 18rem;">
+            <div class="panel-heading">
+                <h5 class="panel-title">{{ student.lastname }}{{ student.firstname }}</h5>
+            </div>
+            <div class="panel-body">
+                <img src="{{ student.url }}" title = "點選來編輯" alt="Responsive image" class="img-circle studentManage" id="facePicture_{{ student.id }}" onclick="clickFacePicture(id)">
+                <a href="/pictureEdit?pictureId={{ student.id }}" class="btn btn-primary my-btn">詳細</a>
+                <a href="#" id="delete_{{ student.id }}" class="btn btn-primary my-btn" onclick="deleteEvent(id)">刪除</a>
+            </div> 
+        </div>
     {% else %}
         <div class="panel panel-danger studentPanel" style="width: 18rem;">
-    {% endif %}
-        <div class="panel-heading">
-            <h5 class="panel-title">{{ student.lastname }}{{ student.firstname }}</h5>
+            <div class="panel-heading">
+                <h5 class="panel-title">{{ student.lastname }}{{ student.firstname }} (尚未完成資料))</h5>
+            </div>
+            <div class="panel-body">
+                <img src="{{ student.url }}" title = "點選來編輯" alt="Responsive image" class="img-circle studentManage" id="facePicture_{{ student.id }}" onclick="clickFacePicture(id)">
+                <a href="/pictureEdit?pictureId={{ student.id }}" class="btn btn-primary my-btn">詳細</a>
+                <a href="#" id="delete_{{ student.id }}" class="btn btn-primary my-btn" onclick="deleteEvent(id)">刪除</a>
+            </div> 
         </div>
-        <div class="panel-body">
-            <img src="{{ student.url }}" title = "點選來編輯" alt="Responsive image" class="img-circle studentManage" id="facePicture_{{ student.id }}" onclick="clickFacePicture(id)">
-            <a href="/pictureEdit?pictureId={{ student.id }}" class="btn btn-primary my-btn">編輯</a>
-            <a href="#" id="delete_{{ student.id }}" class="btn btn-primary my-btn" onclick="deleteEvent(id)">刪除</a>
-        </div> 
-    </div>
+    {% endif %}
+       
 {% endfor %}
-<button class="btn btn-primary my-btn" id="{{ classId}}" onclick='addClassMember(id)'>加入學生</button>
+<button class="btn btn-primary addMemeber-btn" id="{{ classId}}" onclick='addClassMember(id)'>加入學生</button>
 </div>
 {% endblock page_content %}
 {% block scripts %}
