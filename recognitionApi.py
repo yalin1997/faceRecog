@@ -349,17 +349,7 @@ def studentInfo():
         faceList.append(str(studentFace[i][0]))
         userFaceSet.add(str(studentFace[i][1]))
         faceUrlDic[str(studentFace[i][1])] = str(studentFace[i][0]
-    '''len(faceSet - userFaceSet)
-    setLen = len(faceSet - userFaceSet)
-    if setLen > 0:
-        flashMsg = "缺少"
-        isDataComplete = False
-        for faceMsg in faceSet - userFaceSet:
-            flashMsg = flashMsg + faceDirectDic[faceMsg]
-    else:
-        flashMsg = "資料完整"
-        isDataComplete = True
-    flash(flashMsg)'''
+
     return render_template('studentInfo.html' , student = students(queryResult[i][0] , str(queryResult[i][1]) , str(queryResult[i][2]) , str(queryResult[i][3]) , str(queryResult[i][4]) , "" , isDataComplete) ,
       faceUrlDic = faceUrlDic)
 
