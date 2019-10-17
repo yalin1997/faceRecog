@@ -341,13 +341,13 @@ def studentInfo():
     studentData = getDataService.getUserDataById(studentId)
     studentFace = getDataService.getFaceById(studentId)
     faceList = []
-    userFaceSet = []
+    userFaceSet = set()
     faceSet = set(['positive' , 'left' , 'right' , 'up' , 'down'])
     for i in range(len(studentFace)):
         faceList.append(str(studentFace[i][0]))
-        userFaceSet.append(str(studentFace[i][1]))
+        userFaceSet.add(str(studentFace[i][1]))
         faceUrlDic[str(studentFace[i][1])] = str(studentFace[i][0]
-    if len(faceSet - set(userFaceSet)) > 0 :
+    if len(faceSet - userFaceSet) > 0 :
         flashMsg = "缺少"
         isDataComplete = False
         for faceMsg in faceSet - set(userFaceSet):
