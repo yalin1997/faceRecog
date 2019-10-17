@@ -343,7 +343,7 @@ def studentInfo():
     faceList = []
     userFaceSet = []
     faceSet = set(['positive' , 'left' , 'right' , 'up' , 'down'])
-    for i in range(len(studentFace))):
+    for i in range(len(studentFace)):
         faceList.append(str(studentFace[i][0]))
         userFaceSet.append(str(studentFace[i][1]))
         faceUrlDic[str(studentFace[i][1])] = str(studentFace[i][0]
