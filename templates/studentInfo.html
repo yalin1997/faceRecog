@@ -8,42 +8,37 @@
     
 {% endblock %}
 {% block page_content %}
-    
+    <div class="flexslider" style="width:30%; margin:0 auto;">
+        <ul class="slides">
+            {% if 'positive' in faceUrlDic.keys() %}
+                <li><img src="{{ faceUrlDic['positive'] }}" alt="" width="350" height="250"></li>
+            {% else %}
+                <li><img src="/upload/others/img_avatar.jpg" alt="" width="350" height="250"></li>
+            {% endif %}
+            {% if 'left' in faceUrlDic.keys() %}
+                <li><img src="{{ faceUrlDic['left'] }}" alt="" width="350" height="250"></li>
+            {% else %}
+                <li><img src="/upload/others/img_avatar.jpg" alt="" width="350" height="250"></li>
+            {% endif %}
+            {% if 'right' in faceUrlDic.keys() %}
+                <li><img src="{{ faceUrlDic['right'] }}" alt="" width="350" height="250"></li>
+            {% else %}
+                <li><img src="/upload/others/img_avatar.jpg" alt="" width="350" height="250"></li>
+            {% endif %}
+
+            {% if 'up' in faceUrlDic.keys() %}
+                <li><img src="{{ faceUrlDic['up'] }}" alt="" width="350" height="250"></li>
+            {% else %}
+                <li><img src="/upload/others/img_avatar.jpg" alt="" width="350" height="250"></li>
+            {% endif %}
+            {% if 'down' in faceUrlDic.keys() %}
+                <li><img src="{{ faceUrlDic['down'] }}" alt="" width="350" height="250"></li>
+            {% else %}
+                <li><img src="/upload/others/img_avatar.jpg" alt="" width="350" height="250"></li>
+            {% endif %}
+        </ul>
+    </div>
     <table style="width: 100%;">
-        <tr>
-            <td>
-                <div class="flexslider" style="width:30%; margin:0 auto;">
-                        <ul class="slides">
-                            {% if 'positive' in faceUrlDic.keys() %}
-                                <li><img src="{{ faceUrlDic['positive'] }}" alt="" width="350" height="250"></li>
-                            {% else %}
-                                <li><img src="/upload/others/img_avatar.jpg" alt="" width="350" height="250"></li>
-                            {% endif %}
-                            {% if 'left' in faceUrlDic.keys() %}
-                                <li><img src="{{ faceUrlDic['left'] }}" alt="" width="350" height="250"></li>
-                            {% else %}
-                                <li><img src="/upload/others/img_avatar.jpg" alt="" width="350" height="250"></li>
-                            {% endif %}
-                            {% if 'right' in faceUrlDic.keys() %}
-                                <li><img src="{{ faceUrlDic['right'] }}" alt="" width="350" height="250"></li>
-                            {% else %}
-                                <li><img src="/upload/others/img_avatar.jpg" alt="" width="350" height="250"></li>
-                            {% endif %}
-                
-                            {% if 'up' in faceUrlDic.keys() %}
-                                <li><img src="{{ faceUrlDic['up'] }}" alt="" width="350" height="250"></li>
-                            {% else %}
-                                <li><img src="/upload/others/img_avatar.jpg" alt="" width="350" height="250"></li>
-                            {% endif %}
-                            {% if 'down' in faceUrlDic.keys() %}
-                                <li><img src="{{ faceUrlDic['down'] }}" alt="" width="350" height="250"></li>
-                            {% else %}
-                                <li><img src="/upload/others/img_avatar.jpg" alt="" width="350" height="250"></li>
-                            {% endif %}
-                        </ul>
-                </div>
-            </td>
-        </tr>
         <tr>
             <th style="text-align: center;">
                 學號
