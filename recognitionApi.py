@@ -350,7 +350,7 @@ def studentInfo():
     if len(faceSet - userFaceSet) > 0 :
         flashMsg = "缺少"
         isDataComplete = False
-        for faceMsg in faceSet - set(userFaceSet):
+        for faceMsg in faceSet - userFaceSet:
             flashMsg = flashMsg + faceDirectDic[faceMsg]
     else:
         flashMsg = "資料完整"
