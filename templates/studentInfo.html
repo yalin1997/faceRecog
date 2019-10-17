@@ -6,81 +6,74 @@
     <link href="{{ url_for('static', filename = 'css/studentInfo.css') }}" rel="stylesheet">
 {% endblock %}
 {% block page_content %}
-<div style="margin:0px auto;" class="tableDiv">
-    <table>
-        <tr>
-            <th>
-            </th>
-            <td>
-                <h1 style="padding-top: 60px;">{{ student.lastname}}{{ student.firstname}}</h1>
-                <h2>
-                    <div class="alert alert-warning" role="alert">
-                        {{ msg }}
-                    </div>
-                </h2>
-                <div id="slider1" class="csslider infinity inside">
-                    <input type="radio" name="slides" id="slides_1" checked="">
-                    <input type="radio" name="slides" id="slides_2">
-                    <input type="radio" name="slides" id="slides_3">
-                    <input type="radio" name="slides" id="slides_4">
-                    <input type="radio" name="slides" id="slides_5">
-                    <ul>
-                        <li>
-                            {% if 'positive' in faceUrlDic.keys() %}
-                                <img src="{{ faceUrlDic['positive'] }}">
-                            {% else %}
-                                <img src="/upload/others/img_avatar.jpg">
-                            {% endif %}
-                        </li>
-                        <li>
-                            {% if 'up' in faceUrlDic.keys() %}
-                                <img src="{{ faceUrlDic['up'] }}">
-                            {% else %}
-                                <img src="/upload/others/img_avatar.jpg">
-                            {% endif %}
-                        </li>
-                        <li>
-                            {% if 'down' in faceUrlDic.keys() %}
-                                <img src="{{ faceUrlDic['down'] }}">
-                            {% else %}
-                                <img src="/upload/others/img_avatar.jpg">
-                            {% endif %}
-                        </li>
-                        <li class="scrollable">
-                            {% if 'left' in faceUrlDic.keys() %}
-                                <img src="{{ faceUrlDic['left'] }}">
-                            {% else %}
-                                <img src="/upload/others/img_avatar.jpg">
-                            {% endif %}
-                        </li>
-                        <li class="scrollable">
-                            {% if 'right' in faceUrlDic.keys() %}
-                                <img src="{{ faceUrlDic['right'] }}">
-                            {% else %}
-                                <img src="/upload/others/img_avatar.jpg">
-                            {% endif %}
-                        </li>
-                    </ul>
-                    <div class="arrows">
-                        <label for="slides_1"></label>
-                        <label for="slides_2"></label>
-                        <label for="slides_3"></label>
-                        <label for="slides_4"></label>
-                        <label for="slides_5"></label>
-                    </div>
-                    <div class="navigation">
-                        <div>
-                            <label for="slides_1"></label>
-                            <label for="slides_2"></label>
-                            <label for="slides_3"></label>
-                            <label for="slides_4"></label>
-                            <label for="slides_5"></label>
-                        </div>
-                    </div>
+    <div style="margin:0px auto;" class="tableDiv">
+        <h1 style="padding-top: 60px;">{{ student.lastname}}{{ student.firstname}}</h1>
+        <h2>
+            <div class="alert alert-warning" role="alert">
+                {{ msg }}
+            </div>
+        </h2>
+        <div id="slider1" class="csslider infinity inside" style="margin:0px auto;">
+            <input type="radio" name="slides" id="slides_1" checked="">
+            <input type="radio" name="slides" id="slides_2">
+            <input type="radio" name="slides" id="slides_3">
+            <input type="radio" name="slides" id="slides_4">
+            <input type="radio" name="slides" id="slides_5">
+            <ul>
+                <li>
+                    {% if 'positive' in faceUrlDic.keys() %}
+                        <img src="{{ faceUrlDic['positive'] }}">
+                    {% else %}
+                        <img src="/upload/others/img_avatar.jpg">
+                    {% endif %}
+                </li>
+                <li>
+                    {% if 'up' in faceUrlDic.keys() %}
+                        <img src="{{ faceUrlDic['up'] }}">
+                    {% else %}
+                        <img src="/upload/others/img_avatar.jpg">
+                    {% endif %}
+                </li>
+                <li>
+                    {% if 'down' in faceUrlDic.keys() %}
+                        <img src="{{ faceUrlDic['down'] }}">
+                    {% else %}
+                        <img src="/upload/others/img_avatar.jpg">
+                    {% endif %}
+                </li>
+                <li class="scrollable">
+                    {% if 'left' in faceUrlDic.keys() %}
+                        <img src="{{ faceUrlDic['left'] }}">
+                    {% else %}
+                        <img src="/upload/others/img_avatar.jpg">
+                    {% endif %}
+                </li>
+                <li class="scrollable">
+                    {% if 'right' in faceUrlDic.keys() %}
+                        <img src="{{ faceUrlDic['right'] }}">
+                    {% else %}
+                        <img src="/upload/others/img_avatar.jpg">
+                    {% endif %}
+                </li>
+            </ul>
+            <div class="arrows">
+                <label for="slides_1"></label>
+                <label for="slides_2"></label>
+                <label for="slides_3"></label>
+                <label for="slides_4"></label>
+                <label for="slides_5"></label>
+            </div>
+            <div class="navigation">
+                <div>
+                    <label for="slides_1"></label>
+                    <label for="slides_2"></label>
+                    <label for="slides_3"></label>
+                    <label for="slides_4"></label>
+                    <label for="slides_5"></label>
                 </div>
-
-            </td>
-        </tr>
+            </div>
+    </div>
+    <table>
         <tr>
             <th style="text-align: center;">
                 學號
