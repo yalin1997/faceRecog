@@ -38,7 +38,7 @@ app = flask.Flask(__name__)
 
 
 app.secret_key = os.urandom(24)
-UPLOAD_FOLDER = "/home/nknu/文件/faceRecog_V1.1/static/upload"
+UPLOAD_FOLDER = "/home/nknu/文件/faceRecog/static/upload"
 #UPLOAD_FOLDER = "D:/faceRecog/static/upload"
 
 embPath = "/face"
@@ -335,6 +335,7 @@ def studentsManage():
             return redirect('/videoManage')
 
 @app.route('/studentInfo' , methods = ['GET'])
+@login_required
 def studentInfo():
     faceDirectDic = {"positive" : "正面" , "left" : "左側臉" , "right" : "右側臉" , "up" : "上側臉" , "down" : "下側臉"}
     faceUrlDic = {}
