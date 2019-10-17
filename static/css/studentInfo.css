@@ -1,6 +1,14 @@
 .facePicture{
     cursor: pointer;
 }
+.tableDiv{
+    background: none;
+    float: left;
+    overflow: visible;
+    text-overflow: ellipsis;
+    width: 890px;
+    word-break: break-all;
+}
 
 .csslider .navigation label {
     background: #B1B1B1;
