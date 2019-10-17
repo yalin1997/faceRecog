@@ -31,7 +31,11 @@
 </form>
 <div id="renderStudentsArea">
 {% for student in studentsList %}
-    <div class="panel panel-primary studentPanel" style="width: 18rem;">
+    {% if student.isDataComplete %}
+        <div class="panel panel-primary studentPanel" style="width: 18rem;">
+    {% else %}
+        <div class="panel panel-danger studentPanel" style="width: 18rem;">
+    {% endif %}
         <div class="panel-heading">
             <h5 class="panel-title">{{ student.lastname }}{{ student.firstname }}</h5>
         </div>

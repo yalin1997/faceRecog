@@ -143,14 +143,20 @@ def getAllStudents(classId):
     FROM (class_member INNER JOIN user_data ON class_member.user_id = user_data.user_id) WHERE class_id = {} '''.format(classId)
     queryResult = Connector.sqlQuery(sql)
     faceUrlList = []
+    isDataCompleteList = []
     for i in range(len(queryResult)):
-        sql2 = "SELECT face_url FROM face_data WHERE user_id = {}".format(queryResult[0][0])
+        sql2 = "SELECT face_url , type FROM face_data WHERE user_id = {}".format(queryResult[0][0])
         faceResult = Connector.sqlQuery(sql)
-        faceUrlList.append(faceResult[0][0])
+        faceCover = ""
+        isDataCompleteList.append(len(faceResult) == 5)
+        for i in range(len(faceResult)):
+            if str(faceResult[i][1]) == 'position':
+                faceCover = faceResult[i][0]
+        faceUrlList.append(faceCover)
     Connector.quit()
     studentsList = []
     for i in range(len(queryResult)):
-        studentsList.append(students(queryResult[i][0] , str(queryResult[i][1]) , str(queryResult[i][2]) , str(queryResult[i][3]) , str(queryResult[i][4]) , str(faceUrlList[i])))
+        studentsList.append(students(queryResult[i][0] , str(queryResult[i][1]) , str(queryResult[i][2]) , str(queryResult[i][3]) , str(queryResult[i][4]) , str(faceUrlList[i]) , isDataCompleteList[i]))
     return studentsList
 
 
