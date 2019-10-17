@@ -347,11 +347,10 @@ def studentInfo():
         faceList.append(str(studentFace[i][0]))
         userFaceSet.append(str(studentFace[i][1]))
         faceUrlDic[str(studentFace[i][1])] = str(studentFace[i][0]
-    remainSet = faceSet - set(userFaceSet)
-    if len(remainSet) > 0 :
+    if len(faceSet - set(userFaceSet)) > 0 :
         flashMsg = "缺少"
         isDataComplete = False
-        for faceMsg in remainSet:
+        for faceMsg in faceSet - set(userFaceSet):
             flashMsg = flashMsg + faceDirectDic[faceMsg]
     else:
         flashMsg = "資料完整"
