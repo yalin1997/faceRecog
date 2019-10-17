@@ -347,7 +347,9 @@ def studentInfo():
         faceList.append(str(studentFace[i][0]))
         userFaceSet.add(str(studentFace[i][1]))
         faceUrlDic[str(studentFace[i][1])] = str(studentFace[i][0]
-    if len(faceSet - userFaceSet) > 0 :
+    print(len(faceSet - userFaceSet))
+    setLen = len(faceSet - userFaceSet)
+    if setLen > 0:
         flashMsg = "缺少"
         isDataComplete = False
         for faceMsg in faceSet - userFaceSet:
