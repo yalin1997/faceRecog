@@ -663,7 +663,7 @@ def upload():
                     result = insertService.InsertVideoInfo(dateTime,classNo,classId,"/upload/"+filename,"",False )
                     
                     #recog.main(filePath,filename,embList,model_Path[0][0],nameList,dateTime,time,className)
-                return jsonify(result)
+                return jsonify({'result' : result})
         else: # todo
             face = flask.request.file['face']
             leftFace = flask.request.file['leftFace']
