@@ -381,6 +381,7 @@ def studentVideo():
                 matchData.append( {'id':str(resultVideo[i][0]),'pictureUrl': cover , 'date' : resultVideo[i][3] , 'classNo' : resultVideo[i][4]})
             return jsonify({'allMatchData':matchData})
     else:
+        form = videoFilter()
         classId = request.args.get('classId')
         if current_user.permission == 'manager':
             studentId = request.args.get('studentId')
@@ -391,7 +392,7 @@ def studentVideo():
                 if resultVideo[i][-1] == None :
                     videoCover = "/upload/others/img_avatar.jpg"
                 videoList.append(video(str(resultVideo[i][0]) , videoCover , str(resultVideo[i][2]) , str(resultVideo[i][3]) , str(resultVideo[i][4]) ))
-            return render_template("studentVideo.html" , videoData = videoList)
+            return render_template("studentVideo.html" , videoData = videoList , form = form)
         else:
             studentId = current_user.id
             resultVideo = getDataService.getFocusVideo(studentId , classId)
@@ -400,7 +401,7 @@ def studentVideo():
                 if resultVideo[i][-1] == None :
                     videoCover = "/upload/others/img_avatar.jpg"
                 videoList.append(video(str(resultVideo[i][0]) , videoCover , str(resultVideo[i][2]) , str(resultVideo[i][3]) , str(resultVideo[i][4]) ))
-            return render_template("studentVideo.html" , videoData = videoList)
+            return render_template("studentVideo.html" , videoData = videoList , form = form)
 
 @app.route('/studentsEdit' , methods = ['GET' , 'POST'])
 @login_required
