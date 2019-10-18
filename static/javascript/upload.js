@@ -1,7 +1,20 @@
 $( document ).ready(function() {
     $("#uploaded_file").change(uploadFileChange);
     $("#confirm").click(function(){
-        $("#uploadForm").submit();
+        var formData = new FormData($('#uploadForm')[0]);
+        $.ajax({
+            url: '/upload',
+            type: 'POST',
+            cache: false,
+            data:formData,
+            processData: false,
+            contentType: false
+        }).done(function(res) {
+            if(res.result){
+                alert("上傳成功");
+                window.location.reload();
+            }
+        }).fail(function(res) { console.log(res);});
     });
 });
 function uploadFileChange(){

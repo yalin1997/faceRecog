@@ -652,7 +652,7 @@ def upload():
                     filePath = os.path.join(app.config["UPLOAD_FOLDER"]+picturePath, pictureName)
                     file.save(filePath)
                     faceDetect.detectSinglePicture(app.config["UPLOAD_FOLDER"]+picturePath,pictureName)
-                    insertService.insertFaceInfo(lastName,firstName,"/upload/"+pictureName)
+                    result = insertService.insertFaceInfo(lastName,firstName,"/upload/"+pictureName)
                 elif allowed_video(filename):
                     filePath = os.path.join(app.config["UPLOAD_FOLDER"]+videoPath, filename)
                     file.save(filePath)
@@ -660,9 +660,10 @@ def upload():
                     className = flask.request.form['className']
                     dateTime = flask.request.form['dateTime']
                     classNo = flask.request.form['classNo']
-                    insertService.InsertVideoInfo(dateTime,classNo,classId,"/upload/"+filename,"",False )
+                    result = insertService.InsertVideoInfo(dateTime,classNo,classId,"/upload/"+filename,"",False )
+                    
                     #recog.main(filePath,filename,embList,model_Path[0][0],nameList,dateTime,time,className)
-                return redirect('/upload/result')
+                return jsonify(result)
         else: # todo
             face = flask.request.file['face']
             leftFace = flask.request.file['leftFace']
