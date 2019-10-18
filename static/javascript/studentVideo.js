@@ -3,11 +3,11 @@ $( document ).ready(function() {
 });
 function filterEvent(){
     csrfVal = $("#csrf_token").val();
-    studentId = location.search.split("&")[0].split("=")[1];
-    classId = location.search.split("&")[1].split("=")[1];
+    studentIdVal = location.search.split("&")[0].split("=")[1];
+    classIdVal = location.search.split("&")[1].split("=")[1];
     sdateVal = $("#sdate").val();
     edateVal = $("#edate").val();
-    classNo = $("#classNo").val();
+    classNoVal = $("#classNo").val();
     $.ajax({
         type: 'POST',
         url: '/studentVideo',
@@ -15,11 +15,11 @@ function filterEvent(){
         dataType: 'json',
         data:JSON.stringify({
                     csrf_token: csrfVal,
-                    studentId : studentId,
-                    classId : classId,
+                    studentId : studentIdVal,
+                    classId : classIdVal,
                     sdate: sdateVal,
                     edate: edateVal,
-                    classNo: classNo}),
+                    classNo: classNoVal}),
         success: createCard
     });
 }

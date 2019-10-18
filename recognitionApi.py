@@ -373,7 +373,7 @@ def studentVideo():
             sDate = str(filterData['sdate'])
             eDate = str(filterData['edate'])
             classNo = str(filterData['classNo'])
-            resultVideo = getDataService.filterFocusVideo(studentId , classId , sDate , eDate , classNo)
+            resultVideo = getDataService.getFocusVideo(studentId , classId , sDate , eDate , classNo)
             matchData = []
             for i in range(len(resultVideo)):
                 cover = str(resultVideo[i][-1])
