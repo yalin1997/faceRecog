@@ -72,7 +72,7 @@ def getPictureById(pictureId):
 # 篩選影片
 def getVideo(lastName,firstName,sTime,eTime,lesson , cid):
     Connector.connect()
-    sql = '''SELECT video_face.video_id , cover , video_is_recoged
+    sql = '''SELECT video_face.video_id , cover , video_is_recoged , video_face.date , classNo
             FROM (  
                     video_face 
                         INNER JOIN 
@@ -96,9 +96,9 @@ def getVideo(lastName,firstName,sTime,eTime,lesson , cid):
     if not sTime == "0":
         sql = sql + " AND class_stime >= {}".format(sTime)
     if not eTime == "0":
-        sql = sql + " AND class_stime <= {}".format(eTime)
+        sql = sql + " AND class_etime <= {}".format(eTime)
     if not lesson == "0":
-        sql = sql + " AND className = '{}'".format(lesson)
+        sql = sql + " AND className LIKE '%{}%'".format(lesson)
     queryResult = Connector.sqlQuery(sql)
     Connector.quit()
     return queryResult
@@ -122,7 +122,7 @@ def getFocusVideo(uid , cid , sdate , edate , classNo):
 
 def getAllVideo(uid , cid):
     Connector.connect()
-    sql = "SELECT video_id , cover , video_is_recoged FROM video_face INNER JOIN class_group ON video_face.class_id = class_group.class_id WHERE manager_id = {} AND video_face.class_id = {}".format(uid , cid)
+    sql = "SELECT video_id , cover , video_is_recoged , date , classNo FROM video_face INNER JOIN class_group ON video_face.class_id = class_group.class_id WHERE manager_id = {} AND video_face.class_id = {}".format(uid , cid)
     queryResult = Connector.sqlQuery(sql)
     Connector.quit()
     return queryResult

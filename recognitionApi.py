@@ -482,8 +482,8 @@ def videoManage():
             result = getDataService.getVideo(lastname , firstname , sDate , eDate , classNo , classId)
         matchData = []
         for i in range(len(result)):
-            cover = str(result[i][-1])
-            if result[i][-1] == None :
+            cover = str(result[i][1])
+            if result[i][1] == None :
                 cover = "/upload/others/img_avatar.jpg"
             matchData.append( {'id':str(result[i][0]),'pictureUrl': cover})
         return jsonify({'allMatchData':matchData})
@@ -500,10 +500,10 @@ def videoManage():
         videoList = []
         
         for i in range(len(allVideo)):
-            videoCover = str(allVideo[i][-1])
-            if allVideo[i][-1] == None :
+            videoCover = str(allVideo[i][1])
+            if allVideo[i][1] == None :
                 videoCover = "/upload/others/img_avatar.jpg"
-            videoList.append(video(str(allVideo[i][0]) , videoCover , str(allVideo[i][2])))
+            videoList.append(video(str(allVideo[i][0]) , videoCover , str(allVideo[i][2]) , str(allVideo[i][3] , str(allVideo[i][4]) ))
 
         if permission == "manager":
             return render_template('videoManage.html',form = videoFilterForm , videoData = videoList)
