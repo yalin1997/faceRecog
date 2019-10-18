@@ -659,11 +659,11 @@ def upload():
                     classId = flask.request.form['classId']
                     className = flask.request.form['className']
                     dateTime = flask.request.form['dateTime']
-                    time = flask.request.form['time']
-                    insertService.InsertVideoInfo(dateTime,time,classId,"/upload/"+filename,"",False)
+                    classNo = flask.request.form['classNo']
+                    insertService.InsertVideoInfo(dateTime,classNo,classId,"/upload/"+filename,"",False )
                     #recog.main(filePath,filename,embList,model_Path[0][0],nameList,dateTime,time,className)
                 return redirect('/upload/result')
-        else:
+        else: # todo
             face = flask.request.file['face']
             leftFace = flask.request.file['leftFace']
             rightFace = flask.request.file['rightFace']

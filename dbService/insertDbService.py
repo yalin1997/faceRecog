@@ -3,13 +3,9 @@ import dbConnector.connectPostgre as dbConnector
 Connector = dbConnector.postgresConnector("face_recog","Ya1in410477023")# 替換成到時候的db 和 使用者帳號密碼
 
 # 存入影片
-def InsertVideoInfo(date,time,cid,videoPath,nameList,coverPath,isRecoged):
+def InsertVideoInfo(date,classNo,cid,videoPath,coverPath,isRecoged):
     Connector.connect()
-    nameStr = ""
-    for name in nameList:
-        nameStr = nameStr+name+','  
-    nameStr.rstrip(',')
-    sql = "INSERT INTO video_face(date,time,class_id,video_url,cover,video_is_recoged) VALUES('{}','{}','{}','{}','{}',{})".format(date,time,cid,videoPath,coverPath,isRecoged)
+    sql = "INSERT INTO video_face(date,classNo,class_id,video_url,cover,video_is_recoged) VALUES('{}','{}','{}','{}','{}',{})".format(date,classNo,cid,videoPath,coverPath,isRecoged)
     Connector.sqlExecute(sql)
     Connector.quit()
     return True
