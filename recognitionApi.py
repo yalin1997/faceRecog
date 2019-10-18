@@ -463,9 +463,9 @@ def addManager():
 @login_required
 def videoManage():
     videoFilterForm = videoFilter()
-    if request.method == 'POST' and videoFilterForm.validate_on_submit():
+    if request.method == 'POST':
         if current_user.permission == 'manager':
-            filterData = request.get_json()
+            filterData = request.get_json(force=True)
             classId = filterData['classId']
             lastName = filterData['lastName']
             firstName = filterData['firstName']
@@ -474,7 +474,7 @@ def videoManage():
             classNo = filterData['classNo']
             result = getDataService.getVideo(lastName , firstName , sDate , eDate , classNo , classId)
         else:
-            filterData = request.get_json()
+            filterData = request.get_json(force=True)
             classId = filterData['classId']
             sDate = filterData['sdate']
             eDate = filterData['edate']
@@ -503,8 +503,8 @@ def videoManage():
             videoCover = str(allVideo[i][1])
             if allVideo[i][1] == None :
                 videoCover = "/upload/others/img_avatar.jpg"
-            videoList.append(video(str(allVideo[i][0]) , videoCover , str(allVideo[i][2]) , str(allVideo[i][3] , str(allVideo[i][4]) ))
-
+            videoList.append(video(str(allVideo[i][0]) , videoCover , str(allVideo[i][2]) , str(allVideo[i][3]) , str(allVideo[i][4]) ))
+    
         if permission == "manager":
             return render_template('videoManage.html',form = videoFilterForm , videoData = videoList)
         else:
