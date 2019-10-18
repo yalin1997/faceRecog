@@ -182,11 +182,12 @@ def next_is_valid(url):
     '/pictureEdit',
     '/upload/result',
     '/addClassGroup' ,
-     '/manageClassGroup' ,
-      '/studentsManage' ,
-       '/studentsEdit',
-       '/addClassMember',
-       '/studentInfo']
+    '/manageClassGroup' ,
+    '/studentsManage' ,
+    '/studentVideo'
+    '/studentsEdit',
+    '/addClassMember',
+    '/studentInfo']
     return url.split('?')[0] in validList
 
 @app.route('/join',methods=['GET','POST'])
