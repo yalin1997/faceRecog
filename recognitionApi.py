@@ -367,10 +367,10 @@ def studentVideo():
     if request.method == 'POST':
         if current_user.permission == 'manager':
             filterData = request.get_json()
-            print(filterData['studentId'])
-            print(filterData['classId'])
-            studentId = filterData['studentId']
-            classId = filterData['classId']
+            print("studentId :" + str(request.args.get('studentId')))
+            print("classId :" + str(request.args.get('classId')))
+            studentId = request.args.get('studentId')
+            classId = request.args.get('classId')
             sDate = filterData['sdate']
             eDate = filterData['edate']
             classNo = filterData['classNo']
