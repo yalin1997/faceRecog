@@ -367,13 +367,11 @@ def studentVideo():
     if request.method == 'POST':
         if current_user.permission == 'manager':
             filterData = request.get_json()
-            print("studentId :" + str(request.args.get('studentId')))
-            print("classId :" + str(request.args.get('classId')))
-            studentId = request.args.get('studentId')
-            classId = request.args.get('classId')
-            sDate = filterData['sdate']
-            eDate = filterData['edate']
-            classNo = filterData['classNo']
+            studentId = str(request.args.get('studentId'))
+            classId = str(request.args.get('classId'))
+            sDate = str(filterData['sdate'])
+            eDate = str(filterData['edate'])
+            classNo = str(filterData['classNo'])
             resultVideo = getDataService.filterFocusVideo(studentId , classId , sDate , eDate , classNo)
             matchData = []
             for i in range(len(resultVideo)):
