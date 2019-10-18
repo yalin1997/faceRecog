@@ -5,7 +5,7 @@
 {% endblock %}
 {% block page_content %}
 <div>
-    <form id="filterForm" class="filterArea" method="POST" enctype=multipart/form-data><br>
+    <div id="filterForm" class="filterArea"><br>
         {{ form.hidden_tag() }}
         <div>
             <div class="row theRow">
@@ -24,10 +24,11 @@
                 {{ form.classNo }}
             </div>
         </div>
-    </form>
-    <div class="row theRow">
-        <button class="btn btn-primary my-btn " onclick="filterEvent()">篩選</button>
+        <div class="row theRow">
+            <button class="btn btn-primary my-btn " onclick="filterEvent()">篩選</button>
+        </div>
     </div>
+
 </div>
 <div id="renderVideoArea">
     {% for video in videoData %}
