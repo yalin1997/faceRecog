@@ -6,26 +6,22 @@ function filterEvent(){
     csrfVal = $("#csrf_token").val();
     studentId = location.search.split("&")[0].split("=")[1];
     classId = location.search.split("&")[1].split("=")[1];
-    lastNameVal =  $("#lastName").val();
-    firstNameVal = $("#firstName").val();
     sdateVal = $("#sdate").val();
     edateVal = $("#edate").val();
     classNo = $("#classNo").val();
     $.ajax({
         type: 'POST',
         url: '/studentVideo',
+        contentType: "application/json",
+        dataType: 'json',
         data:JSON.stringify ({
                     csrf_token: csrfVal,
                     studentId : studentId,
                     classId : classId,
-                    lastName: lastNameVal,
-                    firstName: firstNameVal,
                     sdate: sdateVal,
                     edate: edateVal,
                     classNo: classNo}),
-        success: createCard,
-        contentType: "application/json",
-        dataType: 'json'
+        success: createCard
     });
 }
 function fillinDate(){
@@ -55,6 +51,6 @@ function createCard(data){
     $("#renderVideoArea").html(content);
 }
 function CardClickedEvent(id){
-    window.location = "/videoEdit?videoId=" + id.split("_")[1];
+    //window.location = "/videoEdit?videoId=" + id.split("_")[1];
 }
 

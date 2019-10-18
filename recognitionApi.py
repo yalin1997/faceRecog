@@ -364,9 +364,10 @@ def studentInfo():
 @app.route('/studentVideo' , methods = ['GET' , 'POST'])
 @login_required
 def studentVideo():
+    form = videoFilter()
     if request.method == 'POST':
         if current_user.permission == 'manager':
-            filterData = request.get_json()
+            filterData = request.get_json(force=True)
             studentId = str(request.args.get('studentId'))
             classId = str(request.args.get('classId'))
             sDate = str(filterData['sdate'])
@@ -381,7 +382,6 @@ def studentVideo():
                 matchData.append( {'id':str(resultVideo[i][0]),'pictureUrl': cover , 'date' : resultVideo[i][3] , 'classNo' : resultVideo[i][4]})
             return jsonify({'allMatchData':matchData})
     else:
-        form = videoFilter()
         classId = request.args.get('classId')
         if current_user.permission == 'manager':
             studentId = request.args.get('studentId')
