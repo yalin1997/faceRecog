@@ -1,5 +1,4 @@
 $( document ).ready(function() {
-    $("#startFilter").click(filterEvent);
     fillinDate();
 });
 function filterEvent(){
@@ -12,9 +11,9 @@ function filterEvent(){
     $.ajax({
         type: 'POST',
         url: '/studentVideo',
-        contentType: "application/json",
+        contentType: 'application/json',
         dataType: 'json',
-        data:JSON.stringify ({
+        data:JSON.stringify({
                     csrf_token: csrfVal,
                     studentId : studentId,
                     classId : classId,
