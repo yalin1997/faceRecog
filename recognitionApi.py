@@ -184,7 +184,7 @@ def next_is_valid(url):
     '/addClassGroup' ,
     '/manageClassGroup' ,
     '/studentsManage' ,
-    '/studentVideo'
+    '/studentVideo',
     '/studentsEdit',
     '/addClassMember',
     '/studentInfo']
