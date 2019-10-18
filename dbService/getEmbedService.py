@@ -105,7 +105,7 @@ def getVideo(lastName,firstName,sTime,eTime,lesson , cid):
 
 def getFocusVideo(uid , cid , sdate , edate , classNo):
     Connector.connect()
-    sql = '''SELECT video_face.video_id , video_url , video_is_recoged , date , time , cover 
+    sql = '''SELECT video_face.video_id , video_url , video_is_recoged , date , classNo , cover 
             FROM video_face 
             LEFT JOIN recoged_user 
             ON  video_face.video_id = recoged_user.video_id
