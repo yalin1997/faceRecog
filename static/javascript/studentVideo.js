@@ -1,0 +1,56 @@
+$( document ).ready(function() {
+    $("#startFilter").click(filterEvent);
+    fillinDate();
+});
+function filterEvent(){
+    csrfVal = $("#csrf_token").val();
+    lastNameVal =  $("#lastName").val();
+    firstNameVal = $("#firstName").val();
+    sdateVal = $("#sdate").val();
+    edateVal = $("#edate").val();
+    classNo = $("#classNo").val();
+    $.ajax({
+        type: 'POST',
+        url: '/studentVideo',
+        data:JSON.stringify ({
+                    csrf_token: csrfVal,
+                    lastName: lastNameVal,
+                    firstName: firstNameVal,
+                    sdate: sdateVal,
+                    edate: edateVal,
+                    classNo: classNo}),
+        success: createCard,
+        contentType: "application/json",
+        dataType: 'json'
+    });
+}
+function fillinDate(){
+    var Today=new Date().toISOString().slice(0,10);
+    $("#sdate").val(Today);
+    $("#edate").val(Today);
+}
+function createCard(data){
+    var content = ""
+
+    for(var i = 0;i < data.allMatchData.length;i++){
+        coverPath = "/upload/others/img_avatar.jpg"
+        if(data.allMatchData[i].pictureUrl != ""){
+            coverPath = data.allMatchData[i].pictureUrl
+        }
+        
+        var card = "<div class='card' id='card_"+data.allMatchData[i].id+"' style='width:92%;max-width:300px;' onclick='CardClickedEvent(id)'>"+
+                        "<img src='"+coverPath+"' alt='Avatar' style='width:100%;opacity:0.85'>"+
+                        "<div class='container'>"+
+                            "<h5><b>"+data.allMatchData[i].date+"</b></h5>"+    
+                            "<p>"+data.allMatchData[i].classNo+"</p>"+   
+                        "</div>"+ 
+                    "</div>";
+        content+=card;
+    }
+
+    $("#renderVideoArea").html(content);
+}
+function CardClickedEvent(id){
+    window.location = "/videoEdit?videoId=" + id.split("_")[1];
+}
+

@@ -349,7 +349,7 @@ def studentInfo():
         faceList.append(str(studentFace[i][0]))
         userFaceSet.add(str(studentFace[i][1]))
         faceUrlDic[str(studentFace[i][1])] = str(studentFace[i][0])
-    print(len(faceSet - userFaceSet))
+
     if len(faceSet - userFaceSet) > 0:
         flashMsg = "缺少: "
         isDataComplete = False
@@ -360,6 +360,47 @@ def studentInfo():
         isDataComplete = True
     return render_template('studentInfo.html' , student = students(studentData[0][0] , str(studentData[0][1]) , str(studentData[0][2]) , str(studentData[0][3]) , str(studentData[0][4]) , "" , isDataComplete) ,
       faceUrlDic = faceUrlDic , msg = flashMsg)
+
+@app.route('/studentVideo' , methods = ['GET' , 'POST'])
+@login_required
+def studentVideo():
+    if request.method == 'POST':
+        if current_user.permission == 'manager':
+            filterData = request.get_json()
+            studentId = filterData['studentId']
+            classId = filterData['classId']
+            sDate = filterData['sdate']
+            eDate = filterData['edate']
+            classNo = filterData['classNo']
+            resultVideo = getDataService.filterFocusVideo(studentId , classId , sDate , eDate , classNo)
+            matchData = []
+            for i in range(len(resultVideo)):
+                cover = str(resultVideo[i][-1])
+                if resultVideo[i][-1] == None :
+                    cover = "/upload/others/img_avatar.jpg"
+                matchData.append( {'id':str(resultVideo[i][0]),'pictureUrl': cover , 'date' : resultVideo[i][3] , 'classNo' : resultVideo[i][4]})
+            return jsonify({'allMatchData':matchData})
+    else:
+        classId = request.args.get('classId')
+        if current_user.permission == 'manager':
+            studentId = request.args.get('studentId')
+            resultVideo = getDataService.getFocusVideo(studentId , classId , None , None , None)
+            videoList = []
+            for i in range(len(resultVideo)):
+                videoCover = str(resultVideo[i][-1])
+                if resultVideo[i][-1] == None :
+                    videoCover = "/upload/others/img_avatar.jpg"
+                videoList.append(video(str(resultVideo[i][0]) , videoCover , str(resultVideo[i][2]) , str(resultVideo[i][3] , str(resultVideo[i][4])))
+            return render_template("studentVideo.html" , videoData = videoList)
+        else:
+            studentId = current_user.id
+            resultVideo = getDataService.getFocusVideo(studentId , classId)
+            for i in range(len(resultVideo)):
+                videoCover = str(resultVideo[i][-1])
+                if resultVideo[i][-1] == None :
+                    videoCover = "/upload/others/img_avatar.jpg"
+                videoList.append(video(str(resultVideo[i][0]) , videoCover , str(resultVideo[i][2]) , str(resultVideo[i][3] , str(resultVideo[i][4]))))
+            return render_template("studentVideo.html" , videoData = videoList)
 
 @app.route('/studentsEdit' , methods = ['GET' , 'POST'])
 @login_required
@@ -428,15 +469,15 @@ def videoManage():
             firstName = filterData['firstName']
             sDate = filterData['sdate']
             eDate = filterData['edate']
-            lesson = filterData['lesson']
-            result = getDataService.getVideo(lastName , firstName , sDate , eDate , lesson , classId)
+            classNo = filterData['classNo']
+            result = getDataService.getVideo(lastName , firstName , sDate , eDate , classNo , classId)
         else:
             filterData = request.get_json()
             classId = filterData['classId']
             sDate = filterData['sdate']
             eDate = filterData['edate']
-            lesson = filterData['lesson']
-            result = getDataService.getVideo(lastname , firstname , sDate , eDate , lesson , classId)
+            classNo = filterData['classNo']
+            result = getDataService.getVideo(lastname , firstname , sDate , eDate , classNo , classId)
         matchData = []
         for i in range(len(result)):
             cover = str(result[i][-1])

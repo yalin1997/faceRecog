@@ -103,6 +103,23 @@ def getVideo(lastName,firstName,sTime,eTime,lesson , cid):
     Connector.quit()
     return queryResult
 
+def getFocusVideo(uid , cid , sdate , edate , classNo):
+    Connector.connect()
+    sql = '''SELECT video_id , video_url , video_is_recoged , date , time , cover 
+            FROM video_face 
+            LEFT JOIN recoged_user 
+            ON  video_face.video_id = recoged_user.video_id
+            WHERE class_id = {} AND recoged_user.user_id = {} AND is_focus = True'''.format(cid , uid)
+    if sdate :
+        sql = sql + " AND date >= '{}'".format(sdate)
+    if edate :
+        sql = sql + " AND date <= '{}'".format(edate)
+    if classNo :
+        sql = sql + " AND classNo = {}".format(classNo)
+    queryResult = Connector.sqlQuery(sql)
+    Connector.quit()
+    return queryResult
+
 def getAllVideo(uid , cid):
     Connector.connect()
     sql = "SELECT video_id , cover , video_is_recoged FROM video_face INNER JOIN class_group ON video_face.class_id = class_group.class_id WHERE manager_id = {} AND video_face.class_id = {}".format(uid , cid)
