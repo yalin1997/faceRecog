@@ -4,6 +4,8 @@ $( document ).ready(function() {
 });
 function filterEvent(){
     csrfVal = $("#csrf_token").val();
+    studentId = location.search.split("&")[0].split("=")[1];
+    classId = location.search.split("&")[1].split("=")[1];
     lastNameVal =  $("#lastName").val();
     firstNameVal = $("#firstName").val();
     sdateVal = $("#sdate").val();
@@ -14,6 +16,8 @@ function filterEvent(){
         url: '/studentVideo',
         data:JSON.stringify ({
                     csrf_token: csrfVal,
+                    studentId : studentId,
+                    classId : classId,
                     lastName: lastNameVal,
                     firstName: firstNameVal,
                     sdate: sdateVal,
