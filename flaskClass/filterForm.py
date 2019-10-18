@@ -8,7 +8,15 @@ class videoFilter(FlaskForm):
     firstName = StringField('firstName', validators=[Optional()],render_kw={'placeholder': u'名'})
     classNo = SelectField(
         '節數',
-        choices=[('第一節', 1), ('第二節', 2), ('第三節', 3),('第四節', 4),('第五節', 5),('第六節', 6),('第七節', 7),('第八節', 8),('第九節', 9)]
+        choices=[(1 , '第一節'),
+        (2 , '第二節'),
+        (3 , '第三節'),
+        (4 , '第四節'),
+        (5 , '第五節'),
+        (6 , '第六節'),
+        (7 , '第七節'),
+        (8 , '第八節'),
+        (9 , '第九節')]
     )
     sdate = DateField('日期')
     edate = DateField('日期')
