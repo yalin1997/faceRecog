@@ -390,7 +390,7 @@ def studentVideo():
                 videoCover = str(resultVideo[i][-1])
                 if resultVideo[i][-1] == None :
                     videoCover = "/upload/others/img_avatar.jpg"
-                videoList.append(video(str(resultVideo[i][0]) , videoCover , str(resultVideo[i][2]) , str(resultVideo[i][3] , str(resultVideo[i][4])))
+                videoList.append(video(str(resultVideo[i][0]) , videoCover , str(resultVideo[i][2]) , str(resultVideo[i][3]) , str(resultVideo[i][4]) ))
             return render_template("studentVideo.html" , videoData = videoList)
         else:
             studentId = current_user.id
@@ -399,7 +399,7 @@ def studentVideo():
                 videoCover = str(resultVideo[i][-1])
                 if resultVideo[i][-1] == None :
                     videoCover = "/upload/others/img_avatar.jpg"
-                videoList.append(video(str(resultVideo[i][0]) , videoCover , str(resultVideo[i][2]) , str(resultVideo[i][3] , str(resultVideo[i][4]))))
+                videoList.append(video(str(resultVideo[i][0]) , videoCover , str(resultVideo[i][2]) , str(resultVideo[i][3]) , str(resultVideo[i][4]) ))
             return render_template("studentVideo.html" , videoData = videoList)
 
 @app.route('/studentsEdit' , methods = ['GET' , 'POST'])
