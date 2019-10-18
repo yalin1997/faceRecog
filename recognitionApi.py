@@ -367,6 +367,8 @@ def studentVideo():
     if request.method == 'POST':
         if current_user.permission == 'manager':
             filterData = request.get_json()
+            print(filterData['studentId'])
+            print(filterData['classId'])
             studentId = filterData['studentId']
             classId = filterData['classId']
             sDate = filterData['sdate']
