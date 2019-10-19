@@ -515,7 +515,7 @@ def videoManage():
         else:
             return render_template('videoManageUser.html',form = videoFilterForm , videoData = videoList)
 
-@app.route('videoRecog' , methods = ['POST'])
+@app.route('/videoRecog' , methods = ['POST'])
 @login_required
 def videoRecog():
     videoId = request.get_json(force=True)["videoId"]
