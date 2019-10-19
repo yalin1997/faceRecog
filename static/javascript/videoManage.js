@@ -2,13 +2,33 @@ $( document ).ready(function() {
     $("#startFilter").click(filterEvent);
     fillinDate();
 });
+
+function pustInRecogQueue(videoId){
+    $.ajax({
+        type: 'POST',
+        url: '/videoRecog',
+        data:JSON.stringify ({
+            videoId : videoId
+                    }),
+        success: function(data){
+            if (data.result){
+                alert("已經加入辨識");
+            }
+            else{
+                alert("失敗!!，請確認網路狀況後再重新嘗試");
+            }
+        },
+        contentType: "application/json",
+        dataType: 'json'
+    });
+}
 function filterEvent(){
     csrfVal = $("#csrf_token").val() == ""? "0" : $("#csrf_token").val();
     lastNameVal =  $("#lastName").val() == ""?  "0" : $("#lastName").val();
     firstNameVal = $("#firstName").val() == ""?  "0" : $("#firstName").val();
     sdateVal = $("#sdate").val() == ""?  "0" : $("#sdate").val();
     edateVal = $("#edate").val() == ""?  "0" : $("#edate").val();
-    lessonVal = $("#lesson").val() == ""? "0" : $("#lesson").val();
+    classNoVal = $("#classNo").val() == ""? "0" : $("#classNo").val();
     $.ajax({
         type: 'POST',
         url: '/videoManage',
@@ -18,7 +38,7 @@ function filterEvent(){
                     firstName: firstNameVal,
                     sdate: sdateVal,
                     edate: edateVal,
-                    lesson: lessonVal}),
+                    classNo: classNoVal}),
         success: createCard,
         contentType: "application/json",
         dataType: 'json'

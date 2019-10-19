@@ -43,17 +43,32 @@
 </div>
 <div id="renderVideoArea">
     {% for video in videoData %}
-        <div class='card' id="card_{{video.id}}" style='width:92%;max-width:300px;' onclick='CardClickedEvent(id)'>
-            {% if video.videoUrl%}
-                <img src="{{video.videoUrl}}" alt='Avatar' style='width:100%;opacity:0.85'>
-            {% else %}
-                <img src="/upload/others/img_avatar.jpg" alt='Avatar' style='width:100%;opacity:0.85'>
-            {% endif %}
-            <div class='container'>
-                <h5><b>{{video.date}}</b></h5>
-                <p>第{{video.classNo}}節</p>  
+        {% if video.is_recoged %}
+            <div class='card' id="card_{{video.id}}" style='width:92%;max-width:300px;' onclick='CardClickedEvent(id)'>
+                <div class="card-header">{{video.date}}</div>
+                {% if video.videoUrl%}
+                    <img src="{{video.videoUrl}}" alt='Avatar' style='width:100%;opacity:0.85'>
+                {% else %}
+                    <img src="/upload/others/img_avatar.jpg" alt='Avatar' style='width:100%;opacity:0.85'>
+                {% endif %}
+                <div class='container'>
+                    <p>第{{video.classNo}}節</p>  
+                </div>
             </div>
-        </div>
+        {% else %}
+            <div class='card text-white bg-danger' id="card_{{video.id}}" style='width:92%;max-width:300px;' onclick='CardClickedEvent(id)'>
+                <div class="card-header">{{video.date}} (尚未辨識)</div>
+                {% if video.videoUrl%}
+                    <img src="{{video.videoUrl}}" alt='Avatar' style='width:100%;opacity:0.85'>
+                {% else %}
+                    <img src="/upload/others/img_avatar.jpg" alt='Avatar' style='width:100%;opacity:0.85'>
+                {% endif %}
+                <div class='container'>
+                    <p>第{{video.classNo}}節</p>  
+                    <button class="btn btn-primary my-btn" id="{{video.id}}" onclick="pustInRecogQueue(id)"></button>
+                </div>
+            </div>
+        {% endif %} 
     {% endfor %}
 </div>
 {% endblock page_content %}
