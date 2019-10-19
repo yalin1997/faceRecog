@@ -6,7 +6,7 @@ Connector = dbConnector.postgresConnector("face_recog","Ya1in410477023")# 替換
 def InsertVideoInfo(date,classNo,cid,videoPath,coverPath,isRecoged , fileName , filePath):
     Connector.connect()
     sql = '''INSERT INTO 
-    video_face( date,classNo,class_id,video_url,cover,video_is_recoged , is_focus , file_name , file_path ) 
+    video_face( date,class_no,class_id,video_url,cover,video_is_recoged , is_focus , file_name , file_path ) 
     VALUES( '{}' , '{}' , '{}' , '{}' , '{}' , {} , False , '{}' , '{}' )'''.format(date,
     classNo,
     cid,
