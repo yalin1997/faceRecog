@@ -37,7 +37,7 @@ import os.path
 import uuid
 
 app = flask.Flask(__name__)
-
+executor = ThreadPoolExecutor(2)
 
 app.secret_key = os.urandom(24)
 UPLOAD_FOLDER = "/home/nknu/文件/faceRecog/static/upload"
@@ -519,8 +519,8 @@ def videoRecog():
     videoId = request.get_json(force=True)["videoId"]
     if videoId and current_user.permission == 'manager':
         result = getDataService.getVideoById(videoId)
-        with ThreadPoolExecutor() as executor:
-            executor.submit(recogTask, result[0][2] , result[0][3])
+
+        executor.submit(recogTask, result[0][2] , result[0][3])
         return jsonify({'result':True})
     else:
         return jsonify({'result':False})
