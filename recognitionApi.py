@@ -521,7 +521,7 @@ def videoRecog():
     videoId = request.get_json(force=True)["videoId"]
     if videoId and current_user.permission == 'manager':
         result = getDataService.getVideoById(videoId)
-        task = recogTask.delay(result[2] , result[3])
+        task = recogTask.delay(result[0][2] , result[0][3])
         return jsonify({'result':True})
     else:
         return jsonify({'result':False})
