@@ -1,5 +1,5 @@
 import flask # api 依賴
-from concurrent.futures import ProcessPoolExecutor
+from concurrent.futures import ThreadPoolExecutor
 from flask import request,jsonify,render_template,redirect,send_from_directory,g,session,flash
 from flaskClass.loginForm import EmailPasswordForm
 from flaskClass.uploadForm import uploadForm,videoEditForm,userUploadForm
@@ -519,8 +519,8 @@ def videoRecog():
     videoId = request.get_json(force=True)["videoId"]
     if videoId and current_user.permission == 'manager':
         result = getDataService.getVideoById(videoId)
-        with ProcessPoolExecutor() as executor:
-            returnVal = executor.submit(recogTask, result[0][2] , result[0][3])
+        with ThreadPoolExecutor() as executor:
+            executor.submit(recogTask, result[0][2] , result[0][3])
         return jsonify({'result':True})
     else:
         return jsonify({'result':False})
