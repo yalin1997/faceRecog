@@ -1,5 +1,5 @@
 import flask # api 依賴
-import celery
+import celery as celeryConfig
 from flask import request,jsonify,render_template,redirect,send_from_directory,g,session,flash
 from flaskClass.loginForm import EmailPasswordForm
 from flaskClass.uploadForm import uploadForm,videoEditForm,userUploadForm
@@ -61,7 +61,7 @@ app.config.update(
 
 
 
-celery = celery.make_celery(app)
+celery = celeryConfig.make_celery(app)
 
 #savePath = '/home/nknu/文件/faceRecog/embDir'
 
