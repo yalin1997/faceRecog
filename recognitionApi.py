@@ -1,5 +1,5 @@
 import flask # api 依賴
-import celery as celeryConfig
+from concurrent.futures import ThreadPoolExecutor
 from flask import request,jsonify,render_template,redirect,send_from_directory,g,session,flash
 from flaskClass.loginForm import EmailPasswordForm
 from flaskClass.uploadForm import uploadForm,videoEditForm,userUploadForm
@@ -31,6 +31,7 @@ import getEmb
 import base64
 from datetime import timedelta
 from datetime import datetime
+from time import sleep
 import calculate_dection_face as faceDetect
 import os.path
 import uuid
@@ -53,15 +54,6 @@ ALLOWED_VIDEO = set(['avi','mp4'])
 
 app.config["UPLOAD_FOLDER"] =UPLOAD_FOLDER
 app.config["JSON_AS_ASCII"] = False
-
-app.config.update(
-    CELERY_BROKER_URL='redis://localhost:6379',
-    CELERY_RESULT_BACKEND='redis://localhost:6379'
-)
-
-
-
-celery = celeryConfig.make_celery(app)
 
 #savePath = '/home/nknu/文件/faceRecog/embDir'
 
@@ -527,15 +519,16 @@ def videoRecog():
     videoId = request.get_json(force=True)["videoId"]
     if videoId and current_user.permission == 'manager':
         result = getDataService.getVideoById(videoId)
-        task = recogTask.delay(result[0][2] , result[0][3])
+        with ProcessPoolExecutor() as executor:
+            returnVal = executor.submit(recogTask, result[0][2] , result[0][3])
         return jsonify({'result':True})
     else:
         return jsonify({'result':False})
-    
-@celery.task
+
 def recogTask(filename, filePath):
     # some long running task here
     #recog.main(filePath,filename,embList,model_Path[0][0],nameList,dateTime,time,className)
+    sleep(20)
     print(str(filePath+filename))
 
 @app.route('/videoEdit',methods=['GET','POST'])
