@@ -23,6 +23,7 @@ def getModelPath():
     return queryResult
 
 def getClassList(uid):
+    Connector.connect()
     sql = "SELECT className FROM class_group WHERE user_id= '{}'".format(uid)
     Connector.connect()
     queryResult = Connector.sqlQuery(sql)
@@ -35,13 +36,6 @@ def getNameList():
     queryResult = Connector.sqlQuery(sql)
     Connector.quit()
     return queryResult
-
-def getPictureTmp():
-    # 假資料 之後改為讀取 DB
-    pictureList = []
-    for  i in range(27):
-        pictureList.append(picture("/upload/3Yaun_0001.jpg","三原","惠晤",i))
-    return pictureList
 
 def getAllPicture():
     Connector.connect()
