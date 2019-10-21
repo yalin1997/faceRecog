@@ -43,7 +43,7 @@
 </div>
 <div id="renderVideoArea">
     {% for video in videoData %}
-        {% if video.is_recoged == 1 %}
+        {% if video.isRecoged == 1 %}
             <div class='card' id="card_{{video.id}}" style='width:92%;max-width:300px;' onclick='CardClickedEvent(id)'>
                 <div class="card-header">{{video.date}}</div>
                 {% if video.videoUrl%}
@@ -55,7 +55,7 @@
                     <p>第{{video.classNo}}節</p>  
                 </div>
             </div>
-        {% elif video.is_recoged == 2 %}
+        {% elif video.isRecoged == 2 %}
             <div class='card text-white bg-warning' id="card_{{video.id}}" style='width:92%;max-width:300px;' onclick='CardClickedEvent(id)'>
                 <div class="card-header">{{video.date}} (辨識中)</div>
                 {% if video.videoUrl%}
