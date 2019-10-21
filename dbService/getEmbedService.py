@@ -151,6 +151,7 @@ def getClassGroupById(cid):
     return queryResult
 
 def getStudentsPicture(classId):
+    Connector.connect()
     sql = '''SELECT last_name , first_name , file_path
         FROM 
         (class_member 
