@@ -55,7 +55,7 @@
                     <p>第{{video.classNo}}節</p>  
                 </div>
             </div>
-        { elif video.is_recoged == 2}
+        {% elif video.is_recoged == 2 %}
             <div class='card text-white bg-warning' id="card_{{video.id}}" style='width:92%;max-width:300px;' onclick='CardClickedEvent(id)'>
                 <div class="card-header">{{video.date}} (辨識中)</div>
                 {% if video.videoUrl%}
