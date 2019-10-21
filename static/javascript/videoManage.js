@@ -13,6 +13,7 @@ function pustInRecogQueue(videoId){
         success: function(data){
             if (data.result){
                 alert("已經加入辨識");
+                location.reload();
             }
             else{
                 alert("失敗!!，請確認網路狀況後再重新嘗試");

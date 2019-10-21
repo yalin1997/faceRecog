@@ -29,7 +29,7 @@ import dbService.insertDbService as insertService
 import json
 
 # 參數分別為收到的檔案,資料庫取得之embs , facenet model 位置 , 比對庫中的名字
-def main(uploadFile,fileName,emdList,modelPath,all_name,date,videoTime,className):      
+def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date , classNo , className):      
     timeFrame = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
     with tf.Graph().as_default():
         config = tf.ConfigProto(allow_soft_placement=True)
@@ -63,8 +63,8 @@ def main(uploadFile,fileName,emdList,modelPath,all_name,date,videoTime,className
             # 建立 VideoWriter 物件，輸出影片至 output.avi，FPS 值為 20.0
             videoUUID = str(uuid.uuid1())
             videoName = 'output_'+videoUUID+'.mp4'
-            filePath = "/home/nknu/文件/faceRecog_V1.1/static/upload/"
-            outputPath = '/home/nknu/文件/faceRecog_V1.1/static/upload/video/'+videoName
+            filePath = "/home/nknu/文件/faceRecog/static/upload/"
+            outputPath = '/home/nknu/文件/faceRecog/static/upload/video/'+videoName
             outputUrl = '/upload/'+videoName
             coverPath = filePath +'otherPicture/cover_' + timeFrame + '.jpg'
             coverUrl =  '/upload/others/cover_' + timeFrame + '.jpg'
@@ -123,9 +123,10 @@ def main(uploadFile,fileName,emdList,modelPath,all_name,date,videoTime,className
                             if(fin_obj[rec_position] != 'unknow'):
                                  # 生成cv寫入影片物件
                                 if(str(fin_obj[rec_position]) not in faceVideoDictionary.keys()):
-                                    faceVideoUrl = filePath +'video/faceVideo_' + str(fin_obj[rec_position])+ '.mp4'
+                                    faceVideoFileName = 'video/faceVideo_' + str(fin_obj[rec_position]) + '_' + str(uuid()) + '.mp4'
+                                    faceVideoUrl = filePath + faceVideoFileName
                                     faceVideoDictionary[str(fin_obj[rec_position])] = cv2.VideoWriter(faceVideoUrl,fourcc4FaceVideo,fps4FaceVideo,(400,480))#最后一个是保存图片的尺寸
-                                    insertService.InsertVideoInfo(date,videoTime,className,'/upload/faceVideo_' + str(fin_obj[rec_position])+ '.mp4',[fin_obj[rec_position]],"")
+                                    insertService.InsertVideoInfo(date , classNo , classId ,'/upload/' + faceVideoFileName , "" , 1 , faceVideoFileName , faceVideoUrl)
                                 
                                 picturePath = facePicPath + str(fin_obj[rec_position]) + "_" + str(uuid.uuid1()) + ".png"
                                 facePicFrame = frame[bounding_box[rec_position,1]:bounding_box[rec_position,3],bounding_box[rec_position,0]:bounding_box[rec_position,2]]
@@ -157,7 +158,7 @@ def main(uploadFile,fileName,emdList,modelPath,all_name,date,videoTime,className
             capture.release()
             out.release()
             
-            insertService.InsertVideoInfo(date,videoTime,className,outputUrl,nameList,coverUrl)
+            insertService.editFaceInfo(videoId,outputUrl)
 
 
 

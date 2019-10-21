@@ -59,7 +59,6 @@ app.config["JSON_AS_ASCII"] = False
 
 
 model_Path = getDataService.getModelPath() # 取模型路徑 tuple list
-embList , nameList = getEmb.getEmbList( model_Path[0][0], './static/upload/face')# 算出 Emb 得到 ndarray
 
 
 # flask Bootstrap randerer
@@ -519,16 +518,23 @@ def videoRecog():
     videoId = request.get_json(force=True)["videoId"]
     if videoId and current_user.permission == 'manager':
         result = getDataService.getVideoById(videoId)
-
-        executor.submit(recogTask, result[0][2] , result[0][3])
+        classId = int(result[0][4])
+        memberList = getDataService.getStudentsPicture(classId)
+        insertService.editRecogStatus(videoId , 2);
+        executor.submit(recogTask, videoId , result[0][2] , result[0][3] , result[0][5] , result[0][6] , classId ,memberList)
         return jsonify({'result':True})
     else:
         return jsonify({'result':False})
 
-def recogTask(filename, filePath):
-    # some long running task here
-    #recog.main(filePath,filename,embList,model_Path[0][0],nameList,dateTime,time,className)
-    sleep(20)
+def recogTask(videoId ,filename, filePath , date , classNo, classId ,  memberList):
+    # 長執行任務
+    picturePathList = []
+    pictureNameList = []
+    for i in range(len(memberList)):
+        picturePathList.append(memberList[i][2])
+        pictureNameList.append(str(memberList[i][0]) + str(memberList[i][1]))
+    embList = getEmb.getEmbList( model_Path[0][0], picturePathList)# 算出 Emb 得到 ndarray
+    recog.main(videoId , filePath,filename,embList,model_Path[0][0],pictureNameList,date,classNo,classId)
     print(str(filePath+filename))
 
 @app.route('/videoEdit',methods=['GET','POST'])

@@ -43,9 +43,21 @@
 </div>
 <div id="renderVideoArea">
     {% for video in videoData %}
-        {% if video.is_recoged %}
+        {% if video.is_recoged == 1 %}
             <div class='card' id="card_{{video.id}}" style='width:92%;max-width:300px;' onclick='CardClickedEvent(id)'>
                 <div class="card-header">{{video.date}}</div>
+                {% if video.videoUrl%}
+                    <img src="{{video.videoUrl}}" alt='Avatar' style='width:100%;opacity:0.85'>
+                {% else %}
+                    <img src="/upload/others/img_avatar.jpg" alt='Avatar' style='width:100%;opacity:0.85'>
+                {% endif %}
+                <div class='container'>
+                    <p>第{{video.classNo}}節</p>  
+                </div>
+            </div>
+        { elif video.is_recoged == 2}
+            <div class='card text-white bg-warning' id="card_{{video.id}}" style='width:92%;max-width:300px;' onclick='CardClickedEvent(id)'>
+                <div class="card-header">{{video.date}} (辨識中)</div>
                 {% if video.videoUrl%}
                     <img src="{{video.videoUrl}}" alt='Avatar' style='width:100%;opacity:0.85'>
                 {% else %}
