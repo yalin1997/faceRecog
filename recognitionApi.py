@@ -505,8 +505,8 @@ def videoManage():
             videoCover = str(allVideo[i][1])
             if allVideo[i][1] == None :
                 videoCover = "/upload/others/img_avatar.jpg"
-            print("recoged code : "+ allVideo[i][2])
-            videoList.append(video(str(allVideo[i][0]) , videoCover , allVideo[i][2] , str(allVideo[i][3]) , str(allVideo[i][4]) ))
+            print("recoged code : "+ str(allVideo[i][2]))
+            videoList.append(video(str(allVideo[i][0]) , videoCover , int(allVideo[i][2]) , str(allVideo[i][3]) , str(allVideo[i][4]) ))
     
         if permission == "manager":
             return render_template('videoManage.html',form = videoFilterForm , videoData = videoList)
