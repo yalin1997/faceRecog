@@ -534,9 +534,11 @@ def recogTask(videoId ,filename, filePath , date , classNo, classId ,  memberLis
     for i in range(len(memberList)):
         picturePathList.append(memberList[i][2])
         pictureNameList.append(str(memberList[i][0]) + str(memberList[i][1]))
+    print("get Emb start")
     embList = getEmb.getEmbList( model_Path[0][0], picturePathList)# 算出 Emb 得到 ndarray
+    print("get Emb End ")
     recog.main(videoId , filePath,filename,embList,model_Path[0][0],pictureNameList,date,classNo,classId)
-    print(str(filePath+filename))
+    
 
 @app.route('/videoEdit',methods=['GET','POST'])
 @login_required
