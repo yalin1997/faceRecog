@@ -30,6 +30,7 @@ import json
 
 # 參數分別為收到的檔案,資料庫取得之embs , facenet model 位置 , 比對庫中的名字
 def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date , classNo , className):      
+    print("start recog!!")
     timeFrame = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
     with tf.Graph().as_default():
         config = tf.ConfigProto(allow_soft_placement=True)
@@ -78,6 +79,7 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
             timer=0
             # 出現過的人名與產生臉部特寫影片的物件對照
             faceVideoDictionary = {}
+            print("capture is open!")
             while (capture.isOpened()):
                 ret, frame = capture.read() 
                 if(not ret):
@@ -157,7 +159,7 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
 
             capture.release()
             out.release()
-            
+            print("finish and insert data!")
             insertService.editFaceInfo(videoId,outputUrl)
 
 
