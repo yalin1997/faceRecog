@@ -55,6 +55,8 @@ function createCard(data){
                               "<li><a href='#' id='delete_{{ student.id }}' class='btn btn-primary my-btn' onclick='deleteEvent(id)'>刪除</a></li>"+
                             "</div>"+
                         "</div>"+
+                        "<a href='#' id='delete_{{ student.id }}' class='btn btn-danger my-btn' onclick='deleteEvent(id)'>刪除</a>"+
+                        "</div>"+
                         "</div>";
         }
         else{
@@ -74,6 +76,8 @@ function createCard(data){
                               "<li><div class='dropdown-divider'></div></li>"+
                               "<li><a href='#' id='delete_{{ student.id }}' class='btn btn-primary my-btn' onclick='deleteEvent(id)'>刪除</a></li>"+
                             "</div>"+
+                        "</div>"+
+                        "<a href='#' id='delete_{{ student.id }}' class='btn btn-danger my-btn' onclick='deleteEvent(id)'>刪除</a>"+
                         "</div>"+
                         "</div>";
         }
