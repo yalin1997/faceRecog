@@ -126,7 +126,7 @@ def insertClassMember(uid , cid ):
 def deleteClassMemeber(uid):
     Connector.connect()
     sql = "DELETE FROM class_member WHERE user_id = {}".format(uid)
-    connector.sqlExecute(sql)
+    Connector.sqlExecute(sql)
     Connector.quit()
     return True
 
