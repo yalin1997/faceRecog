@@ -425,12 +425,11 @@ def addClassMember():
         for member in MemberList:
             
             if getDataService.SearchUser(member["account"]):
-                insertService.insertRegisterInfo(member["account"],member["email"],"1234" , member["lastName"] , member["firstName"],"user")
+                User.registerr_by_email(member["account"] , member["email"] , "1234" , member["lastName"] , member["firstName"] , "user")
                 uid = getDataService.getUserIdByAccount(member["account"])
-                insertService.insertClassMember(uid , classId )
+                insertService.insertClassMember(uid , member["classId"] )
             else:
                 uid = getDataService.getUserIdByAccount(member["account"])
-                
                 insertService.insertClassMember(uid , int(member["classId"]) )
         return jsonify({'result': True})
 
