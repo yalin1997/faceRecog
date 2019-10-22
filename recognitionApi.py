@@ -136,6 +136,13 @@ def allowed_video(filename):
 def user_loader(userId):
     return loginService.getUserById(userId)
 
+@app.route('/',methods=['GET','POST'])
+def root():
+    if current_user.is_authenticated:
+        return redirect(flask.url_for('manageClassGroup'))
+    else:
+        return redirect(flask.url_for('login'))
+
 @app.route('/login',methods=['GET','POST'])
 def login():
     form = EmailPasswordForm()
@@ -164,6 +171,8 @@ def login():
         else:
             return "帳號不存在"
     else:
+        if current_user.is_authenticated:
+            return redirect(flask.url_for('manageClassGroup'))
         #  如果不是提交過來的表單，就是GET，這時候就回傳user.html網頁
         return render_template('login.html', form=form)
     return True
@@ -315,7 +324,7 @@ def studentsManage():
             lastName = filterData['lastName']
             firstName = filterData['firstName']
         else:
-            return False
+            return "權限不足""
 
         studentsSerchResult = getDataService.getStudents(classId,lastName,firstName)
         matchData = []
