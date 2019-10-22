@@ -7,36 +7,34 @@
 {% endblock %}
 {% block navbar %}
 <div class="navbar navbar-default navbar-static-top">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-ex-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="/manageClassGroup"><span>faceRecog</span></a>
-        </div>
-        {% if current_user.is_authenticated %}
-        <div class="collapse navbar-collapse" id="navbar-ex-collapse">
-            <ul class="nav navbar-nav navbar-right">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        班群
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="/manageClassGroup">管理班群</a>
-                        <a class="dropdown-item" href="/addClassGroup">新增班群</a>
-                      <div class="dropdown-divider"></div>
-                    </div>
-                </li>
-                <li id="logout">
-                    <a class="btn-warning btn" href="/logout">登出</a>
-                </li>
-            </ul>
-        </div>
-        {% endif %}
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-ex-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/manageClassGroup"><span>faceRecog</span></a>
     </div>
+    {% if current_user.is_authenticated %}
+    <div class="collapse navbar-collapse" id="navbar-ex-collapse">
+        <ul class="nav navbar-nav navbar-right">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    班群
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/manageClassGroup">管理班群</a>
+                    <a class="dropdown-item" href="/addClassGroup">新增班群</a>
+                    <div class="dropdown-divider"></div>
+                </div>
+            </li>
+            <li id="logout">
+                <a class="btn-warning btn" href="/logout">登出</a>
+            </li>
+        </ul>
+    </div>
+    {% endif %}
 </div>
 <div class="container">
 {% endblock %}
