@@ -332,6 +332,7 @@ def studentsManage():
         matchData = []
         for i in range(len(studentsSerchResult)):
             matchData.append( {'id':str(studentsSerchResult[i].id),
+            'classId': classId,
             'faceUrl': str(studentsSerchResult[i].faceUrl), 
             'lastname': str(studentsSerchResult[i].lastname),
             "firstname" : str(studentsSerchResult[i].firstname),
