@@ -19,10 +19,10 @@
                 {{ form.hidden_tag() }}
             </div>
             <div class="form-group">
-                {{ form.account.lab el }} {{ form.account }}
+                {{ form.account.label }} {{ form.account }}
                 {% if form.account.errors %}
                     {% for error in form.account.errors %}
-                        {{ error }}
+                            {{ error }}
                     {% endfor %}
                 {% endif %}
             </div>
