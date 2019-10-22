@@ -411,7 +411,7 @@ def studentVideo():
 def studentsdelete():
     if current_user.permission == 'manager':
         uid = request.get_json()['id']
-        return jsonify({"result" : insertDataService.deleteClassMemeber(uid)})
+        return jsonify({"result" : insertService.deleteClassMemeber(uid)})
     else:
         return jsonify({"result" : "權限不足"})
 
