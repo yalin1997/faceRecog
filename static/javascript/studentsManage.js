@@ -48,7 +48,7 @@ function createCard(data){
                                 "<div class='btn-group'>"+
                                     "<button type='button' class='btn btn-primary my-btn dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>"+
                                         "功能"+
-                                    "</button>"
+                                    "</button>"+
                                     "<div class='dropdown-menu'>"+
                                         "<li><a class='dropdown-item' href='/studentInfo?studentId=" + data.allMatchData[i].id + "'>查看資料</a></li>"+
                                         "<li><a class='dropdown-item' href='/studentVideo?studentId=" + data.allMatchData[i].id + "&classId="+ data.allMatchData[i].classId +"'>上課影片</a></li>"+
@@ -70,7 +70,7 @@ function createCard(data){
                                 "<div class='btn-group'>"+
                                     "<button type='button' class='btn btn-primary my-btn dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>"+
                                         "功能"+
-                                    "</button>"
+                                    "</button>"+
                                     "<div class='dropdown-menu'>"+
                                         "<li><a class='dropdown-item' href='/studentInfo?studentId=" + data.allMatchData[i].id + "'>查看資料</a></li>"+
                                         "<li><a class='dropdown-item' href='/studentVideo?studentId=" + data.allMatchData[i].id + "&classId="+ data.allMatchData[i].classId +"'>上課影片</a></li>"+
