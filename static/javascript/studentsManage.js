@@ -39,11 +39,11 @@ function createCard(data){
 
         if(data.allMatchData[i].isDataComplete){
             
-            var card = "<div class='panel panel-primary studentPanel' style='width: 18rem;'>"+
-                            "<div class='panel-heading'>"+
-                                "<h5 class='panel-title'>"+data.allMatchData[i].lastname + data.allMatchData[i].firstname +"</h5>"+
+            var card = "<div class='card card-primary studentPanel' style='width: 18rem;'>"+
+                            "<div class='card-heading'>"+
+                                "<h5 class='card-title'>"+data.allMatchData[i].lastname + data.allMatchData[i].firstname +"</h5>"+
                             "</div>"+
-                            "<div class='panel-body'>"+    
+                            "<div class='card-body'>"+    
                                 "<img src='"+ data.allMatchData[i].faceUrl +"' title='fuck you chrome' class='img-circle studentManage' id='facePicture_"+data.allMatchData[i].id+"' onclick='clickFacePicture(id)'>"+   
                                 "<div class='btn-group'>"+
                                     "<button type='button' class='btn btn-primary my-btn dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>"+
@@ -61,11 +61,11 @@ function createCard(data){
                         "</div>";
         }
         else{
-            var card = "<div class='panel panel-danger studentPanel' style='width: 18rem;'>"+
-                            "<div class='panel-heading'>"+
-                                "<h5 class='panel-title'>"+data.allMatchData[i].lastname + data.allMatchData[i].firstname +"(資料未齊全)</h5>"+
+            var card = "<div class='card card-danger studentPanel' style='width: 18rem;'>"+
+                            "<div class='card-heading'>"+
+                                "<h5 class='card-title'>"+data.allMatchData[i].lastname + data.allMatchData[i].firstname +"(資料未齊全)</h5>"+
                             "</div>"+
-                            "<div class='panel-body'>"+    
+                            "<div class='card-body'>"+    
                                 "<img src='"+ data.allMatchData[i].faceUrl +"' title='Responsive image' class='img-circle studentManage' id='facePicture_"+data.allMatchData[i].id+"' onclick='clickFacePicture(id)'>"+   
                                 "<div class='btn-group'>"+
                                     "<button type='button' class='btn btn-primary my-btn dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>"+

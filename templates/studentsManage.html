@@ -33,11 +33,11 @@
 <div id="renderStudentsArea">
 {% for student in studentsList %}
     {% if student.isDataComplete %}
-        <div class="panel panel-primary studentPanel" style="width: 18rem;">
-            <div class="panel-heading">
-                <h5 class="panel-title">{{ student.lastname }}{{ student.firstname }}</h5>
+        <div class="card card-primary studentPanel" style="width: 18rem;">
+            <div class="card-heading">
+                <h5 class="card-title">{{ student.lastname }}{{ student.firstname }}</h5>
             </div>
-            <div class="panel-body">
+            <div class="card-body">
                 <img src="{{ student.url }}" title = "點選來編輯" alt="Responsive image" class="img-circle studentManage" id="facePicture_{{ student.id }}">
                 <div class="btn-group">
                     <button type="button" class="btn btn-primary my-btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -54,11 +54,11 @@
             </div> 
         </div>
     {% else %}
-        <div class="panel panel-danger studentPanel" style="width: 18rem;">
-            <div class="panel-heading">
-                <h5 class="panel-title">{{ student.lastname }}{{ student.firstname }}</h5>
+        <div class="card card-danger studentPanel" style="width: 18rem;">
+            <div class="card-heading">
+                <h5 class="card-title">{{ student.lastname }}{{ student.firstname }}</h5>
             </div>
-            <div class="panel-body">
+            <div class="card-body">
                 <img src="{{ student.url }}" title = "點選來編輯" alt="Responsive image" class="img-circle studentManage" id="facePicture_{{ student.id }}">
                 <div class="btn-group">
                     <button type="button" class="btn btn-primary my-btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
