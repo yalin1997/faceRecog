@@ -37,16 +37,46 @@ function createCard(data){
  
     for(var i = 0;i < data.allMatchData.length;i++){
 
-        var card = "<div class='panel panel-primary studentPanel' style='width: 18rem;'>"+
+        if(data.allMatchData[i].isDataComplete){
+            var card = "<div class='panel panel-primary studentPanel' style='width: 18rem;'>"+
                         " <div class='panel-heading'>"+
                             "<h5 class='panel-title'>"+data.allMatchData[i].lastname + data.allMatchData[i].firstname +"</h5>"+
                          "</div>"+
                         "<div class='panel-body'>"+    
                             "<img src='"+ data.allMatchData[i].faceUrl +"' title='fuck you chrome' class='img-circle studentManage' id='facePicture_"+data.allMatchData[i].id+"' onclick='clickFacePicture(id)'>"+   
-                            "<a href='/studentsEdit?faceId="+data.allMatchData[i].id+"' class='btn btn-primary my-btn'>編輯</a>"+ 
-                            "<a href='#' id='delete_"+data.allMatchData[i].id +"' class='btn btn-primary my-btn' onclick='deleteEvent(id)'>刪除</a>"+
+                            "<div class='btn-group'>"+
+                            "<button type='button' class='btn btn-primary my-btn dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>"+
+                                "功能"+
+                            "</button>"
+                            "<div class='dropdown-menu'>"+
+                              "<li><a class='dropdown-item' href='/studentInfo?studentId={{ student.id }}'>查看資料</a></li>"+
+                              "<li><a class='dropdown-item' href='/studentVideo?studentId={{ student.id }}&classId={{ classId }}'>上課影片</a></li>"+
+                              "<li><div class='dropdown-divider'></div></li>"+
+                              "<li><a href='#' id='delete_{{ student.id }}' class='btn btn-primary my-btn' onclick='deleteEvent(id)'>刪除</a></li>"+
+                            "</div>"+
                         "</div>"+
-                    "</div>";
+                        "</div>";
+        }
+        else{
+            var card = "<div class='panel panel-danger studentPanel' style='width: 18rem;'>"+
+                        " <div class='panel-heading'>"+
+                            "<h5 class='panel-title'>"+data.allMatchData[i].lastname + data.allMatchData[i].firstname +"(資料未齊全)</h5>"+
+                         "</div>"+
+                        "<div class='panel-body'>"+    
+                            "<img src='"+ data.allMatchData[i].faceUrl +"' title='fuck you chrome' class='img-circle studentManage' id='facePicture_"+data.allMatchData[i].id+"' onclick='clickFacePicture(id)'>"+   
+                            "<div class='btn-group'>"+
+                            "<button type='button' class='btn btn-primary my-btn dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>"+
+                                "功能"+
+                            "</button>"
+                            "<div class='dropdown-menu'>"+
+                              "<li><a class='dropdown-item' href='/studentInfo?studentId={{ student.id }}'>查看資料</a></li>"+
+                              "<li><a class='dropdown-item' href='/studentVideo?studentId={{ student.id }}&classId={{ classId }}'>上課影片</a></li>"+
+                              "<li><div class='dropdown-divider'></div></li>"+
+                              "<li><a href='#' id='delete_{{ student.id }}' class='btn btn-primary my-btn' onclick='deleteEvent(id)'>刪除</a></li>"+
+                            "</div>"+
+                        "</div>"+
+                        "</div>";
+        }
         content+=card;
     }
 

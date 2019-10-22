@@ -336,7 +336,8 @@ def studentsManage():
             'lastname': str(studentsSerchResult[i].lastname),
             "firstname" : str(studentsSerchResult[i].firstname),
             "email": str(studentsSerchResult[i].email),
-            "account":str(studentsSerchResult[i].account)
+            "account":str(studentsSerchResult[i].account),
+            "isDataComplete":studentsSerchResult[i].isDataComplete
             })
         return jsonify({'allMatchData':matchData})
     else:
