@@ -6,19 +6,20 @@
     <link rel="icon" href="{{ url_for('static', filename = 'favicon.ico') }}" type="image/x-icon">
 {% endblock %}
 {% block navbar %}
-<div class="navbar navbar-default navbar-static-top">
-    <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-ex-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="/manageClassGroup"><span>faceRecog</span></a>
-    </div>
-    {% if current_user.is_authenticated %}
-    <div class="collapse navbar-collapse" id="navbar-ex-collapse">
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href=""><span>faceRecog</span></a>
+    
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse " id="navbarNav">
+        <ul class="navbar-nav">
+            
+        </ul>
         <ul class="nav navbar-nav navbar-right">
+            {% if current_user.is_authenticated %}
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     班群
@@ -31,11 +32,11 @@
             </li>
             <li id="logout">
                 <a class="btn-warning btn" href="/logout">登出</a>
-            </li>
+            </li>        
+            {% endif %}
         </ul>
     </div>
-    {% endif %}
-</div>
+</nav>
 <div class="container">
 {% endblock %}
 {% block content %}
