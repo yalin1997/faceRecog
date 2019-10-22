@@ -94,6 +94,7 @@ def insertClassName(className  , classYear , classDay , classStime , classEtime 
     result = Connector.sqlExecuteWithReturn(sql)
     Connector.quit()
     return result
+
 # 刪除班群
 def deleteClassGroup(cid):
     # 先刪除班級成員
@@ -121,4 +122,11 @@ def insertClassMember(uid , cid ):
     Connector.quit()
     return True
 
+# 刪除班群成員
+def deleteClassMemeber(uid):
+    Connector.connect()
+    sql = "DELETE FROM class_member WHERE user_id = {}".format(uid)
+    connector.sqlExecute(sql)
+    Connector.quit()
+    return True
 

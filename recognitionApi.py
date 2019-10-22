@@ -406,13 +406,14 @@ def studentVideo():
                 videoList.append(video(str(resultVideo[i][0]) , videoCover , str(resultVideo[i][2]) , str(resultVideo[i][3]) , str(resultVideo[i][4]) ))
             return render_template("studentVideo.html" , videoData = videoList , form = form)
 
-@app.route('/studentsEdit' , methods = ['GET' , 'POST'])
+@app.route('/studentsEdit/delete' , methods = ['POST'])
 @login_required
-def studentsEdit():
-    if request.method == 'POST':
-        return True
+def studentsdelete():
+    if current_user.permission == 'manager':
+        uid = request.get_json()['id']
+        return jsonify({"result" : insertDataService.deleteClassMemeber(uid)})
     else:
-        return False
+        return jsonify({"result" : "權限不足"})
 
 @app.route('/addClassMember' , methods = ['GET' , 'POST'])
 @login_required
@@ -737,42 +738,6 @@ def upload():
 def uploadResult():
     uploadform = uploadForm()
     return render_template('uploadResult/success.html')
-
-# APP---------------------------------------------------------------
-# 登入判斷api
-@app.route("/appLogin", methods=['POST'])
-def appLogin():
-    jsonData = request.get_json()
-    account = jsonData["account"]
-    password = jsonData["password"]
-    result = loginService.checkLogin(account,password)
-    if len(result) == 1:
-        return jsonify({"errno": 0, "errmsg": "登入成功"})
-    
-    else:
-        return jsonify({"errno": 1, "errmsg": "登入失敗"})
-# 上傳圖片api  
-@app.route("/uploadPicture",methods=['POST'])
-def uploadPicture():
-    picture = flask.request.files['uploaded_file']
-    firstName = flask.request.files['firstname']
-    lastName = flask.request.files['lastname']
-    print('first:'+firstName)
-    print('last:'+lastName)
-    if picture.filename == '':
-        flask.flash('No selected file')
-        print('No select file')
-        return flask.redirect(flask.request.url)
-    if picture and allowed_file(picture.filename):
-        filename = secure_filename(picture.filename)
-        filePath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-        
-        picture.save(filePath)
-        print('filePath:'+filePath)
-        return jsonify({"errno": 0, "errmsg": "上傳成功"})
-    else:
-        return "hello"
-# APP---------------------------------------------------------------
 
 # 取得資料
 @app.route('/upload/<filename>')
