@@ -321,6 +321,7 @@ def studentsManage():
     if request.method == 'POST':
         if current_user.permission == 'manager':
             filterData =  request.get_json()
+            classId = filterData['classId']
             lastName = filterData['lastName']
             firstName = filterData['firstName']
         else:
