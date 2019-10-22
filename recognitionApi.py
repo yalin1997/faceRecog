@@ -521,8 +521,8 @@ def videoRecog():
         result = getDataService.getVideoById(videoId)
         classId = int(result[0][4])
         memberList = getDataService.getStudentsPicture(classId)
-        insertService.editRecogStatus(videoId , 2);
-        executor.submit(recogTask, videoId , result[0][2] , result[0][3] , result[0][5] , result[0][6] , classId ,memberList)
+        # executor.submit(recogTask, videoId , result[0][2] , result[0][3] , result[0][5] , result[0][6] , classId ,memberList)
+        recogTask( videoId , result[0][2] , result[0][3] , result[0][5] , result[0][6] , classId ,memberList)
         return jsonify({'result':True})
     else:
         return jsonify({'result':False})
@@ -537,6 +537,7 @@ def recogTask(videoId ,filename, filePath , date , classNo, classId ,  memberLis
     print("get Emb start")
     embList = getEmb.getEmbList( model_Path[0][0], picturePathList)# 算出 Emb 得到 ndarray
     print("get Emb End ")
+    insertService.editRecogStatus(videoId , 2)
     recog.main(videoId , filePath,filename,embList,model_Path[0][0],pictureNameList,date,classNo,classId)
     
 
