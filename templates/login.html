@@ -11,26 +11,28 @@
         {{ message }}
     {% endfor %}
 </div>
-<div class="container">
-    <h1 class="title">登入</h1>
-    <form  id="loginForm" method="POST" >
-        {{ form.hidden_tag() }}
-        <div class="row">
-            <p class="loginCol">{{ form.account.label }} {{ form.account }}
-                {% if form.account.errors %}
-                    {% for error in form.account.errors %}
-                        {{ error }}
-                    {% endfor %}
-                {% endif %}
-            </p>
-        </div>
-        <div class="row">
-            <p class="loginCol">{{ form.password.label }} {{ form.password }}</p>
-        </div>
-        <div class="row">
-            <p class="loginCol">{{ form.submit }}</p>
-        </div>
-    </form>
+<div class="row">
+    <div class="col-12">
+        <h1 class="title">登入</h1>
+        <form  id="loginForm" method="POST" >
+            <div class="form-group">
+                {{ form.hidden_tag() }}
+                <p class="loginCol">{{ form.account.label }} {{ form.account }}
+                    {% if form.account.errors %}
+                        {% for error in form.account.errors %}
+                            {{ error }}
+                        {% endfor %}
+                    {% endif %}
+                </p>
+            </div>
+            <div class="form-group">
+                {{ form.password.label }} {{ form.password }}
+            </div>
+            <div class="form-group">
+                {{ form.submit }}
+            </div>
+        </form>
+    </div>
 </div>
 {% endblock page_content %}
 {% block scripts %}
