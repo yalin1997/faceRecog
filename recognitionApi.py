@@ -324,7 +324,7 @@ def studentsManage():
             lastName = filterData['lastName']
             firstName = filterData['firstName']
         else:
-            return "權限不足""
+            return "權限不足"
 
         studentsSerchResult = getDataService.getStudents(classId,lastName,firstName)
         matchData = []
