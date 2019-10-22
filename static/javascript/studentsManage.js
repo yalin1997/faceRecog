@@ -1,7 +1,4 @@
-$( document ).ready(function() {
-    $("#startFilter").click(filterEvent);
 
-});
 function deleteEvent(targetId){
     $.ajax({
         type: 'POST',
