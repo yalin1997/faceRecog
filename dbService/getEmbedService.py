@@ -203,9 +203,9 @@ def getStudents(classId , lastname , firstname):
     FROM (class_member INNER JOIN user_data ON class_member.user_id = user_data.user_id)
     WHERE class_id = {} '''.format(classId)
     if lastname:
-        sql = sql + "AND last_name = '{}' ".format(lastname)
+        sql = sql + "AND last_name = '{}'".format(lastname)
     if firstname:
-        sql = sql + " AND first_name = '{} '".format(firstname)
+        sql = sql + " AND first_name = '{}'".format(firstname)
     queryResult = Connector.sqlQuery(sql)
     faceUrlList = []
     for i in range(len(queryResult)):
