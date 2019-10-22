@@ -11,12 +11,12 @@ function pustInRecogQueue(videoId){
             videoId : videoId
                     }),
         success: function(data){
-            if (data.result){
+            if (data.result == true){
                 alert("已經加入辨識");
                 location.reload();
             }
             else{
-                alert("失敗!!，請確認網路狀況後再重新嘗試");
+                alert( "失敗! 原因 : " + data.result );
             }
         },
         contentType: "application/json",
