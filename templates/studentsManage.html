@@ -34,11 +34,9 @@
 {% for student in studentsList %}
     {% if student.isDataComplete %}
         <div class="card card-primary studentPanel" style="width: 18rem;">
-            <div class="card-heading">
-                <h5 class="card-title">{{ student.lastname }}{{ student.firstname }}</h5>
-            </div>
             <div class="card-body">
                 <img src="{{ student.url }}" title = "點選來編輯" alt="Responsive image" class="img-circle studentManage" id="facePicture_{{ student.id }}">
+                <h5 class="card-title">{{ student.lastname }}{{ student.firstname }}</h5>
                 <div class="btn-group">
                     <button type="button" class="btn btn-primary my-btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         功能
@@ -55,11 +53,9 @@
         </div>
     {% else %}
         <div class="card card-danger studentPanel" style="width: 18rem;">
-            <div class="card-heading">
-                <h5 class="card-title">{{ student.lastname }}{{ student.firstname }}</h5>
-            </div>
             <div class="card-body">
                 <img src="{{ student.url }}" title = "點選來編輯" alt="Responsive image" class="img-circle studentManage" id="facePicture_{{ student.id }}">
+                <h5 class="card-title">{{ student.lastname }}{{ student.firstname }}</h5>
                 <div class="btn-group">
                     <button type="button" class="btn btn-primary my-btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         功能

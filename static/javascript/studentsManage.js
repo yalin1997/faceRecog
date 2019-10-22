@@ -40,11 +40,9 @@ function createCard(data){
         if(data.allMatchData[i].isDataComplete){
             
             var card = "<div class='card card-primary studentPanel' style='width: 18rem;'>"+
-                            "<div class='card-heading'>"+
-                                "<h5 class='card-title'>"+data.allMatchData[i].lastname + data.allMatchData[i].firstname +"</h5>"+
-                            "</div>"+
                             "<div class='card-body'>"+    
-                                "<img src='"+ data.allMatchData[i].faceUrl +"' title='fuck you chrome' class='img-circle studentManage' id='facePicture_"+data.allMatchData[i].id+"' onclick='clickFacePicture(id)'>"+   
+                                "<img src='"+ data.allMatchData[i].faceUrl +"' title='fuck you chrome' class='img-circle studentManage' id='facePicture_"+data.allMatchData[i].id+"' onclick='clickFacePicture(id)'>"+ 
+                                "<h5 class='card-title'>"+data.allMatchData[i].lastname + data.allMatchData[i].firstname +"</h5>"+  
                                 "<div class='btn-group'>"+
                                     "<button type='button' class='btn btn-primary my-btn dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>"+
                                         "功能"+
@@ -62,11 +60,9 @@ function createCard(data){
         }
         else{
             var card = "<div class='card card-danger studentPanel' style='width: 18rem;'>"+
-                            "<div class='card-heading'>"+
-                                "<h5 class='card-title'>"+data.allMatchData[i].lastname + data.allMatchData[i].firstname +"(資料未齊全)</h5>"+
-                            "</div>"+
                             "<div class='card-body'>"+    
-                                "<img src='"+ data.allMatchData[i].faceUrl +"' title='Responsive image' class='img-circle studentManage' id='facePicture_"+data.allMatchData[i].id+"' onclick='clickFacePicture(id)'>"+   
+                                "<img src='"+ data.allMatchData[i].faceUrl +"' title='Responsive image' class='img-circle studentManage' id='facePicture_"+data.allMatchData[i].id+"' onclick='clickFacePicture(id)'>"+  
+                                "<h5 class='card-title'>"+data.allMatchData[i].lastname + data.allMatchData[i].firstname +"(資料未齊全)</h5>"+ 
                                 "<div class='btn-group'>"+
                                     "<button type='button' class='btn btn-primary my-btn dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>"+
                                         "功能"+
