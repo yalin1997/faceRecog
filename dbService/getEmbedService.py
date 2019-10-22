@@ -200,7 +200,7 @@ def getUserDataById(uid):
 def getStudents(classId , lastname , firstname):
     Connector.connect()
     sql = '''SELECT DISTINCT class_member.user_id , last_name , first_name , account , email 
-    FROM (class_member INNER JOIN user_id ON class_member.user_id = user_data.user_id)
+    FROM (class_member INNER JOIN user_data ON class_member.user_id = user_data.user_id)
     WHERE class_id = {} '''.format(classId)
     if lastname:
         sql = sql + "AND last_name = '{}' ".format(lastname)
