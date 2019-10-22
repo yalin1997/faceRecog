@@ -33,7 +33,7 @@ function filterEvent(id){
     });
 }
 function createCard(data){
-    var content = ""
+    var content = "";
  
     for(var i = 0;i < data.allMatchData.length;i++){
 
@@ -82,6 +82,7 @@ function createCard(data){
                             "</div>"+
                         "</div>";
         }
+        console.log(card);
         content+=card;
     }
 
