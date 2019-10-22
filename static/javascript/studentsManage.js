@@ -21,12 +21,13 @@ function addClassMember(id){
 function clickFacePicture(facePictureId){
     window.location = "/studentsEdit?faceId=" + facePictureId.split("_")[1];
 }
-function filterEvent(){
+function filterEvent(id){
     $.ajax({
         type: 'POST',
         url: '/studentsManage',
         data:JSON.stringify ({
                     csrf_token: $("#csrf_token").val(),
+                    classId: id,
                     lastName: $("#lastName").val(),
                     firstName:$("#firstName").val()}),
         success: createCard,

@@ -327,7 +327,7 @@ def studentsManage():
         else:
             return "權限不足"
 
-        studentsSerchResult = getDataService.getStudents(classId,lastName,firstName)
+        studentsSerchResult = getDataService.getStudents(int(classId) , lastName , firstName)
         matchData = []
         for i in range(len(studentsSerchResult)):
             matchData.append( {'id':str(studentsSerchResult[i].id),
