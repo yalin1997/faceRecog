@@ -92,7 +92,7 @@ def getVideo(lastName,firstName,sTime,eTime,lesson , cid):
     if not eTime == "0":
         sql = sql + " AND class_etime <= {}".format(eTime)
     if not lesson == "0":
-        sql = sql + " AND className LIKE '%{}%'".format(lesson)
+        sql = sql + " AND class_name LIKE '%{}%'".format(lesson)
     queryResult = Connector.sqlQuery(sql)
     Connector.quit()
     return queryResult
