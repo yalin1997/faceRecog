@@ -522,9 +522,9 @@ def videoManage():
             videoList.append(video(str(allVideo[i][0]) , videoCover , int(allVideo[i][2]) , str(allVideo[i][3]) , str(allVideo[i][4]) ))
     
         if permission == "manager":
-            return render_template('videoManage.html',form = videoFilterForm , videoData = videoList)
+            return render_template('videoManage.html',form = videoFilterForm , videoData = videoList , classId = classId)
         else:
-            return render_template('videoManageUser.html',form = videoFilterForm , videoData = videoList)
+            return render_template('videoManageUser.html',form = videoFilterForm , videoData = videoList , classId = classId)
 
 @app.route('/videoRecog' , methods = ['POST'])
 @login_required

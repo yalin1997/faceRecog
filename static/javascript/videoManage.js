@@ -23,7 +23,7 @@ function pustInRecogQueue(videoId){
         dataType: 'json'
     });
 }
-function filterEvent(){
+function filterEvent(id){
     csrfVal = $("#csrf_token").val() == ""? "0" : $("#csrf_token").val();
     lastNameVal =  $("#lastName").val() == ""?  "0" : $("#lastName").val();
     firstNameVal = $("#firstName").val() == ""?  "0" : $("#firstName").val();
@@ -35,6 +35,7 @@ function filterEvent(){
         url: '/videoManage',
         data:JSON.stringify ({
                     csrf_token: csrfVal,
+                    classId: id,
                     lastName: lastNameVal,
                     firstName: firstNameVal,
                     sdate: sdateVal,
