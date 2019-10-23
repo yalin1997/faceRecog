@@ -77,7 +77,7 @@ def getVideo(lastName,firstName,sTime,eTime,lesson , cid):
                     INNER JOIN 
                 user_data 
                     ON 
-                recoged_user.user_id = user_data.user.user_id 
+                recoged_user.user_id = user_data.user_id 
                     INNER JOIN
                 class_group
                     ON
