@@ -64,7 +64,7 @@ def getPictureById(pictureId):
     return queryResult
 
 # 篩選影片
-def getVideo(lastName,firstName,sTime,eTime,lesson , cid):
+def getVideo(lastName,firstName,sTime,eTime,classNo , cid):
     Connector.connect()
     sql = '''SELECT video_face.video_id , cover , video_is_recoged , video_face.date , class_no
             FROM (  
@@ -92,7 +92,7 @@ def getVideo(lastName,firstName,sTime,eTime,lesson , cid):
     if not eTime == "0":
         sql = sql + " AND class_etime <= {}".format(eTime)
     if not lesson == "0":
-        sql = sql + " AND class_name LIKE '%{}%'".format(lesson)
+        sql = sql + " AND class_no LIKE '%{}%'".format(classNo)
     queryResult = Connector.sqlQuery(sql)
     Connector.quit()
     return queryResult
