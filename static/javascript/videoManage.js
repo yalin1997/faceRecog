@@ -1,5 +1,4 @@
 $( document ).ready(function() {
-    $("#startFilter").click(filterEvent);
     fillinDate();
 });
 
