@@ -780,6 +780,6 @@ def getOtherFile(filename):
 
 if __name__ == "__main__":
     if sys.argv[1]:
-        app.run(host = '140.127.74.249' , port=sys.argv[1])
+        app.run(host = '140.127.74.249' , port=int(sys.argv[1]))
     else:
         app.run(host = '140.127.74.249' , port=5000)
