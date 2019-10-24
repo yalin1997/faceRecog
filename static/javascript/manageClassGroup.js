@@ -1,7 +1,7 @@
 $( document ).ready(function() {
     $("#startFilter").click(filterEvent);
 
-    document.getElementById("startFilter").click();
+    filterEvent();
 });
 function filterEvent(){
     $.ajax({
@@ -37,13 +37,11 @@ function createCard(data){
  
     for(var i = 0;i < data.allMatchData.length;i++){
 
-        var card = "<div class='panel panel-primary classGroupPanel' style='width: 18rem;'>"+
-                        "<div class='panel-heading'>"+
-                            "<h5 class='panel-title'>" + data.allMatchData[i].className + "</h5>"+
-                        "</div>"+
-                        "<div class='panel-body'>"+
-                            "<p>學年: "+ data.allMatchData[i].classYear +" </p>"+
-                            "<p>星期: "+ data.allMatchData[i].classDay +"</p>"+
+        var card = "<div class='card' style='width: 100%;'>"+
+                        "<div class='card-body'>"+
+                            "<h5 class='card-title'>" + data.allMatchData[i].className + "</h5>"+
+                            "<p class='card-text'>學年: "+ data.allMatchData[i].classYear +" </p>"+
+                            "<p class='card-text'>星期: "+ data.allMatchData[i].classDay +"</p>"+
                             "<div class='btn-group'>"+
                                 "<button type='button' class='btn btn-primary my-btn dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>"+
                                     "編輯"+
