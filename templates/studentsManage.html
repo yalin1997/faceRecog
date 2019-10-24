@@ -48,11 +48,11 @@
                     <button type="button" class="btn btn-primary my-btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         功能
                     </button>
-                    <div class="dropdown-menu">
+                    <a href="#" id="delete_{{ student.id }}" class="btn btn-danger my-btn m-1" onclick="deleteEvent(id)">刪除</a>
+                    <div class="dropdown-menu m-1">
                         <li><a class="dropdown-item" href="/studentInfo?studentId={{ student.id }}">查看資料</a></li>
                         <li><a class="dropdown-item" href="/studentVideo?studentId={{ student.id }}&classId={{ classId }}">上課影片</a></li>
                     </div>
-                    <a href="#" id="delete_{{ student.id }}" class="btn btn-danger my-btn" onclick="deleteEvent(id)">刪除</a>
                 </div>
             </div> 
         </div>
