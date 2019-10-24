@@ -7,54 +7,54 @@
 {% endblock %}
 {% block page_content %}
 
-<div id= "joinForm" class="container">
-    <form method="POST">
+<div id= "joinForm" class="row d-flex justify-content-center">
+    <form method="POST" class="col-12 col-md-10 col-lg-8 border rounded p-3">
+        <h4>新增班級成員</h4>
         {{ form.hidden_tag() }}
-        <div class="row">
-            <p class="joinCol">
-                {{ form.lastName.label }} {{ form.lastName }}
-            </p>
+        <div class="form-group">
+            {{ form.lastName.label }} {{ form.lastName }}
         </div>
-        <div class="row">
-            <p class="joinCol">
-                {{ form.firstName.label }} {{ form.firstName }}
-            </p>
+        <div class="form-group">
+            {{ form.firstName.label }} {{ form.firstName }}
         </div>
-        <div class="row">
-            <p class="joinCol">
-                {{ form.account.label }} {{ form.account }}
-            </p>
+        <div class="form-group">
+            {{ form.account.label }} {{ form.account }}
         </div>
-        <div class="row">
-            <p  class="joinCol">
-                {{ form.email.label }} {{ form.email }}
-            </p>
+        <div class="form-group">
+            {{ form.email.label }} {{ form.email }}
         </div>
-        <div class="row">
-            <p class="joinCol"> <button type="button" class="btn btn-primary" onclick = "addClassMemberList()">加入班級名單</button></p>
+        <div class="form-group d-flex flex-row-reverse">
+            <button type="button" class="btn btn-primary" onclick = "addClassMemberList()">加入班級名單</button>
         </div>
     </form>
-</div>
-<div id="classMemberList" align="center">
-        <table class="table" id="classMemberTable">
-            <thead>
-                <tr>
-                    <th scope="col">編號</th>
-                    <th scope="col">姓</th>
-                    <th scope="col">名</th>
-                    <th scope="col">學號</th>
-                    <th scope="col">信箱</th>
-                    <th scope="col">動作</th>
-                </tr>
-            </thead>
-            <tbody>
 
-            </tbody>
-        </table>
 </div>
-<div align="center">
-    <button type="button" class="btn btn-primary" style="margin: 10px;" onclick = "sentConfirmClassMember()">送出班級成員</button>
+
+<div id= "joinForm" class="row d-flex justify-content-center">
+
+    <div id="classMemberList" class="col-12 col-md-10 col-lg-8 border rounded p-3 mt-3">
+            <table class="table" id="classMemberTable">
+                <thead>
+                    <tr>
+                        <th scope="col">編號</th>
+                        <th scope="col">姓</th>
+                        <th scope="col">名</th>
+                        <th scope="col">學號</th>
+                        <th scope="col">信箱</th>
+                        <th scope="col">動作</th>
+                    </tr>
+                </thead>
+                <tbody>
+    
+                </tbody>
+            </table>
+
+            <div class="form-group d-flex flex-row-reverse">
+                    <button type="button" class="btn btn-primary" style="margin: 10px;" onclick = "sentConfirmClassMember()">送出班級成員</button>
+            </div>
+    </div>
 </div>
+
 {% endblock page_content %}
 {% block scripts %}
 {{ super() }}
