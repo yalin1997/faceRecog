@@ -69,16 +69,16 @@ def getVideo(lastName,firstName,sTime,eTime,classNo , cid):
     sql = '''SELECT video_face.video_id , cover , video_is_recoged , video_face.date , class_no
             FROM (  
                     video_face 
-                        INNER JOIN 
+                        LEFT JOIN 
                     recoged_user 
                         ON  
                     video_face.video_id = recoged_user.video_id
                 )  
-                    INNER JOIN 
+                    LEFT JOIN 
                 user_data 
                     ON 
                 recoged_user.user_id = user_data.user_id 
-                    INNER JOIN
+                    LEFT JOIN
                 class_group
                     ON
                 video_face.class_id = class_group.class_id
