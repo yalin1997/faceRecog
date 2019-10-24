@@ -6,15 +6,7 @@
     margin-bottom:20px; 
     cursor: pointer;
 }
-#filterForm{
-    margin: auto;
-    padding: 0;
-    min-width: 500px;
-    max-width: 600px;
-    width: 560px; 
-    height:280px;
-    top:0; bottom:0; left:0; right:0;
-}
+
 .addMember-btn{
     margin:20px;
 }

@@ -4,36 +4,27 @@
     <link href="{{ url_for('static', filename = 'css/studentsManage.css') }}" rel="stylesheet">
 {% endblock %}
 {% block page_content %}
-<form id="filterForm" class="filterArea" method="POST" enctype=multipart/form-data><br>
-    {{ form.hidden_tag() }}
-    <div>
-        <div class="row theRow">
-            <p class="Size">
-                篩選
-            </p>   
+<div class="row d-flex justify-content-center">
+    <form id="filterForm" class="filterArea" method="POST" enctype="multipart/form-data" class="col-12 col-md-10 col-lg-8 border rounded p-3">
+        {{ form.hidden_tag() }}
+        <h4>篩選</h4>
+        <div class="form-group">
+            <lable for="lastName">姓</lable>{{ form.lastName }} 
         </div>
-
-        <div class="row theRow">
-            <p class="">
-                姓: 
-                {{ form.lastName }}
-            </p>   
+        <div class="form-group"></div>>
+            <lable for="lastName" >名</lable> {{ form.firstName }}
         </div>
-        <div class="row theRow">
-            <p class="">
-                名: 
-                {{ form.firstName }}
-            </p>
-        </div>
-    </div>
-    <div class="row theRow">
+        
+        <div class="form-group d-flex flex-row-reverse">>
             <a href="#" id="{{ classId }}" class="btn btn-primary my-btn " onclick="filterEvent(id)">篩選</a>
-    </div>
-</form>
-<div id="renderStudentsArea">
+        </div>
+    </form>
+</div>
+
+<div id="renderStudentsArea" class="row d-flex justify-content-center">
 {% for student in studentsList %}
     {% if student.isDataComplete %}
-        <div class="card card-primary studentPanel" style="width: 18rem;">
+        <div class="card card-primary studentPanel col-12 col-md-5 col-lg-3">
             <div class="card-body">
                 <img src="{{ student.url }}" title = "點選來編輯" alt="Responsive image" class="img-circle studentManage" id="facePicture_{{ student.id }}">
                 <h5 class="card-title">{{ student.lastname }}{{ student.firstname }}</h5>
@@ -50,7 +41,7 @@
             </div> 
         </div>
     {% else %}
-        <div class="card card-danger studentPanel" style="width: 18rem;">
+        <div class="card card-danger studentPanel col-12 col-md-5 col-lg-3">
             <div class="card-body">
                 <img src="{{ student.url }}" title = "點選來編輯" alt="Responsive image" class="img-circle studentManage" id="facePicture_{{ student.id }}">
                 <h5 class="card-title">{{ student.lastname }}{{ student.firstname }}</h5>
