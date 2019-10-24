@@ -50,5 +50,5 @@ function createCard(data){
         content+=card;
     }
 
-    $("#renderClassGroupArea").html(content);
+    $("#renderClassGroupArea2").html(content);
 }
