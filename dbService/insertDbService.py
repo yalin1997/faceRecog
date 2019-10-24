@@ -43,7 +43,7 @@ def deleteVideoInfo(vid):
 # 新增臉
 def insertFaceInfo(uid,uri,faceType , facePath , faceName):
     Connector.connect()
-    sql = "INSERT INTO face_data(user_id,face_url,face_type , face_path , face_name) VALUES('{}','{}','{}','{}','{}')".format(uid,uri,faceType,facePath,faceName)
+    sql = "INSERT INTO face_data(user_id,face_url,face_type , file_path , file_name) VALUES('{}','{}','{}','{}','{}')".format(uid,uri,faceType,facePath,faceName)
     Connector.sqlExecute(sql)
     Connector.quit()
     return True
