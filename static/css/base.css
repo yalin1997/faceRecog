@@ -14,7 +14,6 @@
 /*讀取圖示*/
 .lds-ring {
     display: inline-block;
-    position: relative;
     width: 64px;
     height: 64px;
 }
