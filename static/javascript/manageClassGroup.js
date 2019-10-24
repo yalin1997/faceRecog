@@ -5,8 +5,8 @@ $( document ).ready(function() {
 });
 function filterEvent(){
     var loader = createLoader();
-    $("#renderClassGroupArea").html(loader);
-    
+    $("#renderClassGroupArea").empty().append(loader);
+
     $.ajax({
         type: 'POST',
         url: '/manageClassGroup',
