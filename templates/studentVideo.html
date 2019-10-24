@@ -4,35 +4,27 @@
     <link href="{{ url_for('static', filename = 'css/studentVideo.css') }}" rel="stylesheet">
 {% endblock %}
 {% block page_content %}
-<div>
-    <div id="filterForm" class="filterArea"><br>
+<div class="row d-flex justify-content-center">
+    <div id="filterForm" class="col-12 col-md-10 col-lg-8 border rounded p-3"><br>
         {{ form.hidden_tag() }}
-        <div>
-            <div class="row theRow">
-                <p class="Size">
-                    篩選
-                </p>   
-            </div>
-            <div class="row theRow">
-                <p class="">
-                    日期: 
-                    {{ form.sdate }} ~  {{ form.edate }}
-                </p>
-            </div>
-            <div class="row theRow">
-                節數: 
-                {{ form.classNo }}
-            </div>
+        <h4>篩選</h4>
+        <div class="form-group">
+            <label>日期</label>
+            {{ form.sdate }} ~ {{ form.edate }}
         </div>
-        <div class="row theRow">
-            <button class="btn btn-primary my-btn " onclick="filterEvent()">篩選</button>
+        <div class="form-group">
+            <label for="classNo">節數</label>
+            {{ form.classNo }}
+        </div>
+        <div class="form-group d-flex flex-row-reverse">
+            <button class="btn btn-primary my-btn" onclick="filterEvent()">篩選</button>
         </div>
     </div>
 
 </div>
-<div id="renderVideoArea">
+<div id="renderVideoArea" class="row d-flex justify-content-center">
     {% for video in videoData %}
-        <div class='card' id="card_{{video.id}}" style='width:92%;max-width:300px;' onclick='CardClickedEvent(id)'>
+        <div class='card' id="card_{{video.id}}" class="col-12 col-md-5 col-lg-3" onclick='CardClickedEvent(id)'>
             {% if video.videoUrl%}
                 <img src="{{video.videoUrl}}" alt='Avatar' style='width:100%;opacity:0.85'>
             {% else %}
