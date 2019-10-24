@@ -4,10 +4,11 @@
     <link href="{{ url_for('static', filename = 'css/addClassGroup.css') }}" rel="stylesheet">
 {% endblock %}
 {% block page_content %}
-<div id= "classGroupForm" class="container">
+
+<div class="row d-flex justify-content-center">
     <form method="POST" action="{{ url_for('addClassGroup') }}" id='addClassGroupForm' >
         {{ form.hidden_tag() }}
-        <div class="row">
+        <div class="form-group">
             <p class="joinCol">{{ form.className.label }} {{ form.className }}
                 {% if form.className.errors %}
                     {% for error in form.classNam.errors %}
@@ -16,23 +17,24 @@
                 {% endif %}
             </p>
         </div>
-        <div class="row">
-            <p class="joinCol">{{ form.classYear.label }} {{ form.classYear }}</p>
+        <div class="form-group">
+            {{ form.classYear.label }} {{ form.classYear }}
         </div>
-        <div class="row">
-            <p class="joinCol">{{ form.classDay.label }} {{ form.classDay }}</p>
+        <div class="form-group">
+            {{ form.classDay.label }} {{ form.classDay }}
         </div>
-        <div class="row">
-            <p class="joinCol">{{ form.classStime.label }} {{form.classStime}}</p>
+        <div class="form-group">
+            {{ form.classStime.label }} {{form.classStime}}
         </div>
-        <div class="row">
-            <p class="joinCol">{{ form.classEtime.label }} {{form.classEtime}}</p>
+        <div class="form-group">
+            {{ form.classEtime.label }} {{form.classEtime}}
         </div>
         <div class="row theRow">
             <button href="#" id="addClassGroup" class="btn btn-primary my-btn ">建立班群</button>
         </div>
     </form>
 </div>
+
 {% endblock page_content %}
 {% block scripts %}
 {{ super() }}
