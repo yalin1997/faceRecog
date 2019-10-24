@@ -88,9 +88,9 @@ def getVideo(lastName,firstName,sTime,eTime,classNo , cid):
     if not firstName == "0":
         sql = sql + " AND  firstName LIKE '%{}%'".format(firstName)
     if not sTime == "0":
-        sql = sql + " AND video_face.date >= {}".format(sTime)
+        sql = sql + " AND video_face.date >= '{}'".format(sTime)
     if not eTime == "0":
-        sql = sql + " AND video_face.date <= {}".format(eTime)
+        sql = sql + " AND video_face.date <= '{}'".format(eTime)
     if not classNo == "0":
         sql = sql + " AND class_no = {}".format(classNo)
     print(sql)
