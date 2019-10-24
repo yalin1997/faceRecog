@@ -37,12 +37,12 @@ function createCard(data){
     var content = "";
     for(var i = 0;i < data.allMatchData.length;i++){
 
-        var card = "<div class='card col-12 col-md-10 col-lg-8 p-0'>"+
+        var card = "<div class='card col-12 col-md-10 col-lg-8 p-0 mt-3'>"+
                         "<h5 class='card-header'>" + data.allMatchData[i].className + "</h5>"+
                         "<div class='card-body'>"+
                             "<p class='card-title'>學年: "+ data.allMatchData[i].classYear +" </p>"+
                             "<p class='card-text'>星期: "+ data.allMatchData[i].classDay +"</p>"+
-                            "<div class='btn-group'>"+
+                            "<div class='d-flex flex-row-reverse'>"+
                                 "<button type='button' class='btn btn-primary my-btn dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>"+
                                     "編輯"+
                                 "</button>"+
