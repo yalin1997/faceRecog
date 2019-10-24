@@ -732,7 +732,7 @@ def upload():
             else:
                 return render_template('upload.html', form=uploadform)
         else:
-             return render_template('uploadUser.html', form=uploadform)
+             return render_template('upload.html', form=uploadform)
 
 def faceLocateTask( face , leftFace , rightFace , upFace , downFace ):
     faceDict = {'face':face,'left_face':leftFace,'right_face':rightFace,'up_face':upFace,'down_face':downFace}
