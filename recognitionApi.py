@@ -714,7 +714,7 @@ def upload():
                         classId,
                         "/upload/"+filename,
                         "",
-                        False,
+                        0,
                         filename,
                         filePath 
                     )
