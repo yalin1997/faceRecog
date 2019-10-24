@@ -99,7 +99,7 @@ def insertClassName(className  , classYear , classDay , classStime , classEtime 
 def deleteClassGroup(cid):
     # 先刪除班級成員
     Connector.connect()
-    if deleteClassMember(cid):    
+    if deleteClassMember(cid) and deleteClassVideo(cid):    
         sql = "DELETE FROM class_group WHERE class_id = {}".format(cid)
         Connector.sqlExecute(sql)
         Connector.quit()
@@ -111,6 +111,13 @@ def deleteClassGroup(cid):
 def deleteClassMember(cid):
     Connector.connect()
     sql = "DELETE FROM class_member WHERE class_id = {}".format(cid)
+    Connector.sqlExecute(sql)
+    return True
+
+# 刪除班級影片
+def deleteClassVideo(cid):
+    Connector.connect()
+    sql = "DELETE FROM video_face WHERE class_id = {}".format(cid)
     Connector.sqlExecute(sql)
     return True
 
