@@ -10,24 +10,6 @@
             Your browser does not support the video tag.
     </video>
     <div class="row theRow editPanel" id="videoPanel">
-        {% if promission == 'manager' %}
-        <a href="#" id="videoDelete" class="btn btn-primary my-btn ">刪除</a>
-        <a href="#" id="videoEdit" class="btn btn-primary my-btn ">編輯</a>
-        <div id = "editPanel" style="display: none">
-            <form id='editForm' method='POST' action='/videoEdit' enctype=multipart/form-data >
-                {{ form.hidden_tag() }}
-                <div class="row">
-                    <p class="theCol">{{ form.newVideo }}
-                        {% for error in form.newVideo.errors %}
-                        <span style="color: red;">{{ error }}</span>
-                        {% endfor %}
-                    </p>
-                </div>
-                <input type="text" id="id" name='videoId' value="{{ editVideo.id }}" readonly style="display: none">
-                <a href='#' id='EditSubmit' class='btn btn-primary my-btn'>送出</a>
-            </form>
-        </div>
-        {% endif %}
     </div>
 </div>
 {% endblock page_content %}
