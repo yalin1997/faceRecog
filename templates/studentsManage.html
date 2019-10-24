@@ -45,8 +45,8 @@
                 <img src="{{ student.url }}" title = "點選來編輯" alt="Responsive image" class="img-circle studentManage" id="facePicture_{{ student.id }}">
                 <h5 class="card-title">{{ student.lastname }}{{ student.firstname }}</h5>
                 <div class="form-group d-flex flex-row-reverse">
-                    <button type='button' id="delete_{{ student.id }}" class="btn btn-danger my-btn" onclick="deleteEvent(id)" >刪除</button>
-                    <button type="button" class="btn btn-primary my-btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <button type='button' id="delete_{{ student.id }}" class="btn btn-danger " onclick="deleteEvent(id)" >刪除</button>
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         功能
                     </button>
                     <div class="dropdown-menu">
