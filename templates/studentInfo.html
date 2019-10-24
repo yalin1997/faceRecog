@@ -14,28 +14,28 @@
             <div class="flexslider col-10 col-md-8 col-lg-4">
                 <ul class="slides">
                     {% if 'face' in faceUrlDic.keys() %}
-                        <li><img src="{{ faceUrlDic['positive'] }}" alt="" width="350" height="250"></li>
+                        <li><img src="{{ faceUrlDic['face'] }}" alt="" width="350" height="250"></li>
                     {% else %}
                         <li><img src="/upload/others/img_avatar.jpg" alt="" width="350" height="250"></li>
                     {% endif %}
                     {% if 'left_face' in faceUrlDic.keys() %}
-                        <li><img src="{{ faceUrlDic['left'] }}" alt="" width="350" height="250"></li>
+                        <li><img src="{{ faceUrlDic['left_face'] }}" alt="" width="350" height="250"></li>
                     {% else %}
                         <li><img src="/upload/others/img_avatar.jpg" alt="" width="350" height="250"></li>
                     {% endif %}
                     {% if 'right_face' in faceUrlDic.keys() %}
-                        <li><img src="{{ faceUrlDic['right'] }}" alt="" width="350" height="250"></li>
+                        <li><img src="{{ faceUrlDic['right_face'] }}" alt="" width="350" height="250"></li>
                     {% else %}
                         <li><img src="/upload/others/img_avatar.jpg" alt="" width="350" height="250"></li>
                     {% endif %}
 
                     {% if 'up_face' in faceUrlDic.keys() %}
-                        <li><img src="{{ faceUrlDic['up'] }}" alt="" width="350" height="250"></li>
+                        <li><img src="{{ faceUrlDic['up_face'] }}" alt="" width="350" height="250"></li>
                     {% else %}
                         <li><img src="/upload/others/img_avatar.jpg" alt="" width="350" height="250"></li>
                     {% endif %}
                     {% if 'down_face' in faceUrlDic.keys() %}
-                        <li><img src="{{ faceUrlDic['down'] }}" alt="" width="350" height="250"></li>
+                        <li><img src="{{ faceUrlDic['down_face'] }}" alt="" width="350" height="250"></li>
                     {% else %}
                         <li><img src="/upload/others/img_avatar.jpg" alt="" width="350" height="250"></li>
                     {% endif %}
