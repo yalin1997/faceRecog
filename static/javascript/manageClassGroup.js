@@ -34,7 +34,6 @@ function deleteEvent(targetId){
 }
 
 function createCard(data){
-    var content = ""
  
     for(var i = 0;i < data.allMatchData.length;i++){
 
@@ -47,6 +46,8 @@ function createCard(data){
                             "<a href='#' id='delete_"+data.allMatchData[i].id +"' class='btn btn-primary my-btn' onclick='deleteEvent(id)'>刪除</a>"+
                         "</div>"+
                     "</div>";
+
+                    
         content+=card;
     }
 
