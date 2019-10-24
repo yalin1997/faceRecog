@@ -36,14 +36,16 @@ class studentsFilter(FlaskForm):
     firstName = StringField('firstName', validators=[],render_kw={'placeholder': u'名'})
 
 class classGroupFilter(FlaskForm):
-    className = StringField('課程名稱')
+    className = StringField('課程名稱' , render_kw={'class': 'form-control'})
     classYear = classYear =  SelectField(
         '學年',
         choices=[]
+        , render_kw={'class': 'form-control'}
     )
     classDay =  SelectField(
         '星期',
         choices=[(1,'一') , (2 , '二') , (3, '三') , (4,'四') , (5,'五') ]
+        , render_kw={'class': 'form-control'}
     )
 
     
