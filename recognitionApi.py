@@ -506,7 +506,7 @@ def videoManage():
             allVideo = getDataService.getVideo(lastname,firstname,"0","0","0",classId)
             videoFilterForm = videoFilterUser()
         else:
-            allVideo = getDataService.getAllVideo(current_user.id , classId)
+            allVideo = getDataService.getVideo(current_user.lastname , current_user.firstname , "0" , "0" , "0" , classId)
         videoList = []
         
         for i in range(len(allVideo)):
@@ -519,7 +519,7 @@ def videoManage():
         if permission == "manager":
             return render_template('videoManage.html',form = videoFilterForm , videoData = videoList , classId = classId)
         else:
-            return render_template('videoManageUser.html',form = videoFilterForm , videoData = videoList , classId = classId)
+            return render_template('videoManage.html', videoData = videoList , classId = classId)
 
 @app.route('/videoRecog' , methods = ['POST'])
 @login_required
