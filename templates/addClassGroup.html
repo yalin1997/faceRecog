@@ -9,13 +9,12 @@
     <form method="POST" action="{{ url_for('addClassGroup') }}" id='addClassGroupForm' >
         {{ form.hidden_tag() }}
         <div class="form-group">
-            <p class="joinCol">{{ form.className.label }} {{ form.className }}
+            {{ form.className.label }} {{ form.className }}
                 {% if form.className.errors %}
                     {% for error in form.classNam.errors %}
                         {{ error }}
                     {% endfor %}
                 {% endif %}
-            </p>
         </div>
         <div class="form-group">
             {{ form.classYear.label }} {{ form.classYear }}
