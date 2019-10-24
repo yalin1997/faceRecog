@@ -59,5 +59,5 @@ function createCard(data){
         content+=card;
     }
 
-    $("#renderClassGroupArea2").html(content);
+    $("#renderClassGroupArea").html(content);
 }
