@@ -579,7 +579,7 @@ def videoEdit():
     else:
         videoId = request.args.get('videoId')  
         videoData = getDataService.getVideoById(videoId)
-        editVideo = video(videoId,str(videoData[0][1]))
+        editVideo = video(videoId,str(videoData[0][1]) , videoData[0][6] , str(videoData[0][5]) , videoData[0][-1])
         permission = current_user.permission
         return render_template('videoEdit.html',editVideo=editVideo,form=editVideoForm,permission = permission)
 
