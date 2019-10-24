@@ -52,10 +52,11 @@ function createCard(data){
                                     "<li><a class='dropdown-item' href='/studentsManage?classId="+ data.allMatchData[i].id +"'>管理學生</a></li>"+
                                     "<li><a class='dropdown-item' href='/addClassMember?classId="+ data.allMatchData[i].id +"'>加入學生</a></li>"+
                                 "</div>"+
-                                "</div>"+
-                            "<a href='#' id='delete_"+ data.allMatchData[i].id +"' class='btn btn-danger my-btn' onclick='deleteEvent(id)'>刪除</a>"+
+                                "<a href='#' id='delete_"+ data.allMatchData[i].id +"' class='btn btn-danger my-btn' onclick='deleteEvent(id)'>刪除</a>"+
+                            "</div>"+
                         "</div>"+ 
-                    "</div>"
+                    "</div>";
+        
         content+=card;
     }
 
