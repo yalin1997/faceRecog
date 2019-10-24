@@ -4,40 +4,31 @@
     <link href="{{ url_for('static', filename = 'css/videoManage.css') }}" rel="stylesheet">
 {% endblock %}
 {% block page_content %}
-<div>
-    <form id="filterForm" class="filterArea" method="POST" enctype=multipart/form-data><br>
+<div class="row d-flex justify-content-center">
+    <form id="filterForm" method="POST" enctype="multipart/form-data" class="col-12 col-md-10 col-lg-8 border rounded p-3">
         {{ form.hidden_tag() }}
-        <div>
-            <div class="row theRow">
-                <p class="Size">
-                    篩選
-                </p>   
-            </div>
-            <div class="row theRow">
-                <p class="">
-                    姓: 
-                    {{ form.lastName }}
-                </p>   
-            </div>
-            <div class="row theRow">
-                <p class="">
-                    名: 
-                    {{ form.firstName }}
-                </p>
-            </div>
-            <div class="row theRow">
-                <p class="">
-                    日期: 
-                    {{ form.sdate }} ~  {{ form.edate }}
-                </p>
-            </div>
-            <div class="row theRow">
-                節數: 
-                {{ form.classNo }}
-            </div>
+        <h4>
+            篩選
+        </h4>
+
+        <div class="form-group">
+            <label for="lastName">姓</label>
+            {{ form.lastName }}
         </div>
-        <div class="row theRow">
-                <a href="#" id="{{ classId }}" class="btn btn-primary my-btn" onclick="filterEvent(id)">篩選</a>
+        <div class="form-group">
+            <label for="firstName">名</label>
+            {{ form.firstName }}
+        </div>
+        <div class="form-group">
+            <label>日期</label>
+            {{ form.sdate }} ~  {{ form.edate }}
+        </div>
+        <div class="form-group">
+            <label for="classNo">節數</label>
+            {{ form.classNo }}
+        </div>
+        <div class="form-group d-flex flex-row-reverse">
+            <a href="#" id="{{ classId }}" class="btn btn-primary my-btn" onclick="filterEvent(id)">篩選</a>
         </div>
     </form>
 </div>
