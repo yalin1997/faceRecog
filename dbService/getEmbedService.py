@@ -200,6 +200,8 @@ def getAllStudents(classId):
         faceUrlList.append(faceCover)
     Connector.quit()
     studentsList = []
+    
+    print(str(faceResult))
     print(str(faceUrlList))
     print(str(isDataCompleteList))
     for i in range(len(queryResult)):
