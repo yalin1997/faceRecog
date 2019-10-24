@@ -500,7 +500,7 @@ def videoManage():
             cover = str(result[i][1])
             if result[i][1] == None :
                 cover = "/upload/others/img_avatar.jpg"
-            matchData.append( {'id':str(result[i][0]),'pictureUrl': cover})
+            matchData.append( {'id':str(result[i][0]),'videoUrl': cover , 'isRecoged' : int(allVideo[i][2]) , 'date': str(allVideo[i][3]) , 'classNo' : str(allVideo[i][4]) })
         return jsonify({'allMatchData':matchData})
     else:
         permission = current_user.permission

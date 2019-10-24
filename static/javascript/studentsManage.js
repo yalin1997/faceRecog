@@ -78,7 +78,6 @@ function createCard(data){
                             "</div>"+
                         "</div>";
         }
-        console.log(card);
         content+=card;
     }
 

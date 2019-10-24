@@ -54,21 +54,36 @@ function createCard(data){
     var content = ""
 
     for(var i = 0;i < data.allMatchData.length;i++){
-        coverPath = "/upload/others/img_avatar.jpg"
-        if(data.allMatchData[i].pictureUrl != ""){
-            coverPath = data.allMatchData[i].pictureUrl
+        if(data.allMatchData.isRecoged == 1){
+            var card = "<div class='card' id='card_" + data.allMatchData.id + "' style='width:92%;max-width:300px;' onclick='CardClickedEvent(id)'>"+
+                "<div class='card-header'>" + data.allMatchData.date + "</div>"+
+                    "<img src='" + data.allMatchData.videoUrl +"' alt='Avatar' style='width:100%;opacity:0.85'>"+
+                "<div class='container'>"+
+                    "<p>第" + data.allMatchData.classNo + "節</p>"+  
+                "</div>"+
+            "</div>"
         }
-        
-        var card = "<div class='card' id='card_"+data.allMatchData[i].id+"' style='width:92%;max-width:300px;' onclick='CardClickedEvent(id)'>"+
-                        "<img src='"+coverPath+"' alt='Avatar' style='width:100%;opacity:0.85'>"+
-                        "<div class='container'>"+
-                            "<h5><b>"+data.allMatchData[i].title+"</b></h5>"+    
-                            "<p>"+data.allMatchData[i].people+"</p>"+   
-                        "</div>"+ 
-                    "</div>";
+        else if(data.allMatchData.isRecoged == 2){
+            var card = "<div class='card bg-warning text-white' id='card_" + data.allMatchData.id + "' style='width:92%;max-width:300px;' onclick='CardClickedEvent(id)'>"+
+                            "<div class='card-header'>" + data.allMatchData.date +" (辨識中)"+ "</div>"+
+                                "<img src='" + data.allMatchData.videoUrl +"' alt='Avatar' style='width:100%;opacity:0.85'>"+
+                            "<div class='container'>"+
+                                "<p>第" + data.allMatchData.classNo + "節</p>"+  
+                            "</div>"+
+                        "</div>"
+        }
+        else{
+
+            var card = "<div class='card text-white bg-danger' id='card_" + data.allMatchData.id + "' style='width:92%;max-width:300px;' onclick='CardClickedEvent(id)'>"+
+                            "<div class='card-header'>" + data.allMatchData.date +" (尚未辨識)"+ "</div>"+
+                                "<img src='" + data.allMatchData.videoUrl +"' alt='Avatar' style='width:100%;opacity:0.85'>"+
+                            "<div class='container'>"+
+                                "<p>第" + data.allMatchData.classNo + "節</p>"+  
+                                "</div>"+
+                        "</div>"
+        }
         content+=card;
     }
-
     $("#renderVideoArea").html(content);
 }
 function CardClickedEvent(id){
