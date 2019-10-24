@@ -84,16 +84,15 @@ def getVideo(lastName,firstName,sTime,eTime,classNo , cid):
                 video_face.class_id = class_group.class_id
             WHERE True AND video_face.class_id = {}'''.format(cid)
     if not lastName == "0":
-        sql = sql + " AND  lastname LIKE '%{}%'".format(lastName)
+        sql = sql + " AND  last_name LIKE '%{}%'".format(lastName)
     if not firstName == "0":
-        sql = sql + " AND  firstName LIKE '%{}%'".format(firstName)
+        sql = sql + " AND  first_name LIKE '%{}%'".format(firstName)
     if not sTime == "0":
         sql = sql + " AND video_face.date >= '{}'".format(sTime)
     if not eTime == "0":
         sql = sql + " AND video_face.date <= '{}'".format(eTime)
     if not classNo == "0":
         sql = sql + " AND class_no = {}".format(classNo)
-    print(sql)
     queryResult = Connector.sqlQuery(sql)
     Connector.quit()
     return queryResult
