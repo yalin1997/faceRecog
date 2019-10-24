@@ -144,6 +144,19 @@ def getClassGroup(className , classYear , classDay , id):
     Connector.quit()
     return queryResult
 
+def getClassGroupByUser(classYear , uid):
+    Connector.connect()
+    sql = '''SELECT DISTINCT class_id , class_name , class_year , class_day FROM class_group
+            INNER JOIN 
+            class_Member
+            ON class_group.class_id = class_group.class_id
+            WHERE user_id = {}'''.format(uid)
+    if classYear:  
+        sql = sql + " AND class_year = {} ".format(classYear)
+    queryResult = Connector.sqlQuery(sql)
+    Connector.quit()
+    return queryResult
+
 def getClassGroupById(cid):
     Connector.connect()
     sql = "SELECT class_id , class_name , class_year , class_day FROM class_group WHERE class_id = {}".format(cid)
