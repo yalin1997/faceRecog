@@ -6,7 +6,7 @@
 {% block page_content %}
 
 <div class="row d-flex justify-content-center">
-    <form method="POST" action="{{ url_for('addClassGroup') }}" id='addClassGroupForm' >
+    <form method="POST" action="{{ url_for('addClassGroup') }}" id='addClassGroupForm' class="col-12 col-md-10 col-lg-8 border rounded p-3" >
         {{ form.hidden_tag() }}
         <div class="form-group">
             {{ form.className.label }} {{ form.className }}
@@ -28,7 +28,7 @@
         <div class="form-group">
             {{ form.classEtime.label }} {{form.classEtime}}
         </div>
-        <div class="row theRow">
+        <div class="form-group d-flex flex-row-reverse">
             <button href="#" id="addClassGroup" class="btn btn-primary my-btn ">建立班群</button>
         </div>
     </form>
