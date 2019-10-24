@@ -715,7 +715,7 @@ def upload():
                     )
                     
                 return jsonify({'result' : result})
-        else: # todo
+        else:
             face = flask.request.file['face']
             leftFace = flask.request.file['leftFace']
             rightFace = flask.request.file['rightFace']
@@ -747,12 +747,6 @@ def faceLocateTask( face , leftFace , rightFace , upFace , downFace ):
                 faceDetect.detectSinglePicture(app.config["UPLOAD_FOLDER"]+picturePath,pictureName)# 尋找臉部
                 insertService.insertFaceInfo(current_user.lastname,current_user.firstname,"/upload/"+pictureName , filePath , pictureName)
                 faceDict[key] = "/upload/"+pictureName
-
-@app.route('/upload/result',methods=['GET'])
-@login_required
-def uploadResult():
-    uploadform = uploadForm()
-    return render_template('uploadResult/success.html')
 
 # 取得資料
 @app.route('/upload/<filename>')
