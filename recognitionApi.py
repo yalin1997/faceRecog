@@ -716,11 +716,11 @@ def upload():
                     
                 return jsonify({'result' : result})
         else:
-            face = flask.request.file['face']
-            leftFace = flask.request.file['leftFace']
-            rightFace = flask.request.file['rightFace']
-            upFace = flask.request.file['upFace']
-            downFace = flask.request.file['downFace']
+            face = flask.request.files['face']
+            leftFace = flask.request.files['leftFace']
+            rightFace = flask.request.files['rightFace']
+            upFace = flask.request.files['upFace']
+            downFace = flask.request.files['downFace']
             executor.submit(faceLocateTask , face , leftFace , rightFace , upFace , downFace)
             return jsonify({'result' : True})
     else:
