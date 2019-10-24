@@ -191,7 +191,7 @@ def getAllStudents(classId):
     isDataCompleteList = []
     for i in range(len(queryResult)):
         sql2 = "SELECT face_url , face_type FROM face_data WHERE user_id = {}".format(int(queryResult[i][0]))
-        faceResult = Connector.sqlQuery(sql)
+        faceResult = Connector.sqlQuery(sql2)
         faceCover = ""
         isDataCompleteList.append(len(faceResult) == 5)
         for i in range(len(faceResult)):
