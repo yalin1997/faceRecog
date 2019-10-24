@@ -288,23 +288,14 @@ def manageClassGroup():
             classGroupResult = getDataService.getClassGroupByUser(classYear , current_user.id)
         matchData = []
         for i in range(len(classGroupResult)):
-            matchData.append( {'id':str(classGroupResult[i][0]),'className': str(classGroupResult[i][1]), 'classYear': str(classGroupResult[i][2]),"classDay" : str(classGroupResult[i][3])})
+            matchData.append( {'id':str(classGroupResult[i][0]),'className': str(classGroupResult[i][1]), 'classYear': str(classGroupResult[i][2]),"classDay" : str(classGroupResult[i][3]),"permission":permission})
         return jsonify({'allMatchData':matchData})
     else:
-        classGroupList = []
-        if permission == 'manager':
-            classGroupResult = getDataService.getClassGroup(None , datetime.now().year - 1911 , None , current_user.id)
-        else:
-            classGroupResult = getDataService.getClassGroupByUser(datetime.now().year - 1911 , current_user.id)
-        for i in range(len(classGroupResult)):
-            classGroupList.append(classGroup(str(classGroupResult[i][0]) , str(classGroupResult[i][1]) , str(classGroupResult[i][2]),str(classGroupResult[i][3])))
-        
         # 產生學年
         classGroupFilterForm.classYear.choices = []
         for i in range(5):
             classGroupFilterForm.classYear.choices.append((datetime.now().year-i-1911,datetime.now().year-i-1911))
-        print("LIST="+ str(classGroupList))
-        return render_template('/manageClassGroup.html',form = classGroupFilterForm , classGroupList = classGroupList)
+        return render_template('/manageClassGroup.html',form = classGroupFilterForm)
 
 @app.route('/editClassGroup/delete',methods=['POST'])
 @login_required

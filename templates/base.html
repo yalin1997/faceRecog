@@ -29,8 +29,12 @@
                     班群
                 </a>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" href="/manageClassGroup">管理班群</a>
-                    <a class="dropdown-item" href="/addClassGroup">新增班群</a>
+                    {% if current_user.permission == 'manager' %}
+                        <a class="dropdown-item" href="/manageClassGroup">管理班群</a>
+                        <a class="dropdown-item" href="/addClassGroup">新增班群</a>
+                    {% else %}
+                        <a class="dropdown-item" href="/manageClassGroup">查看班群</a>
+                    {% endif %}
                 </div>
             </li>
             <li id="logout">
