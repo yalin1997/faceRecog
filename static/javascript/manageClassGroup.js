@@ -1,5 +1,7 @@
 $( document ).ready(function() {
     $("#startFilter").click(filterEvent);
+
+    document.getElementById("startFilter").click();
 });
 function filterEvent(){
     $.ajax({

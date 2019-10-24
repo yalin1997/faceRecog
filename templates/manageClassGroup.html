@@ -5,7 +5,6 @@
 {% endblock %}
 {% block page_content %}
 <div class="row d-flex justify-content-center">
-    <form id="filterForm" method="POST" enctype=multipart/form-data>
         {{ form.hidden_tag() }}
         <div class="col-12 col-md-10 col-lg-8 border rounded p-3">
             <div class="form-group">
@@ -14,31 +13,31 @@
                 </h4>   
             </div>
             <div class="form-group">
-                <p class="">
-                    課程名稱: 
-                    {{ form.className }}
-                </p>   
+                <label for="className">課程名稱:</label>
+                {{ form.className }}
             </div>
             <div class="form-group">
-                <p class="">
-                    學年: 
-                    {{ form.classYear }}
-                </p>
+                <label for="classYear">學年:</label>
+                {{ form.classYear }}
             </div>
             <div class="form-group">
-                <p class="">
-                    星期: 
-                    {{ form.classDay }}
-                </p>
+                <label for="classDay">星期:</label>
+                {{ form.classDay }}
             </div>
-            <div class="form-group ">
-                <a href="#" id="startFilter" class="btn btn-primary my-btn ">篩選</a>
+            <div class="form-group d-flex flex-row-reverse">
+                <button type="button" id="startFilter" class="btn btn-primary my-btn ">篩選</button>
             </div>
         </div>
-    </form>
 </div>
 
 <div class="row d-flex justify-content-center">
+
+    <div class="card">
+        <div class="card-body">
+            <p class="card-text"></p>
+        </div>
+    </div>
+
     <div id="renderClassGroupArea">
     {% for classGroup in classGroupList %}
         <div class="panel panel-primary classGroupPanel" style="width: 18rem;">
