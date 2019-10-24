@@ -721,19 +721,8 @@ def upload():
             rightFace = flask.request.file['rightFace']
             upFace = flask.request.file['upFace']
             downFace = flask.request.file['downFace']
-
-            faceDict = {'face':face,'left_face':leftFace,'right_face':rightFace,'up_face':upFace,'down_face':downFace}
-            for key in faceDict.keys():
-                if faceDict[key] :
-                    filename = secure_filename(faceDict[key].filename)
-                    if allowed_picture(filename):
-                        pictureName = current_user.lastname+'_'+current_user.firstname+'_'+str(uuid.uuid1())+'.jpg'
-                        filePath = os.path.join(app.config["UPLOAD_FOLDER"]+picturePath, pictureName)
-                        faceDict[key].save(filePath)
-                        faceDetect.detectSinglePicture(app.config["UPLOAD_FOLDER"]+picturePath,pictureName)# 尋找臉部
-                        insertService.insertFaceInfo(current_user.lastname,current_user.firstname,"/upload/"+pictureName)
-                        faceDict[key] = "/upload/"+pictureName
-            insertService.updateUserFace(faceDict)
+            executor.submit(faceLocateTask , face , leftFace , rightFace , upFace , downFace)
+            return jsonify({'result' : True})
     else:
         if permission == 'manager':
             classId = request.args.get('classId')
@@ -745,6 +734,19 @@ def upload():
         else:
              return render_template('uploadUser.html', form=uploadform)
 
+def faceLocateTask( face , leftFace , rightFace , upFace , downFace ):
+    faceDict = {'face':face,'left_face':leftFace,'right_face':rightFace,'up_face':upFace,'down_face':downFace}
+    for key in faceDict.keys():
+        if faceDict[key] :
+            filename = secure_filename(faceDict[key].filename)
+            if allowed_picture(filename):
+                pictureName = current_user.lastname+'_'+current_user.firstname+'_'+str(key)+'.jpg'
+                filePath = os.path.join(app.config["UPLOAD_FOLDER"]+picturePath, pictureName)
+                faceDict[key].save(filePath)
+                
+                faceDetect.detectSinglePicture(app.config["UPLOAD_FOLDER"]+picturePath,pictureName)# 尋找臉部
+                insertService.insertFaceInfo(current_user.lastname,current_user.firstname,"/upload/"+pictureName , filePath , pictureName)
+                faceDict[key] = "/upload/"+pictureName
 
 @app.route('/upload/result',methods=['GET'])
 @login_required

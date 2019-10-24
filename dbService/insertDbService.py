@@ -41,20 +41,10 @@ def deleteVideoInfo(vid):
     return True
 
 # 新增臉
-def insertFaceInfo(uid,uri,faceType):
+def insertFaceInfo(uid,uri,faceType , facePath , faceName):
     Connector.connect()
-    sql = "INSERT INTO face_data(user_id,face_url,face_type) VALUES('{}','{}','{}')".format(uid,uri,faceType)
+    sql = "INSERT INTO face_data(user_id,face_url,face_type , face_path , face_name) VALUES('{}','{}','{}','{}','{}')".format(uid,uri,faceType,facePath,faceName)
     Connector.sqlExecute(sql)
-    Connector.quit()
-    return True
-
-# 更新臉
-def updateUserFace(faceDict):
-    Connector.connect()
-    for key in faceDict.keys():
-        if faceDict[key] :
-            sql = "UPDATE user_data({}) VALUES('{}')".format(key,faceDict[key])
-            Connector.sqlExecute(sql)
     Connector.quit()
     return True
 
