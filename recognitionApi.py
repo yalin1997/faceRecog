@@ -721,7 +721,8 @@ def upload():
             rightFace = flask.request.files['rightFace']
             upFace = flask.request.files['upFace']
             downFace = flask.request.files['downFace']
-            executor.submit(faceLocateTask , face , leftFace , rightFace , upFace , downFace)
+            faceLocateTask(face , leftFace , rightFace , upFace , downFace)
+            #executor.submit(faceLocateTask , face , leftFace , rightFace , upFace , downFace)
             return jsonify({'result' : True})
     else:
         if permission == 'manager':
