@@ -61,5 +61,6 @@ function createCard(data){
                     "</div>"
         content+=card;
     }
-    $("#renderClassGroupArea").html(content);
+
+    $("#renderClassGroupArea2").html(content);
 }
