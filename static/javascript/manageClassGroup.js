@@ -4,6 +4,9 @@ $( document ).ready(function() {
     filterEvent();
 });
 function filterEvent(){
+    var loader = createLoader();
+    $("#renderClassGroupArea").html(loader);
+    
     $.ajax({
         type: 'POST',
         url: '/manageClassGroup',
@@ -16,7 +19,7 @@ function filterEvent(){
                 }),
         success: createCard,
         contentType: "application/json",
-        dataType: 'json'
+        dataType: 'json',
     });
 }
 function deleteEvent(targetId){

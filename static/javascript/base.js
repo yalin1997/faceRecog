@@ -12,3 +12,7 @@ function logout(){
         dataType: 'json'
     });
 }
+
+function createLoader(){
+    return $('<div class="lds-ring"><div></div><div></div><div></div><div></div></div>');
+}
