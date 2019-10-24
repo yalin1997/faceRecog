@@ -1,7 +1,7 @@
 $( document ).ready(function() {
     $("#startFilter").click(filterEvent);
 
-    //document.getElementById("startFilter").click();
+    document.getElementById("startFilter").click();
 });
 function filterEvent(){
     $.ajax({
@@ -50,5 +50,5 @@ function createCard(data){
         content+=card;
     }
 
-    $("#renderClassGroupoArea").html(content);
+    $("#renderClassGroupArea").html(content);
 }
