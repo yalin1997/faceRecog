@@ -229,11 +229,11 @@ def getStudents(classId , lastname , firstname):
     isDataCompleteList = []
     for i in range(len(queryResult)):
         sql2 = "SELECT face_url , face_type FROM face_data WHERE user_id = {}".format(queryResult[0][0])
-        faceResult = Connector.sqlQuery(sql)
+        faceResult = Connector.sqlQuery(sql2)
         faceCover = ""
         isDataCompleteList.append(len(faceResult) == 5)
         for i in range(len(faceResult)):
-            if str(faceResult[i][1]) == 'position':
+            if str(faceResult[i][1]) == 'face':
                 faceCover = faceResult[i][0]
         faceUrlList.append(faceCover)
     Connector.quit()
