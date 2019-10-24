@@ -35,6 +35,7 @@ from time import sleep
 import calculate_dection_face as faceDetect
 import os.path
 import uuid
+import sys
 
 app = flask.Flask(__name__)
 executor = ThreadPoolExecutor(2)
