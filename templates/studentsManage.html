@@ -28,6 +28,7 @@
                 <img src="{{ student.faceUrl }}" title = "點選來編輯" alt="Responsive image" class="img-circle studentManage" id="facePicture_{{ student.id }}">
                 <h5 class="card-title">{{ student.lastname }}{{ student.firstname }}</h5>
                 <div class="form-group d-flex flex-row-reverse">
+                    <button type='button' id="delete_{{ student.id }}" class="btn btn-danger m-1" onclick="deleteEvent(id)" >刪除</button>
                     <button type="button" class="btn btn-primary my-btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         功能
                     </button>
@@ -35,7 +36,6 @@
                         <li><a class="dropdown-item" href="/studentInfo?studentId={{ student.id }}">查看資料</a></li>
                         <li><a class="dropdown-item" href="/studentVideo?studentId={{ student.id }}&classId={{ classId }}">上課影片</a></li>
                     </div>
-                    <a href="#" id="delete_{{ student.id }}" class="btn btn-danger my-btn" onclick="deleteEvent(id)">刪除</a>
                 </div>
             </div> 
         </div>
@@ -45,6 +45,7 @@
                 <img src="{{ student.faceUrl }}" title = "點選來編輯" alt="Responsive image" class="img-circle studentManage" id="facePicture_{{ student.id }}">
                 <h5 class="card-title">{{ student.lastname }}{{ student.firstname }} (資料未完善)</h5>
                 <div class="form-group d-flex flex-row-reverse">
+                    <button type='button' id="delete_{{ student.id }}" class="btn btn-danger m-1" onclick="deleteEvent(id)" >刪除</button>
                     <button type="button" class="btn btn-primary dropdown-toggle m-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         功能
                     </button>
@@ -52,7 +53,6 @@
                         <li><a class="dropdown-item" href="/studentInfo?studentId={{ student.id }}">查看資料</a></li>
                         <li><a class="dropdown-item" href="/studentVideo?studentId={{ student.id }}&classId={{ classId }}">上課影片</a></li>
                     </div>
-                    <button type='button' id="delete_{{ student.id }}" class="btn btn-danger m-1" onclick="deleteEvent(id)" >刪除</button>
                 </div>
             </div> 
         </div>
