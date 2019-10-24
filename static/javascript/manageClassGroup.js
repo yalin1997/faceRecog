@@ -1,7 +1,7 @@
 $( document ).ready(function() {
     $("#startFilter").click(filterEvent);
 
-    document.getElementById("startFilter").click();
+    filterEvent();
 });
 function filterEvent(){
     $.ajax({
@@ -34,18 +34,15 @@ function deleteEvent(targetId){
 }
 
 function createCard(data){
-    var content = ""
- 
+    var content = "";
     for(var i = 0;i < data.allMatchData.length;i++){
 
-        var card = "<div class='panel panel-primary classGroupPanel' style='width: 18rem;'>"+
-                        "<div class='panel-heading'>"+
-                            "<h5 class='panel-title'>" + data.allMatchData[i].className + "</h5>"+
-                        "</div>"+
-                        "<div class='panel-body'>"+
-                            "<p>學年: "+ data.allMatchData[i].classYear +" </p>"+
-                            "<p>星期: "+ data.allMatchData[i].classDay +"</p>"+
-                            "<div class='btn-group'>"+
+        var card = "<div class='card col-12 col-md-10 col-lg-8 p-0 mt-3'>"+
+                        "<h5 class='card-header'>" + data.allMatchData[i].className + "</h5>"+
+                        "<div class='card-body'>"+
+                            "<p class='card-title'>學年: "+ data.allMatchData[i].classYear +" </p>"+
+                            "<p class='card-text'>星期: "+ data.allMatchData[i].classDay +"</p>"+
+                            "<div class='d-flex flex-row-reverse'>"+
                                 "<button type='button' class='btn btn-primary my-btn dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>"+
                                     "編輯"+
                                 "</button>"+
@@ -56,11 +53,11 @@ function createCard(data){
                                     "<li><a class='dropdown-item' href='/addClassMember?classId="+ data.allMatchData[i].id +"'>加入學生</a></li>"+
                                 "</div>"+
                                 "</div>"+
-                            "<a href='#' id='delete_"+ data.allMatchData[i].id +"' class='btn btn-primary my-btn' onclick='deleteEvent(id)'>刪除</a>"+
+                            "<a href='#' id='delete_"+ data.allMatchData[i].id +"' class='btn btn-danger my-btn' onclick='deleteEvent(id)'>刪除</a>"+
                         "</div>"+ 
                     "</div>"
         content+=card;
     }
 
-    $("#renderClassGroupArea2").html(content);
+    $("#renderClassGroupArea").html(content);
 }
