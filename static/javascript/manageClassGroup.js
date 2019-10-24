@@ -37,7 +37,7 @@ function createCard(data){
     var content = "";
     for(var i = 0;i < data.allMatchData.length;i++){
 
-        var card = "<div class='card col-12 col-md-10 col-lg-8'>"+
+        var card = "<div class='card col-12 col-md-10 col-lg-8 p-0'>"+
                         "<h5 class='card-header'>" + data.allMatchData[i].className + "</h5>"+
                         "<div class='card-body'>"+
                             "<p class='card-title'>學年: "+ data.allMatchData[i].classYear +" </p>"+
