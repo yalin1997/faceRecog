@@ -1,9 +1,7 @@
 .videoPanel{
-    margin: 0 auto;
+    margin: 0;
     display: block;
-    width: 550px;
-    min-width: 500px;
-    max-width: 600px;
+    position: relative;
 }
 .theRow{
     margin-left: 15px;
