@@ -43,6 +43,7 @@ function createCard(data){
                             "<p class='card-title'>學年: "+ data.allMatchData[i].classYear +" </p>"+
                             "<p class='card-text'>星期: "+ data.allMatchData[i].classDay +"</p>"+
                             "<div class='d-flex flex-row-reverse'>"+
+                                "<a href='#' id='delete_"+ data.allMatchData[i].id +"' class='btn btn-danger my-btn' onclick='deleteEvent(id)'>刪除</a>"+
                                 "<button type='button' class='btn btn-primary my-btn dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>"+
                                     "編輯"+
                                 "</button>"+
@@ -52,7 +53,6 @@ function createCard(data){
                                     "<li><a class='dropdown-item' href='/studentsManage?classId="+ data.allMatchData[i].id +"'>管理學生</a></li>"+
                                     "<li><a class='dropdown-item' href='/addClassMember?classId="+ data.allMatchData[i].id +"'>加入學生</a></li>"+
                                 "</div>"+
-                                "<a href='#' id='delete_"+ data.allMatchData[i].id +"' class='btn btn-danger my-btn' onclick='deleteEvent(id)'>刪除</a>"+
                             "</div>"+
                         "</div>"+ 
                     "</div>";
