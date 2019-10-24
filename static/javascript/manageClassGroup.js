@@ -37,10 +37,10 @@ function createCard(data){
     var content = "";
     for(var i = 0;i < data.allMatchData.length;i++){
 
-        var card = "<div class='card' style='width: 100%;'>"+
+        var card = "<div class='card col-12 col-md-10 col-lg-8'>"+
+                        "<h5 class='card-header'>" + data.allMatchData[i].className + "</h5>"+
                         "<div class='card-body'>"+
-                            "<h5 class='card-title'>" + data.allMatchData[i].className + "</h5>"+
-                            "<p class='card-text'>學年: "+ data.allMatchData[i].classYear +" </p>"+
+                            "<p class='card-title'>學年: "+ data.allMatchData[i].classYear +" </p>"+
                             "<p class='card-text'>星期: "+ data.allMatchData[i].classDay +"</p>"+
                             "<div class='btn-group'>"+
                                 "<button type='button' class='btn btn-primary my-btn dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>"+
@@ -53,7 +53,7 @@ function createCard(data){
                                     "<li><a class='dropdown-item' href='/addClassMember?classId="+ data.allMatchData[i].id +"'>加入學生</a></li>"+
                                 "</div>"+
                                 "</div>"+
-                            "<a href='#' id='delete_"+ data.allMatchData[i].id +"' class='btn btn-primary my-btn' onclick='deleteEvent(id)'>刪除</a>"+
+                            "<a href='#' id='delete_"+ data.allMatchData[i].id +"' class='btn btn-danger my-btn' onclick='deleteEvent(id)'>刪除</a>"+
                         "</div>"+ 
                     "</div>"
         content+=card;
