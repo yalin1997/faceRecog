@@ -14,9 +14,6 @@
         <div class="form-group"></div>
             <lable for="lastName">名</lable> {{ form.firstName }}
         </div>
-        <div class="form-group d-flex flex-row-reverse">
-            <a href="#" id="{{ classId }}" class="btn btn-primary my-btn" onclick="filterEvent(id)" >篩選</a>
-        </div>
     </form>
 </div>
 
@@ -32,8 +29,8 @@
                         功能
                     </button>
                     <div class="dropdown-menu">
-                      <li><a class="dropdown-item" href="/studentInfo?studentId={{ student.id }}">查看資料</a></li>
-                      <li><a class="dropdown-item" href="/studentVideo?studentId={{ student.id }}&classId={{ classId }}">上課影片</a></li>
+                        <li><a class="dropdown-item" href="/studentInfo?studentId={{ student.id }}">查看資料</a></li>
+                        <li><a class="dropdown-item" href="/studentVideo?studentId={{ student.id }}&classId={{ classId }}">上課影片</a></li>
                     </div>
                 </div>
                 <a href="#" id="delete_{{ student.id }}" class="btn btn-danger my-btn" onclick="deleteEvent(id)">刪除</a>
