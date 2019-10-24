@@ -5,7 +5,7 @@
 {% endblock %}
 {% block page_content %}
 <div class="row d-flex justify-content-center">
-    <form id="filterForm" method="POST" enctype="multipart/form-data">
+    
         {{ form.hidden_tag() }}
         <div class="col-12 col-md-10 col-lg-8 border rounded p-3">
             <div class="form-group">
@@ -14,26 +14,21 @@
                 </h4>   
             </div>
             <div class="form-group">
-                <label>
-                    課程名稱: 
-                    {{ form.className }}
-                </label>  
+                <label for="className">課程名稱:</label>
+                {{ form.className }}
             </div>
             <div class="form-group">
-                <label>學年: 
-                {{ form.classYear }}</label>
+                <label for="classYear">學年:</label>
+                {{ form.classYear }}
             </div>
             <div class="form-group">
-                <label>
-                    星期: 
-                    {{ form.classDay }}
-                </label>
+                <label for="classDay">星期:</label>
+                {{ form.classDay }}
             </div>
             <div class="form-group d-flex flex-row-reverse">
                 <a href="#" id="startFilter" class="btn btn-primary my-btn ">篩選</a>
             </div>
         </div>
-    </form>
 </div>
 
 <div class="row d-flex justify-content-center">
