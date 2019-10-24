@@ -208,6 +208,7 @@ def getUserDataById(uid):
     Connector.connect()
     sql = "SELECT user_id , last_name , first_name , account , email FROM user_data WHERE user_id = {}".format(uid)
     queryResult = Connector.sqlQuery(sql)
+    Connector.quit()
     return queryResult
 
 def getStudents(classId , lastname , firstname):
@@ -241,18 +242,21 @@ def getFaceById(uid):
     Connector.connect()
     sql = "SELECT face_url , face_type FROM face_data WHERE user_id = {}".format(uid)
     queryResult = Connector.sqlQuery(sql)
+    Connector.quit()
     return queryResult
 
 def SearchUser(account):
     Connector.connect()
     sql = "SELECT COUNT(user_id) FROM user_data WHERE account = '{}'".format(account)
     queryResult = Connector.sqlQuery(sql)
+    Connector.quit()
     return int(queryResult[0][0]) == 0
 
 def getUserIdByAccount(account):
     Connector.connect()
     sql = "SELECT user_id FROM user_data WHERE account = '{}'".format(account)
     queryResult = Connector.sqlQuery(sql)
+    Connector.quit()
     return int(queryResult[0][0])
 
     
