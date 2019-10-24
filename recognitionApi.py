@@ -348,14 +348,14 @@ def studentsManage():
 @app.route('/studentInfo' , methods = ['GET'])
 @login_required
 def studentInfo():
-    faceDirectDic = {"positive" : "正面" , "left" : "左側臉" , "right" : "右側臉" , "up" : "上側臉" , "down" : "下側臉"}
+    faceDirectDic = {"face" : "正面" , "left_face" : "左側臉" , "right_face" : "右側臉" , "up_face" : "上側臉" , "down_face" : "下側臉"}
     faceUrlDic = {}
     studentId = request.args.get('studentId')
     studentData = getDataService.getUserDataById(studentId)
     studentFace = getDataService.getFaceById(studentId)
     faceList = []
     userFaceSet = set()
-    faceSet = set(['positive' , 'left' , 'right' , 'up' , 'down'])
+    faceSet = set(['face' , 'left_face' , 'right_face' , 'up_face' , 'down_face'])
     for i in range(len(studentFace)):
         faceList.append(str(studentFace[i][0]))
         userFaceSet.add(str(studentFace[i][1]))
