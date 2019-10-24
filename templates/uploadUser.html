@@ -5,45 +5,42 @@
 {% endblock %}
 
 {% block page_content %}
-<div id= "uploadPanel" class="container">
-    <form method="POST" action="{{ url_for('upload') }}" enctype=multipart/form-data id="uploadForm">
+<div id= "uploadPanel" class="row d-flex justify-content-center">
+    <form method="POST" action="{{ url_for('upload') }}" enctype="multipart/form-data" id="uploadForm" class="col-12 col-md-10 col-lg-8 border rounded p-3">
         {{ form.hidden_tag() }}
-        <div class="row">
-            <p class="theCol">{{ form.face.label }}{{ form.face }}
+        <div class="form-group">
+           {{ form.face.label }}{{ form.face }}
                 {% for error in form.face.errors %}
                 <span style="color: red;">{{ error }}</span>
                 {% endfor %}
-            </p>
         </div>
-        <div class="row">
-            <p class="theCol">{{ form.leftFace.label }}{{ form.leftFace }}
+        <div class="form-group">
+            {{ form.leftFace.label }}{{ form.leftFace }}
                 {% for error in form.leftFace.errors %}
                 <span style="color: red;">{{ error }}</span>
                 {% endfor %}
-            </p>
         </div>
-        <div class="row">
-            <p class="theCol">{{ form.rightFace.label }}{{ form.rightFace }}
+        <div class="form-group">
+            {{ form.rightFace.label }}{{ form.rightFace }}
                 {% for error in form.rightFace.errors %}
                 <span style="color: red;">{{ error }}</span>
                 {% endfor %}
-            </p>
         </div>
-        <div class="row">
-            <p class="theCol">{{ form.upFace.label }}{{ form.upFace }}
+        <div class="form-group">
+            {{ form.upFace.label }}{{ form.upFace }}
                 {% for error in form.upFace.errors %}
                 <span style="color: red;">{{ error }}</span>
                 {% endfor %}
-            </p>
         </div>
-        <div class="row">
-            <p class="theCol">{{ form.downFace.label }}{{ form.downFace }}
+        <div class="form-group">
+            {{ form.downFace.label }}{{ form.downFace }}
                 {% for error in form.downFace.errors %}
                 <span style="color: red;">{{ error }}</span>
                 {% endfor %}
-            </p>
         </div>
-        <a href="#" class="btn btn-primary my-btn" id="confirm">上傳</a>
+        <div class="form-group d-flex flex-row-reverse">
+            <a href="#" class="btn btn-primary my-btn" id="confirm">上傳</a>
+        </div>
     </form>
 </div>
 {% endblock page_content %}
