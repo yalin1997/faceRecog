@@ -79,6 +79,7 @@ function createCard(data){
                                 "<img src='" + data.allMatchData[i].videoUrl +"' alt='Avatar' style='width:100%;opacity:0.85'>"+
                             "<div class='container'>"+
                                 "<p>第" + data.allMatchData[i].classNo + "節</p>"+  
+                                " <button class='btn btn-primary my-btn' id='" + data.allMatchData[i].id + "' onclick='pustInRecogQueue(id)'>執行辨識</button>"+
                                 "</div>"+
                         "</div>"
         }
