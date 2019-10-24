@@ -37,16 +37,27 @@ function createCard(data){
     for(var i = 0;i < data.allMatchData.length;i++){
 
         var card = "<div class='panel panel-primary classGroupPanel' style='width: 18rem;'>"+
-                        " <div class='panel-heading'>"+
-                            "<h5 class='panel-title'>"+data.allMatchData[i].className +"</h5>"+
-                         "</div>"+
-                        "<div class='panel-body'>"+
-                            "<a href='/editClassGroup?classGroupId="+data.allMatchData[i].id+"' class='btn btn-primary my-btn'>編輯</a>"+ 
-                            "<a href='#' id='delete_"+data.allMatchData[i].id +"' class='btn btn-primary my-btn' onclick='deleteEvent(id)'>刪除</a>"+
+                        "<div class='panel-heading'>"+
+                            "<h5 class='panel-title'>" + data.allMatchData[i].className + "</h5>"+
                         "</div>"+
-                    "</div>";
+                        "<div class='panel-body'>"+
+                            "<p>學年: "+ data.allMatchData[i].classYear +" </p>"+
+                            "<p>星期: "+ data.allMatchData[i].classDay +"</p>"+
+                            "<div class='btn-group'>"+
+                                "<button type='button' class='btn btn-primary my-btn dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>"+
+                                    "編輯"+
+                                "</button>"+
+                                "<div class='dropdown-menu'>"+
+                                    "<li><a class='dropdown-item' href='/upload?classId="+ data.allMatchData[i].id +"'>上傳影片</a></li>"+
+                                    "<li><a class='dropdown-item' href='/videoManage?classId="+ data.allMatchData[i].id +"'>管理影片</a></li>"+
+                                    "<li><a class='dropdown-item' href='/studentsManage?classId="+ data.allMatchData[i].id +"'>管理學生</a></li>"+
+                                    "<li><a class='dropdown-item' href='/addClassMember?classId="+ data.allMatchData[i].id +"'>加入學生</a></li>"+
+                                "</div>"+
+                                "</div>"+
+                            "<a href='#' id='delete_"+ data.allMatchData[i].id +"' class='btn btn-primary my-btn' onclick='deleteEvent(id)'>刪除</a>"+
+                        "</div>"+ 
+                    "</div>"
         content+=card;
     }
-
-    $("#renderClassGroupoArea").html(content);
+    $("#renderClassGroupArea").html(content);
 }

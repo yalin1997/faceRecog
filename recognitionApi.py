@@ -287,7 +287,7 @@ def manageClassGroup():
         classGroupResult = getDataService.getClassGroup(className , classYear , classDay , current_user.id)
         matchData = []
         for i in range(len(classGroupResult)):
-            matchData.append( {'id':str(classGroupResult[i][0]),'className': str(classGroupResult[i][1]), 'classDepartment': str(classGroupResult[i][2]),"classDay" : str(classGroupResult[i][3])})
+            matchData.append( {'id':str(classGroupResult[i][0]),'className': str(classGroupResult[i][1]), 'classYear': str(classGroupResult[i][2]),"classDay" : str(classGroupResult[i][3])})
         return jsonify({'allMatchData':matchData})
     else:
         classGroupList = []
