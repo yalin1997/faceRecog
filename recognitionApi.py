@@ -64,8 +64,7 @@ model_Path = getDataService.getModelPath() # 取模型路徑 tuple list
 # flask Bootstrap randerer
 bootstrap = Bootstrap(app)
 
-# 認證
-# auth = HTTPBasicAuth()
+
 login_manager = LoginManager()
 login_manager.session_protection='strong'
 login_manager.login_view = 'login'
@@ -779,5 +778,7 @@ def getOtherFile(filename):
         return send_from_directory(app.config['UPLOAD_FOLDER'],filename)
 
 if __name__ == "__main__":
-    app.run(host='140.127.74.249')
-    #app.run()
+    if sys.argv[1]:
+        app.run(host = '140.127.74.249' , port=sys.argv[1])
+    else:
+        app.run(host = '140.127.74.249' , port=5000)
