@@ -50,7 +50,7 @@ def detectSinglePicture(Dir,fileUrl):
     images = load_and_align_data(img_path_set, 160, 44, 1.0)
 
     # 改为emb_img文件夹的绝对路径  
-    emb_dir='/home/nknu/文件/faceRecog_V1.1/static/upload/face'
+    emb_dir='/home/nknu/文件/faceRecog/static/upload/face'
 
     if(os.path.exists(emb_dir)==False):
         os.mkdir(emb_dir)
