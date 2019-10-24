@@ -43,7 +43,7 @@
         <div class="card card-danger studentPanel col-12 col-md-5 col-lg-3">
             <div class="card-body">
                 <img src="{{ student.faceUrl }}" title = "點選來編輯" alt="Responsive image" class="img-circle studentManage" id="facePicture_{{ student.id }}">
-                <h5 class="card-title">{{ student.lastname }}{{ student.firstname }}</h5>
+                <h5 class="card-title">{{ student.lastname }}{{ student.firstname }} (資料未完善)</h5>
                 <div class="form-group d-flex flex-row-reverse">
                     <button type='button' id="delete_{{ student.id }}" class="btn btn-danger m-1" onclick="deleteEvent(id)" >刪除</button>
                     <button type="button" class="btn btn-primary dropdown-toggle m-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
