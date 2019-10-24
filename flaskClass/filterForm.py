@@ -19,8 +19,8 @@ class videoFilter(FlaskForm):
         (9 , '第九節')]
         , render_kw={'class': 'form-control'}
     )
-    sdate = DateField('日期')
-    edate = DateField('日期')
+    sdate = DateField('日期' , render_kw={'class': 'form-control'})
+    edate = DateField('日期' , render_kw={'class': 'form-control'})
 class videoFilterUser(FlaskForm):
     lesson = SelectField(
         '節數',

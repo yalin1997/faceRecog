@@ -32,11 +32,10 @@
         </div>
     </form>
 </div>
-<div class="row d-flex justify-content-center">
-    <div class="col-12 col-md-10 col-lg-8" id="renderVideoArea">
+<div class="row d-flex justify-content-center" id="renderVideoArea">
         {% for video in videoData %}
             {% if video.isRecoged == 1 %}
-                <div class='card' id="card_{{video.id}}" style='width:92%;max-width:300px;' onclick='CardClickedEvent(id)'>
+                <div class='card col-12 col-md-10 col-lg-5' id="card_{{video.id}}" onclick='CardClickedEvent(id)'>
                     <div class="card-header">{{video.date}}</div>
                     {% if video.videoUrl%}
                         <img src="{{video.videoUrl}}" alt='Avatar' style='width:100%;opacity:0.85'>
@@ -46,9 +45,9 @@
                     <div class='container'>
                         <p>第{{video.classNo}}節</p>  
                     </div>
-                </div>
+                </div>  
             {% elif video.isRecoged == 2 %}
-                <div class='card text-white bg-warning' id="card_{{video.id}}" style='width:92%;max-width:300px;' onclick='CardClickedEvent(id)'>
+                <div class='card col-12 col-md-10 col-lg-5 text-white bg-warning' id="card_{{video.id}}" onclick='CardClickedEvent(id)'>
                     <div class="card-header">{{video.date}} (辨識中)</div>
                     {% if video.videoUrl%}
                         <img src="{{video.videoUrl}}" alt='Avatar' style='width:100%;opacity:0.85'>
@@ -60,7 +59,7 @@
                     </div>
                 </div>
             {% else %}
-                <div class='card text-white bg-danger' id="card_{{video.id}}" style='width:92%;max-width:300px;'>
+                <div class='card col-12 col-md-10 col-lg-5 text-white bg-danger' id="card_{{video.id}}">
                     <div class="card-header">{{video.date}} (尚未辨識)</div>
                     {% if video.videoUrl%}
                         <img src="{{video.videoUrl}}" id="img_{{video.id}}" alt='Avatar' style='width:100%;opacity:0.85'  onclick='CardClickedEvent(id)'>
@@ -74,7 +73,6 @@
                 </div>
             {% endif %} 
         {% endfor %}
-    </div>
 </div>
 {% endblock page_content %}
 {% block scripts %}
