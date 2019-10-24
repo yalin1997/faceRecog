@@ -295,7 +295,6 @@ def manageClassGroup():
         classGroupFilterForm.classYear.choices = []
         for i in range(5):
             classGroupFilterForm.classYear.choices.append((datetime.now().year-i-1911,datetime.now().year-i-1911))
-        print("LIST="+ str(classGroupList))
         return render_template('/manageClassGroup.html',form = classGroupFilterForm)
 
 @app.route('/editClassGroup/delete',methods=['POST'])
