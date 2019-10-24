@@ -28,16 +28,14 @@
                 <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
                     班群
                 </a>
-                {% if current_user.permission == 'manager' %}
-                    <div class="dropdown-menu">
+                <div class="dropdown-menu">
+                    {% if current_user.permission == 'manager' %}
                         <a class="dropdown-item" href="/manageClassGroup">管理班群</a>
                         <a class="dropdown-item" href="/addClassGroup">新增班群</a>
-                    </div>
-                {% else %}
-                    <li id="logout">
-                        <a href="/manageClassGroup">管理班群</a>
-                    </li> 
-                {% endif %}
+                    {% else %}
+                        <a class="dropdown-item" href="/manageClassGroup">查看班群</a>
+                    {% endif %}
+                </div>
             </li>
             <li id="logout">
                 <a class="btn-warning btn" href="/logout">登出</a>
