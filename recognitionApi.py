@@ -746,7 +746,7 @@ def faceLocateTask( face , leftFace , rightFace , upFace , downFace ):
                 faceDict[key].save(filePath)
                 
                 faceDetect.detectSinglePicture(app.config["UPLOAD_FOLDER"]+picturePath,pictureName)# 尋找臉部
-                insertService.insertFaceInfo(current_user.lastname,current_user.firstname,"/upload/"+pictureName , filePath , pictureName)
+                insertService.insertFaceInfo(current_user.id ,"/upload/"+pictureName , key , filePath , pictureName)
                 faceDict[key] = "/upload/"+pictureName
 
 # 取得資料
