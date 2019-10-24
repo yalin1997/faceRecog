@@ -7,6 +7,7 @@
 {% block page_content %}
 <div id= "uploadPanel" class="row d-flex justify-content-center">
     <form method="POST" action="{{ url_for('upload') }}" enctype=multipart/form-data id="uploadForm" class="col-12 col-md-10 col-lg-8 border rounded p-3">
+        <h4>上傳影片</h4>
         {{ form.hidden_tag() }}
         <div class="form-group">
             {{ form.uploaded_file }}
@@ -27,40 +28,38 @@
         <div id="videoUploadMsg" style="display:none">
             {% if classGroup %}
                 <div class="form-group">
-                    <p class="theCol">
-                        <input type="hidden" name="classId" value="{{ classGroup.id }}">
-                        <input type="text" name="className" id="className" placeholder="班級" value="{{ classGroup.className }}" readonly/>
-                    </p>   
+                    <label for="className">班級</label>
+                    <input type="hidden" name="classId" value="{{ classGroup.id }}">
+                    <input type="text" name="className" id="className" class="form-control" placeholder="班級" value="{{ classGroup.className }}" readonly/>
                 </div>
             {% else %}
                 <div class="form-group">
-                    <p class="theCol">
-                        <input type="text" name="className" id="className" placeholder="班級"/>
-                    </p>   
+                    <label for="className">班級</label>
+                    <input type="text" name="className" id="className" class="form-control" placeholder="班級"/> 
                 </div>
             {% endif %}
                 <div class="form-group">
-                    <p class="theCol">
-                        <input type="date" name="dateTime" id="dateTime" placeholder="日期"/>
-                    </p>
+                    <label for="className">日期</label>
+                    <input type="date" name="dateTime" id="dateTime" class="form-control" placeholder="日期"/>
                 </div>
                 <div class="form-group">
-                    <p class="theCol">
-                        <select name="classNo">
-                            <option value="1">第一節</option>
-                            <option value="2">第二節</option>
-                            <option value="3">第三節</option>
-                            <option value="4">第四節</option>
-                            <option value="5">第五節</option>
-                            <option value="6">第六節</option>
-                            <option value="7">第七節</option>
-                            <option value="8">第八節</option>
-                            <option value="9">第九節</option>
-                        </select>
-                    </p>
+                    <label for="className">時間</label>
+                    <select name="classNo" class="form-control">
+                        <option value="1">第一節</option>
+                        <option value="2">第二節</option>
+                        <option value="3">第三節</option>
+                        <option value="4">第四節</option>
+                        <option value="5">第五節</option>
+                        <option value="6">第六節</option>
+                        <option value="7">第七節</option>
+                        <option value="8">第八節</option>
+                        <option value="9">第九節</option>
+                    </select>
                 </div>
         </div>
-        <a href="#" class="btn btn-primary my-btn" id="confirm">上傳</a>
+        <div class="form-group d-flex flex-row-reverse">
+            <a href="#" class="btn btn-primary my-btn" id="confirm">上傳</a>
+        </div>
     </form>
 </div>
 {% endblock page_content %}
