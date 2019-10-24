@@ -5,49 +5,46 @@
 {% endblock %}
 
 {% block page_content %}
-<div id= "uploadPanel" class="container">
-    <form method="POST" action="{{ url_for('upload') }}" enctype=multipart/form-data id="uploadForm">
+<div id= "uploadPanel" class="row d-flex justify-content-center">
+    <form method="POST" action="{{ url_for('upload') }}" enctype=multipart/form-data id="uploadForm" class="col-12 col-md-10 col-lg-8 border rounded p-3">
         {{ form.hidden_tag() }}
-        <div class="row">
-            <p class="theCol">{{ form.uploaded_file }}
+        <div class="form-group">
+            {{ form.uploaded_file }}
                 {% for error in form.uploaded_file.errors %}
                 <span style="color: red;">{{ error }}</span>
                 {% endfor %}
-            </p>
         </div>
         <div id="picUploadMsg" style="display:none">
-            <div class="row">
-                <p class="theCol">
-                    <input type="text" name="lastName" id="lastName" placeholder="姓"/>
-                </p>   
+            <div class="form-group">
+                <label for="lastName">姓</label>
+                <input type="text" name="lastName" id="lastName" class="form-control" placeholder="姓"/>
             </div>
-            <div class="row">
-                <p class="theCol">
-                    <input type="text" name="firstName" id="firstName" placeholder="名"/>
-                </p>
+            <div class="form-group">
+                <label for="firstName">名</label>
+                <input type="text" name="firstName" id="firstName" class="form-control" placeholder="名"/>
             </div>
         </div>
         <div id="videoUploadMsg" style="display:none">
             {% if classGroup %}
-                <div class="row">
+                <div class="form-group">
                     <p class="theCol">
                         <input type="hidden" name="classId" value="{{ classGroup.id }}">
                         <input type="text" name="className" id="className" placeholder="班級" value="{{ classGroup.className }}" readonly/>
                     </p>   
                 </div>
             {% else %}
-                <div class="row">
+                <div class="form-group">
                     <p class="theCol">
                         <input type="text" name="className" id="className" placeholder="班級"/>
                     </p>   
                 </div>
             {% endif %}
-                <div class="row">
+                <div class="form-group">
                     <p class="theCol">
                         <input type="date" name="dateTime" id="dateTime" placeholder="日期"/>
                     </p>
                 </div>
-                <div class="row">
+                <div class="form-group">
                     <p class="theCol">
                         <select name="classNo">
                             <option value="1">第一節</option>
