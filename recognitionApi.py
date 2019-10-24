@@ -563,7 +563,7 @@ def recogTask(videoId ,filename, filePath , date , classNo, classId ,  memberLis
 @login_required
 def videoEdit():
     editVideoForm = videoEditForm()
-    videoId = request.args.get('videoId')    
+      
     if request.method == 'POST' and editVideoForm.validate_on_submit():
         # 取得表單附檔
         newVideo = flask.request.files['newVideo']
@@ -577,8 +577,8 @@ def videoEdit():
         else:
             return "發生異常"
     else:
+        videoId = request.args.get('videoId')  
         videoData = getDataService.getVideoById(videoId)
-        matchData = {'id':videoId ,'videoUrl': str(videoData[0][1])}
         editVideo = video(videoId,str(videoData[0][1]))
         permission = current_user.permission
         return render_template('videoEdit.html',editVideo=editVideo,form=editVideoForm,permission = permission)
