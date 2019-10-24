@@ -8,62 +8,68 @@
     
 {% endblock %}
 {% block page_content %}
-    <div class="flexslider" style="width:30%; margin:0 auto;">
-        <ul class="slides">
-            {% if 'positive' in faceUrlDic.keys() %}
-                <li><img src="{{ faceUrlDic['positive'] }}" alt="" width="350" height="250"></li>
-            {% else %}
-                <li><img src="/upload/others/img_avatar.jpg" alt="" width="350" height="250"></li>
-            {% endif %}
-            {% if 'left' in faceUrlDic.keys() %}
-                <li><img src="{{ faceUrlDic['left'] }}" alt="" width="350" height="250"></li>
-            {% else %}
-                <li><img src="/upload/others/img_avatar.jpg" alt="" width="350" height="250"></li>
-            {% endif %}
-            {% if 'right' in faceUrlDic.keys() %}
-                <li><img src="{{ faceUrlDic['right'] }}" alt="" width="350" height="250"></li>
-            {% else %}
-                <li><img src="/upload/others/img_avatar.jpg" alt="" width="350" height="250"></li>
-            {% endif %}
+<div class="row d-flex justify-content-center">
+    <div class="col-12 col-md-10 col-lg-8 border rounded p-3">
+        <div class="row d-flex justify-content-center">
+            <div class="flexslider col-10 col-md-8 col-lg-4">
+                <ul class="slides">
+                    {% if 'positive' in faceUrlDic.keys() %}
+                        <li><img src="{{ faceUrlDic['positive'] }}" alt="" width="350" height="250"></li>
+                    {% else %}
+                        <li><img src="/upload/others/img_avatar.jpg" alt="" width="350" height="250"></li>
+                    {% endif %}
+                    {% if 'left' in faceUrlDic.keys() %}
+                        <li><img src="{{ faceUrlDic['left'] }}" alt="" width="350" height="250"></li>
+                    {% else %}
+                        <li><img src="/upload/others/img_avatar.jpg" alt="" width="350" height="250"></li>
+                    {% endif %}
+                    {% if 'right' in faceUrlDic.keys() %}
+                        <li><img src="{{ faceUrlDic['right'] }}" alt="" width="350" height="250"></li>
+                    {% else %}
+                        <li><img src="/upload/others/img_avatar.jpg" alt="" width="350" height="250"></li>
+                    {% endif %}
 
-            {% if 'up' in faceUrlDic.keys() %}
-                <li><img src="{{ faceUrlDic['up'] }}" alt="" width="350" height="250"></li>
-            {% else %}
-                <li><img src="/upload/others/img_avatar.jpg" alt="" width="350" height="250"></li>
-            {% endif %}
-            {% if 'down' in faceUrlDic.keys() %}
-                <li><img src="{{ faceUrlDic['down'] }}" alt="" width="350" height="250"></li>
-            {% else %}
-                <li><img src="/upload/others/img_avatar.jpg" alt="" width="350" height="250"></li>
-            {% endif %}
-        </ul>
+                    {% if 'up' in faceUrlDic.keys() %}
+                        <li><img src="{{ faceUrlDic['up'] }}" alt="" width="350" height="250"></li>
+                    {% else %}
+                        <li><img src="/upload/others/img_avatar.jpg" alt="" width="350" height="250"></li>
+                    {% endif %}
+                    {% if 'down' in faceUrlDic.keys() %}
+                        <li><img src="{{ faceUrlDic['down'] }}" alt="" width="350" height="250"></li>
+                    {% else %}
+                        <li><img src="/upload/others/img_avatar.jpg" alt="" width="350" height="250"></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+
+        <table style="width: 100%;" class="table table-hover table-striped">
+            <tr>
+                <th style="text-align: center;">
+                    姓名
+                </th>
+                <td>
+                    {{ student.lastname }}{{ student.firstname }}
+                </td>
+            </tr>
+            <tr>
+                <th style="text-align: center;">
+                    學號
+                </th>
+                <td>
+                    {{ student.account }}
+                </td>
+            </tr>
+            <tr>
+                <th style="text-align: center;">
+                    信箱
+                </th>
+                <td>
+                    {{ student.email }}
+                </td>
+            </tr>
+        </table>
     </div>
-    <table style="width: 100%;" class="table table-hover table-striped">
-        <tr>
-            <th style="text-align: center;">
-                姓名
-            </th>
-            <td>
-                {{ student.lastname }}{{ student.firstname }}
-            </td>
-        </tr>
-        <tr>
-            <th style="text-align: center;">
-                學號
-            </th>
-            <td>
-                {{ student.account }}
-            </td>
-        </tr>
-        <tr>
-            <th style="text-align: center;">
-                信箱
-            </th>
-            <td>
-                {{ student.email }}
-            </td>
-        </tr>
-    </table>
 </div>
 {% endblock page_content %}
 {% block scripts %}
