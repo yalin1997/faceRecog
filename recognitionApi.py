@@ -341,7 +341,6 @@ def studentsManage():
         currentPermission = current_user.permission
         if currentPermission == 'manager':
             studentsList = getDataService.getAllStudents(classId)
-            print(str(studentsList))
             return render_template('studentsManage.html',form=studentsFilterForm,studentsList=studentsList,classId = classId)
         else:
             return redirect('/videoManage')
