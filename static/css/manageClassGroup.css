@@ -2,7 +2,7 @@
     float: left;
     margin:20px;
 }
-#filterForm{
+.filterForm{
     margin: auto;
     padding: 0;
     min-width: 500px;
