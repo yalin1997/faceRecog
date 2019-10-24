@@ -34,7 +34,7 @@ function deleteEvent(targetId){
 }
 
 function createCard(data){
- 
+    var content = "";
     for(var i = 0;i < data.allMatchData.length;i++){
 
         var card = "<div class='card' style='width: 100%;'>"+
