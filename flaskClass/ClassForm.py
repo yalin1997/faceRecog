@@ -15,8 +15,8 @@ class addClassGroupForm(FlaskForm):
     )
     classDay =  SelectField(
         '星期',
-        choices=[(1,'一') , (2 , '二') , (3, '三') , (4,'四') , (5,'五') 
-        , render_kw={'class': 'form-control'}]
+        choices=[(1,'一') , (2 , '二') , (3, '三') , (4,'四') , (5,'五') ]
+        , render_kw={'class': 'form-control'}
     )
 
     classStime = SelectField(
