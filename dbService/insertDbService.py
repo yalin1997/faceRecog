@@ -101,6 +101,7 @@ def editStudentInfo(sid , email , newPassword , lastname , firstname , account )
     if not account == "" :
         sql = sql + " account = '{}', ".format(account)
     sql = sql.strip(',')
+    print(sql)
     sql = sql + " WHERE user_id = {}".format(sid)
 
     Connector.sqlExecute(sql)
