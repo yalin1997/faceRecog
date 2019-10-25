@@ -184,13 +184,13 @@
     $("#newPasswordConfirm").change(function(){
         if($("#newPassword").val() != $("#newPasswordConfirm").val()){
             $("#newPasswordConfirmMsg").text("與新密碼不相同");
-            $("this").css({"border-color": "red"});
+            $(this).css({"border-color": "red"});
         }
         else if($("#newPasswordConfirm").val().length > 0){
             $("#newPasswordConfirmMsg").text("");
-            $("this").css({"border-color": "green"});
+            $(this).css({"border-color": "green"});
         }else{
-            $("this").css({"border-color": ""});
+            $(this).css({"border-color": ""});
         }
     });
 })();
