@@ -47,7 +47,7 @@
             <h4>個人資料</h4>
             {% if canEdit %}
             <button type="button" class="btn btn-outline-info" id="btnEditInfo">編輯資料</button>
-            <button type="button" class="btn btn-outline-danger" id="btnCancelEditInfo" style="display: none;">取消編輯</button>
+            <button type="button" class="btn btn-outline-danger" id="btnCancelEditInfo" style="display: none;">取消編輯資料</button>
             {% endif%}
         </div>
 
@@ -79,15 +79,23 @@
         </table>
 
         {% if canEdit %}
-        <h4>修改密碼</h4>
-        <div class="form-group">
-            <label>目前的密碼</label><input class="form-control" />
+        <div class="d-flex justify-content-between p-3">
+            <h4>修改密碼</h4>
+            {% if canEdit %}
+            <button type="button" class="btn btn-outline-info" id="btnEditInfo">編輯密碼</button>
+            <button type="button" class="btn btn-outline-danger" id="btnCancelEditInfo" style="display: none;">取消編輯密碼</button>
+            {% endif%}
         </div>
-        <div class="form-group">
-            <label>新密碼</label><input id="newPassword" class="form-control" />
-        </div>
-        <div class="form-group">
-            <label>再次輸入新密碼</label><input id="newPasswordConfirm" class="form-control" />
+        <div id="editPassword">
+            <div class="form-group">
+                <label>目前的密碼</label><input class="form-control" />
+            </div>
+            <div class="form-group">
+                <label>新密碼</label><input id="newPassword" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label>再次輸入新密碼</label><input id="newPasswordConfirm" class="form-control" />
+            </div>
         </div>
         {% endif%}
     </div>
