@@ -10,7 +10,7 @@ $( document ).ready(function() {
     var editArray = [];
     var editInput = [];
     $("#btnEditInfo").click(function(){
-        var nameContainer = $("<div>名: <input id='editFirstName'/> 姓:<input id='editLastName' class='ml-1' /></div>");
+        var nameContainer = $("<div>姓:<input id='editLastName' class='ml-1' /> 名: <input id='editFirstName'/></div>");
         var editAccount = $("<input id='editAccount' type='text' />")
         var editEmail = $("<input id='editEmail' type='email' />");
         
