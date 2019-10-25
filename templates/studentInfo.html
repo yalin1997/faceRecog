@@ -108,16 +108,16 @@
 
         editArray.push(infoName);
         editArray.push(infoEmail);
-        
+
         $("#btnCancelEditInfo").show();
         $(this).hide();
     });
 
 
     $("#btnCancelEditInfo").click(function(){
-        for(var input in editInput){
+        for (index = 0; index < editInput.length; ++index){
             console.log(input);
-            input.remove();
+            input[index].remove();
         }
         infoName.children().show();
 
