@@ -740,6 +740,7 @@ def upload():
             isRightFaceExit = getDataService.getFaceByType(current_user.id , 'right_face')
             isUpFaceExit = getDataService.getFaceByType(current_user.id , 'up_face')
             isDownFaceExit = getDataService.getFaceByType(current_user.id , 'down_face')
+            print(len(isFaceExit))
             return render_template('upload.html', form=uploadform ,
              isFaceExit = len(isFaceExit) > 0,
              isLeftFaceExit = len(isLeftFaceExit) > 0,
