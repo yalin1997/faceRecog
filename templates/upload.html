@@ -65,7 +65,7 @@
     {% else %}
         <form method="POST" action="{{ url_for('upload') }}" enctype="multipart/form-data" id="uploadForm" class="col-12 col-md-10 col-lg-8 border rounded p-3">
             {{ form.hidden_tag() }}
-            {% if isFaceExit == True %}
+            {% if not isFaceExit %}
                 <div class="form-group">
                 {{ form.face.label }}{{ form.face }}
                         {% for error in form.face.errors %}
@@ -78,7 +78,7 @@
                 </div>
             {% endif %}
 
-            {% if isLeftFaceExit == True %}
+            {% if not isLeftFaceExit %}
                 <div class="form-group">
                     {{ form.leftFace.label }}{{ form.leftFace }}
                         {% for error in form.leftFace.errors %}
@@ -91,7 +91,7 @@
                 </div>
             {% endif %}
 
-            {% if isRightFaceExit == True %}
+            {% if not isRightFaceExit %}
             <div class="form-group">
                 {{ form.rightFace.label }}{{ form.rightFace }}
                     {% for error in form.rightFace.errors %}
@@ -104,7 +104,7 @@
                 </div>
             {% endif %}
 
-            {% if isUpFaceExit == True %}
+            {% if not isUpFaceExit %}
             <div class="form-group">
                 {{ form.upFace.label }}{{ form.upFace }}
                     {% for error in form.upFace.errors %}
@@ -117,7 +117,7 @@
                 </div>
             {% endif %}
 
-            {% if isDownFaceExit == True %}
+            {% if not isDownFaceExit %}
             <div class="form-group">
                 {{ form.downFace.label }}{{ form.downFace }}
                     {% for error in form.downFace.errors %}
