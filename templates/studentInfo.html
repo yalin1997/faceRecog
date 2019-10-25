@@ -181,17 +181,17 @@
         $(this).hide();
     });
 
-    $("#newPasswordConfirm").change(function(){
+    $("#newPasswordConfirm #newPassword").change(function(){
         if($("#newPassword").val() != $("#newPasswordConfirm").val()){
             $("#newPasswordConfirmMsg").text("與新密碼不相同");
             $(this).css({"border-color": "red"});
         }
         else if($("#newPasswordConfirm").val().length > 0){
             $("#newPasswordConfirmMsg").text("");
-            $(this).css({"border-color": "green"});
+            $("#newPasswordConfirm").css({"border-color": "green"});
         }else{
             $("#newPasswordConfirmMsg").text("");
-            $(this).css({"border-color": ""});
+            $("#newPasswordConfirm").css({"border-color": ""});
         }
     });
 })();
