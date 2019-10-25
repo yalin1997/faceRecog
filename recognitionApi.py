@@ -358,12 +358,22 @@ def studentInfo():
             newPasswordConfirm = str(editData['newPasswordConfirm'])
             if newPassword == newPasswordConfirm:
                 hashPassword = User.generateHash(newPassword)
-                return jsonify({'result':insertService.editStudentInfo(studentId , None , hashPassword)})
+                return jsonify({'result':insertService.editStudentInfo(studentId , "" , hashPassword , "" , "" , "")})
             else :
                 return jsonify({'result':'確認密碼與密碼不相同'})
-        elif 'email' in editData:
-            email = str(editData['email'])
-            return jsonify({'result':insertService.editStudentInfo(studentId , email , None)})
+        else:
+            if current_user.permission == 'manager':
+                email = str(editData['email'])
+                account = str(editData['account'])
+                lastname = str(editData['lastname'])
+                firstname = str(editData['firstname'])
+                if not (email == "" and account == "" and lastname == "" and firstname == ""):
+                    return jsonify({'result':insertService.editStudentInfo(studentId , email , "" , lastname , firstname , account)})
+                else:
+                    return jsonify({'result':'請至少填寫一個欄位'})
+            else:
+                email = str(editData['email'])
+                return jsonify({'result':insertService.editStudentInfo(studentId , email , "" , "" , "" , "")})
     else:
         faceUrlDic = {}
         studentId = request.args.get('studentId')

@@ -86,14 +86,21 @@ def insertClassName(className  , classYear , classDay , classStime , classEtime 
     return result
 
 # 修改學生資料
-def editStudentInfo(sid , email , newPassword):
+def editStudentInfo(sid , email , newPassword , lastname , firstname , account ):
     Connector.connect()
     sql = "UPDATE user_data SET"
 
-    if email :
+    if not email == "" :
         sql = sql + " email = '{}'".format(email)
-    if newPassword :
+    if not newPassword == "" :
         sql = sql + " password = '{}'".format(newPassword)
+    if not lastname == "" :
+        sql = sql + " last_name = '{}'".format(lastname)
+    if not firstname == "" :
+        sql = sql + " first_name = '{}'".format(firstname)   
+    if not account == "" :
+        sql = sql + " account = '{}'".format(account)
+
     sql = sql + " WHERE user_id = {}".format(sid)
 
     Connector.sqlExecute(sql)
