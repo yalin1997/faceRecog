@@ -98,10 +98,9 @@
 
         var infoName = $("#infoName");
         infoName.children().hide();
-        infoName.append(editLastName , editFirstName);
+        infoName.append(nameContainer);
 
         editArray.push(infoName);
-
         editInput.push(nameContainer);
         editInput.push(editEmail);
 
@@ -115,7 +114,7 @@
             input.remove();
         }
         infoName.children().show();
-        
+
         $("btnEditInfo").show();
         $(this).hide();
     });
