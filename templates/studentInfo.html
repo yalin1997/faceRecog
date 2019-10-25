@@ -181,7 +181,7 @@
         $(this).hide();
     });
 
-    $("#newPasswordConfirm #newPassword").change(function(){
+    $("#newPasswordConfirm,#newPassword").change(function(){
         if($("#newPassword").val() != $("#newPasswordConfirm").val()){
             $("#newPasswordConfirmMsg").text("與新密碼不相同");
             $(this).css({"border-color": "red"});
