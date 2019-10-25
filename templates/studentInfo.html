@@ -77,6 +77,19 @@
                 </td>
             </tr>
         </table>
+
+        {% if canEdit %}
+        <h4>修改密碼</h4>
+        <div class="form-group">
+            <label>目前的密碼</label><input class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>新密碼</label><input id="newPassword" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>再次輸入新密碼</label><input id="newPasswordConfirm" class="form-control" />
+        </div>
+        {% endif%}
     </div>
 </div>
 {% endblock page_content %}
@@ -116,7 +129,7 @@
 
     $("#btnCancelEditInfo").click(function(){
         for (index = 0; index < editInput.length; ++index){
-            console.log(input);
+            console.log(editInput);
             input[index].remove();
         }
         infoName.children().show();
