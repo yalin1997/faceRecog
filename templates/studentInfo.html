@@ -67,7 +67,7 @@
                 <th style="text-align: center;">
                     學號
                 </th>
-                <td>
+                <td id="infoAccount">
                     <span>{{ student.account }}</span>
                 </td>
             </tr>
@@ -114,135 +114,13 @@
 {% block scripts %}
 {{ super() }}
 <script src="{{ url_for('static', filename = 'javascript/jquery.flexslider.js') }}" type="text/javascript"></script>
-<script src="{{ url_for('static', filename = 'javascript/studentInfo.js') }}" type="text/javascript"></script>
 
-{% if canEdit %}
-<script>
+{% if canUserEdit %}
+<script src="{{ url_for('static', filename = 'javascript/studentInfoUser.js') }}" type="text/javascript"></script>
+{% endif%}
 
-(function(){
-    var editArray = [];
-    var editInput = [];
-
-    $("#btnEditInfo").click(function(){
-        //var nameContainer = $("<div>名: <input id='editLastName'/> 姓:<input id='editFirstName' class='ml-1' /></div>");
-        var editEmail = $("<input id='editEmail' type='email' />");
-        //editInput.push(nameContainer);
-        editInput.push(editEmail);
-
-        /*var infoName = $("#infoName");
-        infoName.children().hide();
-        infoName.append(nameContainer);*/
-
-        var infoEmail = $("#infoEmail");
-        infoEmail.children().hide();
-        infoEmail.append(editEmail);
-
-        //editArray.push(infoName);
-        editArray.push(infoEmail);
-
-        $("#btnCancelEditInfo").show();
-        $("#btnSubmitInfo").show();
-        $(this).hide();
-    });
-
-
-    $("#btnCancelEditInfo").click(function(){
-        for (index = 0; index < editInput.length; ++index){
-            editInput[index].remove();
-        }
-        for (index = 0; index < editArray.length; ++index){
-            editArray[index].children().show();
-        }
-
-        editInput = [];
-        editArray = [];
-
-        $("#btnEditInfo").show();
-        $("#btnSubmitInfo").hide();
-        $(this).hide();
-    });
-
-}());
-
-(function(){
-    $("#btnEditPassword").click(function(){
-        $("#editPassword").show();
-
-        $("#btnEditCancelPassword").show();
-        $(this).hide();
-    });
-
-    $("#btnEditCancelPassword").click(function(){
-        $("#editPassword").hide();
-        $("#editPassword").find("input").val("");
-        $("#newPasswordConfirmMsg").text("");
-
-        $("#btnEditPassword").show();
-        $(this).hide();
-    });
-
-    $("#newPasswordConfirm,#newPassword").change(function(){
-        if($("#newPassword").val() != $("#newPasswordConfirm").val()){
-            $("#newPasswordConfirmMsg").text("與新密碼不相同");
-            $("#newPasswordConfirm").css({"border-color": "red"});
-        }
-        else if($("#newPasswordConfirm").val().length > 0){
-            $("#newPasswordConfirmMsg").text("");
-            $("#newPasswordConfirm").css({"border-color": "green"});
-        }else{
-            $("#newPasswordConfirmMsg").text("");
-            $("#newPasswordConfirm").css({"border-color": ""});
-        }
-    });
-})();
-
-(function(){
-    $("#btnSubmitInfo").click(function(){
-        $.ajax({
-            type: 'POST',
-            url: '/studentInfo',
-            data:JSON.stringify ({
-                studentId : {{ current_user.id }},
-                email : $('#editEmail').val()
-                        }),
-            success: function(data){
-                if (data.result == true){
-                    alert("修改成功");
-                    location.reload();
-                }
-                else{
-                    alert( "失敗! 原因 : " + data.result );
-                }
-            },
-            contentType: "application/json",
-            dataType: 'json'
-        });
-    });
-
-    $("#btnSubmitEditPassword").click(function(){
-        $.ajax({
-            type: 'POST',
-            url: '/studentInfo',
-            data:JSON.stringify ({
-                studentId : {{ current_user.id }},
-                newPassword : $('#newPassword').val(),
-                newPasswordConfirm : $('#newPasswordConfirm').val()
-                        }),
-            success: function(data){
-                if (data.result == true){
-                    alert("修改成功");
-                    location.reload();
-                }
-                else{
-                    alert( "失敗! 原因 : " + data.result );
-                }
-            },
-            contentType: "application/json",
-            dataType: 'json'
-        });
-    });
-})();
-</script>
+{% if canManagerEdit %}
+<script src="{{ url_for('static', filename = 'javascript/studentInfoManager.js') }}" type="text/javascript"></script>
 {% endif%}
 
 {% endblock scripts %}
