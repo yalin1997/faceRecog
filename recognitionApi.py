@@ -65,7 +65,7 @@ model_Path = getDataService.getModelPath() # 取模型路徑 tuple list
 # flask Bootstrap randerer
 bootstrap = Bootstrap(app)
 
-
+#login
 login_manager = LoginManager()
 login_manager.session_protection='strong'
 login_manager.login_view = 'login'
@@ -73,6 +73,8 @@ app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=30)
 login_manager.remember_cookie_duration=timedelta(days=1)
 login_manager.init_app(app)
 
+# general used var
+faceDirectDic = {"face" : "正面" , "left_face" : "左側臉" , "right_face" : "右側臉" , "up_face" : "上側臉" , "down_face" : "下側臉"}
 
 
 # 儲存檔案
@@ -348,7 +350,6 @@ def studentsManage():
 @app.route('/studentInfo' , methods = ['GET'])
 @login_required
 def studentInfo():
-    faceDirectDic = {"face" : "正面" , "left_face" : "左側臉" , "right_face" : "右側臉" , "up_face" : "上側臉" , "down_face" : "下側臉"}
     faceUrlDic = {}
     studentId = request.args.get('studentId')
     studentData = getDataService.getUserDataById(studentId)
@@ -734,7 +735,18 @@ def upload():
             else:
                 return render_template('upload.html', form=uploadform)
         else:
-             return render_template('upload.html', form=uploadform)
+            isFaceExit = getDataService.getFaceByType(current_user.id , 'face')
+            isLeftFaceExit = getDataService.getFaceByType(current_user.id , 'left_face')
+            isRightFaceExit = getDataService.getFaceByType(current_user.id , 'right_face')
+            isUpFaceExit = getDataService.getFaceByType(current_user.id , 'up_face')
+            isDownFaceExit = getDataService.getFaceByType(current_user.id , 'down_face')
+            return render_template('upload.html', form=uploadform ,
+             isFaceExit = len(isFaceExit) > 0,
+             isLeftFaceExit = len(isLeftFaceExit) > 0,
+             isRightFaceExit = len(isRightFaceExit) > 0,
+             isUpFaceExit = len(isUpFaceExit) > 0,
+             isDownFaceExit = len(isDownFaceExit) > 0
+            )
 
 def faceLocateTask( face , leftFace , rightFace , upFace , downFace ):
     faceDict = {'face':face,'left_face':leftFace,'right_face':rightFace,'up_face':upFace,'down_face':downFace}
@@ -742,7 +754,7 @@ def faceLocateTask( face , leftFace , rightFace , upFace , downFace ):
         if faceDict[key] :
             filename = secure_filename(faceDict[key].filename)
             if allowed_picture(filename):
-                pictureName = current_user.lastname+'_'+current_user.firstname+'_'+str(key)+'.jpg'
+                pictureName = current_user.lastname+'_'+current_user.firstname+'_' + current_user.id + '_'+str(key)+'.jpg'
                 filePath = os.path.join(app.config["UPLOAD_FOLDER"]+picturePath, pictureName)
                 faceDict[key].save(filePath)
                 
