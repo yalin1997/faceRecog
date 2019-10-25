@@ -42,6 +42,11 @@
                 </ul>
             </div>
         </div>
+        {% if currentUser.permission == 'manager' || currentUser.id == studentId %}
+        <div class="d-flex justify-content-end">
+            <span class="iconic iconic-cog iconic-md" title="cog" aria-hidden="true"></span>編輯
+        </div>
+        {% endif%}
 
         <table style="width: 100%;" class="table table-hover table-striped">
             <tr>
