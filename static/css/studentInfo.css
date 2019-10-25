@@ -3,8 +3,10 @@
 }
 
 .gotoUpload{
-    margin: 0 0 60px;
+    position: relative;
     background-color: gray;
     opacity: 0.3;
     height: 20%;
+    width: 100%;
+    top: -60px;
 }
