@@ -75,7 +75,13 @@
             {% else %}
                 <div class="form-group">
                     {{ form.face.label }}照已經上傳
-                    <button type='button' id="face" class="btn btn-danger m-1" onclick="editFile(id)" >修改</button>
+                    <button type='button' id="face" class="btn btn-outline-info m-1" onclick="editFile(id)" >修改</button>
+                    {% for error in form.face.errors %}
+                    <span style="color: red;">{{ error }}</span>
+                    {% endfor %}
+                </div>
+                <div class="form-group">
+                    {{ form.face }}
                 </div>
             {% endif %}
 
@@ -89,7 +95,13 @@
             {% else %}
                 <div class="form-group">
                     {{ form.leftFace.label }}照已經上傳
-                    <button type='button' id="left_face" class="btn btn-danger m-1" onclick="editFile(id)" >修改</button>
+                    <button type='button' id="left_face" class="btn btn-outline-info m-1" onclick="editFile(id)" >修改</button>
+                    {% for error in form.face.errors %}
+                    <span style="color: red;">{{ error }}</span>
+                    {% endfor %}
+                </div>
+                <div class="form-group">
+                    {{ form.leftFace }}
                 </div>
             {% endif %}
 
@@ -103,7 +115,13 @@
             {% else %}
                 <div class="form-group">
                     {{ form.rightFace.label }}照已經上傳
-                    <button type='button' id="right_face" class="btn btn-danger m-1" onclick="editFile(id)" >修改</button>
+                    <button type='button' id="right_face" class="btn btn-outline-info m-1" onclick="editFile(id)" >修改</button>
+                    {% for error in form.face.errors %}
+                    <span style="color: red;">{{ error }}</span>
+                    {% endfor %}
+                </div>
+                <div class="form-group">
+                    {{ form.rightFace }}
                 </div>
             {% endif %}
 
@@ -117,7 +135,13 @@
             {% else %}
                 <div class="form-group">
                     {{ form.upFace.label }}照已經上傳
-                    <button type='button' id="up_face" class="btn btn-danger m-1" onclick="editFile(id)" >修改</button>
+                    <button type='button' id="up_face" class="btn btn-outline-info m-1" onclick="editFile(id)" >修改</button>
+                    {% for error in form.face.errors %}
+                    <span style="color: red;">{{ error }}</span>
+                    {% endfor %}
+                </div>
+                <div class="form-group">
+                    {{ form.upFace }}
                 </div>
             {% endif %}
 
@@ -131,7 +155,13 @@
             {% else %}
                 <div class="form-group">
                     {{ form.downFace.label }}照已經上傳
-                    <button type='button' id="down_face" class="btn btn-danger m-1" onclick="editFile(id)" >修改</button>
+                    <button type='button' id="down_face" class="btn btn-outline-info m-1" onclick="editFile(id)" >修改</button>
+                    {% for error in form.face.errors %}
+                    <span style="color: red;">{{ error }}</span>
+                    {% endfor %}
+                </div>
+                <div class="form-group">
+                    {{ form.downFace }}
                 </div>
             {% endif %}
             <div class="form-group d-flex flex-row-reverse">
