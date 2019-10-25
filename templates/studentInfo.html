@@ -77,6 +77,9 @@
                 </td>
             </tr>
         </table>
+        <div class="d-flex justify-content-end" style="display: none;">
+            <button type="button" class="btn btn-primary" id="btnSubmitInfo">修改資料</button>
+        </div>
 
         {% if canEdit %}
         <div class="d-flex justify-content-between p-3">
@@ -134,6 +137,7 @@
         editArray.push(infoEmail);
 
         $("#btnCancelEditInfo").show();
+        $("#btnSubmitInfo").show();
         $(this).hide();
     });
 
@@ -150,6 +154,7 @@
         editArray = [];
 
         $("#btnEditInfo").show();
+        $("#btnSubmitInfo").hide();
         $(this).hide();
     });
 
