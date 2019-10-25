@@ -19,6 +19,10 @@ class User(UserMixin):
         insertService.insertRegisterInfo(account,email,hashPassword,lastName,firstName,permission)
 
         return True
+    
+    @staticmethod
+    def generateHash(password):
+        return generate_password_hash(password)
 
 
 

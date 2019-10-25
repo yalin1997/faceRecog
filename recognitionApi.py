@@ -353,10 +353,14 @@ def studentInfo():
     if request.method == 'POST':
         editData =  request.get_json(force=True)
         studentId = editData['studentId']
-        if 'newPassword' in editData and 'newPasswordConfirm' in editData and newPassword == newPasswordConfirm :
+        if 'newPassword' in editData and 'newPasswordConfirm' in editData:
             newPassword = str(editData['newPassword'])
             newPasswordConfirm = str(editData['newPasswordConfirm'])
-            return jsonify({'result':insertService.editStudentInfo(studentId , None , newPassword)})
+            if newPassword == newPasswordConfirm:
+                hashPassword = User.generateHash(newPassword)
+                return jsonify({'result':insertService.editStudentInfo(studentId , None , hashPassword)})
+            else :
+                return jsonify({'result':'確認密碼與密碼不相同'})
         elif 'email' in editData:
             email = str(editData['email'])
             return jsonify({'result':insertService.editStudentInfo(studentId , email , None)})
