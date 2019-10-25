@@ -4,9 +4,11 @@
 
 .gotoUpload{
     position: relative;
-    background-color: gray;
-    opacity: 0.3;
-    height: 20%;
+    background-color: balck;
+    opacity: 0.7;
+    height: 25%;
     width: 100%;
-    top: -60px;
+    top: -25%;
+    cursor: pointer;
+    color: white;
 }
