@@ -48,10 +48,10 @@
 
         <div class="d-flex justify-content-between p-3">
             <h4>個人資料</h4>
-            {% if canEdit %}
+
             <button type="button" class="btn btn-outline-info" id="btnEditInfo">編輯資料</button>
             <button type="button" class="btn btn-outline-danger" id="btnCancelEditInfo" style="display: none;">取消編輯資料</button>
-            {% endif%}
+
         </div>
 
         <table style="width: 100%;" class="table table-hover table-striped">
@@ -84,13 +84,13 @@
             <button type="button" class="btn btn-primary" id="btnSubmitInfo" style="display: none;">修改資料</button>
         </div>
 
-        {% if canEdit %}
+
         <div class="d-flex justify-content-between p-3">
             <h4>修改密碼</h4>
-            {% if canEdit %}
+
             <button type="button" class="btn btn-outline-info" id="btnEditPassword">編輯密碼</button>
             <button type="button" class="btn btn-outline-danger" id="btnEditCancelPassword" style="display: none;">取消編輯密碼</button>
-            {% endif%}
+
         </div>
         <div id="editPassword" style="display: none;">
             <div class="form-group">
@@ -107,7 +107,7 @@
                 <button type="button" class="btn btn-primary" id="btnSubmitEditPassword">修改密碼</button>
             </div>
         </div>
-        {% endif%}
+
     </div>
 </div>
 {% endblock page_content %}
