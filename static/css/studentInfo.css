@@ -2,7 +2,7 @@
     cursor: pointer;
 }
 
-.gotoUpload{
+.flexslider:hover .gotoUpload{
     position: relative;
     background-color: balck;
     opacity: 0.7;
