@@ -43,11 +43,11 @@
             </div>
         </div>
 
-        <div class="d-flex justify-content-between">
+        <div class="d-flex justify-content-between p-3">
             <h4>個人資料</h4>
             {% if canEdit %}
             <button type="button" class="btn btn-outline-info" id="btnEditInfo">編輯資料</button>
-            <button type="button" class="btn btn-outline-danger" style="display: none;" id="btnCancelEditInfo">取消編輯</button>
+            <button type="button" class="btn btn-outline-danger" id="btnCancelEditInfo" style="display: none;">取消編輯</button>
             {% endif%}
         </div>
 
@@ -104,18 +104,18 @@
         editInput.push(nameContainer);
         editInput.push(editEmail);
 
-        $("btnCancelEditInfo").show();
+        $("#btnCancelEditInfo").show();
         $(this).hide();
     });
 
 
-    $("btnCancelEditInfo").click(function(){
+    $("#btnCancelEditInfo").click(function(){
         for(var input in editInput){
             input.remove();
         }
         infoName.children().show();
 
-        $("btnEditInfo").show();
+        $("#btnEditInfo").show();
         $(this).hide();
     });
 
