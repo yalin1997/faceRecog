@@ -42,19 +42,21 @@
                 </ul>
             </div>
         </div>
-        {% if canEdit %}
-        <div class="d-flex justify-content-end p-3">
-            <button type="button" class="btn btn-outline-info" >編輯資料</button>
+
+        <div class="d-flex justify-content-between">
+            <h4>個人資料</h4>
+            {% if canEdit %}
+            <button type="button" class="btn btn-outline-info" id="btnEditInfo">編輯資料</button>
+            {% endif%}
         </div>
-        {% endif%}
 
         <table style="width: 100%;" class="table table-hover table-striped">
             <tr>
                 <th style="text-align: center;">
                     姓名
                 </th>
-                <td>
-                    {{ student.lastname }}{{ student.firstname }}
+                <td id="infoName">
+                    <span>{{ student.lastname }}{{ student.firstname }}</span>
                 </td>
             </tr>
             <tr>
@@ -62,15 +64,15 @@
                     學號
                 </th>
                 <td>
-                    {{ student.account }}
+                    <span>{{ student.account }}</span>
                 </td>
             </tr>
             <tr>
                 <th style="text-align: center;">
                     信箱
                 </th>
-                <td>
-                    {{ student.email }}
+                <td id="infoEmail">
+                    <span>{{ student.email }}</span>
                 </td>
             </tr>
         </table>
@@ -81,4 +83,18 @@
 {{ super() }}
 <script src="{{ url_for('static', filename = 'javascript/jquery.flexslider.js') }}" type="text/javascript"></script>
 <script src="{{ url_for('static', filename = 'javascript/studentInfo.js') }}" type="text/javascript"></script>
+
+{% if canEdit %}
+<script>
+$("#btnEditInfo").click(function(){
+    var editLastName = $("<input id='editLastName'/>");
+    var editFirstName = $("<input id='editFirstName'/>");
+    $("#infoName").children().hide();
+    $("#infoName").append(editLastName , editFirstName);
+});
+
+
+</script>
+{% endif%}
+
 {% endblock scripts %}
