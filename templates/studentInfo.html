@@ -101,6 +101,7 @@
             </div>
             <div class="form-group">
                 <label>再次輸入新密碼</label><input id="newPasswordConfirm" class="form-control" />
+                <span id="newPasswordConfirmMsg" class="text-danger"></span>
             </div>
             <div class="d-flex justify-content-end">
                 <button type="button" class="btn btn-primary" id="btnSubmitEditPassword">修改密碼</button>
@@ -174,9 +175,23 @@
     $("#btnEditCancelPassword").click(function(){
         $("#editPassword").hide();
         $("#editPassword").find("input").val("");
+        $("#newPasswordConfirmMsg").text("");
 
         $("#btnEditPassword").show();
         $(this).hide();
+    });
+
+    $("#newPasswordConfirm").change(function(){
+        if($("#newPassword").val() != $("#newPasswordConfirm").val()){
+            $("#newPasswordConfirmMsg").text("與新密碼不相同");
+            $("this").css({"border-color": "red"});
+        }
+        else if($("#newPasswordConfirm").val().length > 0){
+            $("#newPasswordConfirmMsg").text("");
+            $("this").css({"border-color": "green"});
+        }else{
+            $("this").css({"border-color": ""});
+        }
     });
 })();
 
