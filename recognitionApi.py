@@ -373,7 +373,7 @@ def studentInfo():
         userFaceSet = set()
         faceSet = set(['face' , 'left_face' , 'right_face' , 'up_face' , 'down_face'])
         canUserEdit = current_user.id == studentId 
-        canManagerEdit = current_user.id == 'manager'
+        canManagerEdit = current_user.permission == 'manager'
         for i in range(len(studentFace)):
             faceList.append(str(studentFace[i][0]))
             userFaceSet.add(str(studentFace[i][1]))
