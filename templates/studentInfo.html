@@ -82,8 +82,8 @@
         <div class="d-flex justify-content-between p-3">
             <h4>修改密碼</h4>
             {% if canEdit %}
-            <button type="button" class="btn btn-outline-info" id="btnEditInfo">編輯密碼</button>
-            <button type="button" class="btn btn-outline-danger" id="btnCancelEditInfo" style="display: none;">取消編輯密碼</button>
+            <button type="button" class="btn btn-outline-info" id="btnEditPassword">編輯密碼</button>
+            <button type="button" class="btn btn-outline-danger" id="btnEditCancelPassword" style="display: none;">取消編輯密碼</button>
             {% endif%}
         </div>
         <div id="editPassword" style="display: none;">
@@ -140,7 +140,7 @@
             editInput[index].remove();
         }
         for (index = 0; index < editArray.length; ++index){
-            editArray.children().show();
+            editArray[index].children().show();
         }
 
         $("#btnEditInfo").show();
@@ -148,6 +148,23 @@
     });
 
 }());
+
+(function(){
+    $("#btnEditPassword").click(function(){
+        $("#editPassword").show();
+
+        $("#btnEditCancelPassword").show();
+        $(this).hide();
+    });
+
+    $("btnEditCancelPassword").click(function(){
+        $("#editPassword").hide();
+        $("#editPassword").find("input").val("");
+
+        $("#btnEditPassword").hide();
+        $(this).hide();
+    });
+})
 
 </script>
 {% endif%}
