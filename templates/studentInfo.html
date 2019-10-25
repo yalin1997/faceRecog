@@ -127,7 +127,7 @@
         infoEmail.children().hide();
         infoEmail.append(editEmail);
 
-        editArray.push(infoName);
+        //editArray.push(infoName);
         editArray.push(infoEmail);
 
         $("#btnCancelEditInfo").show();
@@ -157,7 +157,7 @@
         $(this).hide();
     });
 
-    $("btnEditCancelPassword").click(function(){
+    $("#btnEditCancelPassword").click(function(){
         $("#editPassword").hide();
         $("#editPassword").find("input").val("");
 
