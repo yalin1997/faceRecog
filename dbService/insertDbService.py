@@ -85,6 +85,21 @@ def insertClassName(className  , classYear , classDay , classStime , classEtime 
     Connector.quit()
     return result
 
+# 修改學生資料
+def editStudentInfo(sid , email , newPassword)
+    Connector.connect()
+    sql = "UPDATE user_data SET"
+
+    if email :
+        sql = sql + " email = '{}'".format(email)
+    if newPassword :
+        sql = sql + " password = '{}'".format(newPassword)
+    sql = sql + " WHERE user_id = {}".format(sid)
+
+    Connector.sqlExecute(sql)
+    Connector.quit()
+    return True
+
 # 刪除班群
 def deleteClassGroup(cid):
     # 先刪除班級成員
