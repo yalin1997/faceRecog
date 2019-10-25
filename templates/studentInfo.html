@@ -175,6 +175,7 @@
     $("#btnEditCancelPassword").click(function(){
         $("#editPassword").hide();
         $("#editPassword").find("input").val("");
+        $("#newPasswordConfirmMsg").text("");
 
         $("#btnEditPassword").show();
         $(this).hide();
@@ -183,9 +184,13 @@
     $("#newPasswordConfirm").change(function(){
         if($("#newPassword").val() != $("#newPasswordConfirm").val()){
             $("#newPasswordConfirmMsg").text("與新密碼不相同");
+            $("this").css({"border-color": "red"});
         }
-        else{
+        else if($("#newPasswordConfirm").val().length > 0){
             $("#newPasswordConfirmMsg").text("");
+            $("this").css({"border-color": "green"});
+        }else{
+            $("this").css({"border-color": ""});
         }
     });
 })();
