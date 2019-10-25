@@ -357,6 +357,7 @@ def studentInfo():
     faceList = []
     userFaceSet = set()
     faceSet = set(['face' , 'left_face' , 'right_face' , 'up_face' , 'down_face'])
+    canEdit = current_user.permission == 'manager' or current_user.id == studentId
     for i in range(len(studentFace)):
         faceList.append(str(studentFace[i][0]))
         userFaceSet.add(str(studentFace[i][1]))
@@ -372,7 +373,7 @@ def studentInfo():
         isDataComplete = True
     print(str(faceUrlDic))
     return render_template('studentInfo.html' , student = students(studentData[0][0] , str(studentData[0][1]) , str(studentData[0][2]) , str(studentData[0][3]) , str(studentData[0][4]) , "" , isDataComplete) ,
-      faceUrlDic = faceUrlDic , msg = flashMsg , currentUser = current_user , studentId = studentId)
+      faceUrlDic = faceUrlDic , msg = flashMsg , canEdit = canEdit)
 
 @app.route('/studentVideo' , methods = ['GET' , 'POST'])
 @login_required
