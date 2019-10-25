@@ -47,6 +47,7 @@
             <h4>個人資料</h4>
             {% if canEdit %}
             <button type="button" class="btn btn-outline-info" id="btnEditInfo">編輯資料</button>
+            <button type="button" class="btn btn-outline-danger" style="display: none;" id="btnCancelEditInfo">取消編輯</button>
             {% endif%}
         </div>
 
@@ -86,13 +87,40 @@
 
 {% if canEdit %}
 <script>
-$("#btnEditInfo").click(function(){
-    var editLastName = $("<input id='editLastName'/>");
-    var editFirstName = $("<input id='editFirstName'/>");
-    $("#infoName").children().hide();
-    $("#infoName").append(editLastName , editFirstName);
-});
 
+(function(){
+    var editArray = [];
+    var editInput = [];
+
+    $("#btnEditInfo").click(function(){
+        var nameContainer = $("<div>名:<input id='editLastName'/> 姓:<input id='editFirstName' class='ml-1' /></div>");
+        var editEmail = $("<input id='editEmail' type='email' />");
+
+        var infoName = $("#infoName");
+        infoName.children().hide();
+        infoName.append(editLastName , editFirstName);
+
+        editArray.push(infoName);
+
+        editInput.push(nameContainer);
+        editInput.push(editEmail);
+
+        $("btnCancelEditInfo").show();
+        $(this).hide();
+    });
+
+
+    $("btnCancelEditInfo").click(function(){
+        for(var input in editInput){
+            input.remove();
+        }
+        infoName.children().show();
+        
+        $("btnEditInfo").show();
+        $(this).hide();
+    });
+
+}());
 
 </script>
 {% endif%}
