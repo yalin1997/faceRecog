@@ -74,7 +74,8 @@
                 </div>
             {% else %}
                 <div class="form-group">
-                    已經上傳
+                    {{ form.face.label }}已經上傳
+                    <button type='button' id="face" class="btn btn-danger m-1" onclick="editFile(id)" >刪除</button>
                 </div>
             {% endif %}
 
@@ -87,7 +88,8 @@
                 </div>
             {% else %}
                 <div class="form-group">
-                    已經上傳
+                    {{ form.leftFace.label }}已經上傳
+                    <button type='button' id="left_face" class="btn btn-danger m-1" onclick="editFile(id)" >刪除</button>
                 </div>
             {% endif %}
 
@@ -100,7 +102,8 @@
             </div>
             {% else %}
                 <div class="form-group">
-                    已經上傳
+                    {{ form.rightFace.label }}已經上傳
+                    <button type='button' id="right_face" class="btn btn-danger m-1" onclick="editFile(id)" >刪除</button>
                 </div>
             {% endif %}
 
@@ -113,9 +116,10 @@
             </div>
             {% else %}
                 <div class="form-group">
-                    已經上傳
+                    {{ form.upFace.label }}已經上傳
+                    <button type='button' id="up_face" class="btn btn-danger m-1" onclick="editFile(id)" >刪除</button>
                 </div>
-            {% endif %}
+            {% endif %}023
 
             {% if not isDownFaceExit %}
             <div class="form-group">
@@ -126,7 +130,8 @@
             </div>
             {% else %}
                 <div class="form-group">
-                    已經上傳
+                    {{ form.downFace.label }}已經上傳
+                    <button type='button' id="down_face" class="btn btn-danger m-1" onclick="editFile(id)" >刪除</button>
                 </div>
             {% endif %}
             

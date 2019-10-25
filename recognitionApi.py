@@ -741,11 +741,11 @@ def upload():
             isUpFaceExit = getDataService.getFaceByType(current_user.id , 'up_face')
             isDownFaceExit = getDataService.getFaceByType(current_user.id , 'down_face')
             return render_template('upload.html', form=uploadform ,
-             isFaceExit = len(isFaceExit) > 0,
-             isLeftFaceExit = len(isLeftFaceExit) > 0,
-             isRightFaceExit = len(isRightFaceExit) > 0,
-             isUpFaceExit = len(isUpFaceExit) > 0,
-             isDownFaceExit = len(isDownFaceExit) > 0
+                isFaceExit = len(isFaceExit) > 0,
+                isLeftFaceExit = len(isLeftFaceExit) > 0,
+                isRightFaceExit = len(isRightFaceExit) > 0,
+                isUpFaceExit = len(isUpFaceExit) > 0,
+                isDownFaceExit = len(isDownFaceExit) > 0
             )
 
 def faceLocateTask( face , leftFace , rightFace , upFace , downFace ):
