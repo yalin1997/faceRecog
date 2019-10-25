@@ -86,7 +86,7 @@
             <button type="button" class="btn btn-outline-danger" id="btnCancelEditInfo" style="display: none;">取消編輯密碼</button>
             {% endif%}
         </div>
-        <div id="editPassword">
+        <div id="editPassword" style="">
             <div class="form-group">
                 <label>目前的密碼</label><input class="form-control" />
             </div>
@@ -138,7 +138,7 @@
     $("#btnCancelEditInfo").click(function(){
         for (index = 0; index < editInput.length; ++index){
             console.log(editInput);
-            input[index].remove();
+            editInput[index].remove();
         }
         infoName.children().show();
 
