@@ -2,7 +2,7 @@
     cursor: pointer;
 }
 
-.flexslider .gotoUpload{
+.gotoUpload{
     position: relative;
     background-color: balck;
     opacity: 0.7;
@@ -12,4 +12,8 @@
     cursor: pointer;
     color: white;
     z-index: 10;
+}
+
+.flexslider .gotoUpload{
+    background-color: #505;
 }
