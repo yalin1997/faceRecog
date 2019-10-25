@@ -114,14 +114,14 @@
     var editInput = [];
 
     $("#btnEditInfo").click(function(){
-        var nameContainer = $("<div>名: <input id='editLastName'/> 姓:<input id='editFirstName' class='ml-1' /></div>");
+        //var nameContainer = $("<div>名: <input id='editLastName'/> 姓:<input id='editFirstName' class='ml-1' /></div>");
         var editEmail = $("<input id='editEmail' type='email' />");
-        editInput.push(nameContainer);
+        //editInput.push(nameContainer);
         editInput.push(editEmail);
 
-        var infoName = $("#infoName");
+        /*var infoName = $("#infoName");
         infoName.children().hide();
-        infoName.append(nameContainer);
+        infoName.append(nameContainer);*/
 
         var infoEmail = $("#infoEmail");
         infoEmail.children().hide();
@@ -164,7 +164,7 @@
         $("#btnEditPassword").hide();
         $(this).hide();
     });
-})
+})();
 
 </script>
 {% endif%}
