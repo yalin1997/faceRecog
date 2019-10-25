@@ -86,7 +86,7 @@ def insertClassName(className  , classYear , classDay , classStime , classEtime 
     return result
 
 # 修改學生資料
-def editStudentInfo(sid , email , newPassword)
+def editStudentInfo(sid , email , newPassword):
     Connector.connect()
     sql = "UPDATE user_data SET"
 
