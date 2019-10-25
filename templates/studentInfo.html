@@ -217,6 +217,29 @@
             dataType: 'json'
         });
     });
+
+    $("#btnSubmitEditPassword").click(function(){
+        $.ajax({
+            type: 'POST',
+            url: '/studentInfo',
+            data:JSON.stringify ({
+                studentId : {{ current_user.id }},
+                newPassword : $('newPassword').val(),
+                newPasswordConfirm : $('newPasswordConfirm').val()
+                        }),
+            success: function(data){
+                if (data.result == true){
+                    alert("修改成功");
+                    location.reload();
+                }
+                else{
+                    alert( "失敗! 原因 : " + data.result );
+                }
+            },
+            contentType: "application/json",
+            dataType: 'json'
+        });
+    });
 })();
 </script>
 {% endif%}
