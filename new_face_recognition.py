@@ -83,7 +83,7 @@ def main():
             fps4FaceVideo = 20.0
             filePath = "./static/recogVideo/"
             fourcc4FaceVideo = cv2.VideoWriter_fourcc(*'MJPG') 
-            cv2.namedWindow("camera",1)
+
             timer=0
             
             while (capture.isOpened()):
@@ -147,8 +147,7 @@ def main():
                         (0, 0 ,255), 
                         thickness = 2, 
                         lineType = 2)
-
-                        cv2.imshow('camera',frame)
+                        
                         out.write(frame)
 
 
