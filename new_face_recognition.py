@@ -158,7 +158,7 @@ def main(picturePathList , videoId , uploadFile , fileName , emdList , modelPath
                         if(min_value>0.7):#0.65
                             fin_obj.append('unknow')
                         else:
-                            fin_obj.append((str(all_name[dist_list.index(min_value)]).split("_",1)[0])
+                            fin_obj.append(str(all_name[dist_list.index(min_value)]).split("_",1)[0])
                             if all_name[dist_list.index(min_value)] not in nameList :
                                 nameList.append(all_name[dist_list.index(min_value)])
 
