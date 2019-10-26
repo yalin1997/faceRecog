@@ -28,7 +28,7 @@ import dbService.insertDbService as insertService
 import json
 
 # 參數分別為收到的檔案,資料庫取得之embs , facenet model 位置 , 比對庫中的名字
-def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date , classNo , className):      
+def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date , classNo , classId , className):      
     print("start recog!!")
     timeFrame = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
     with tf.Graph().as_default():
