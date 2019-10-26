@@ -49,9 +49,9 @@ videoPath = "/video"
 picturePath = "/picture"
 otherPicturePath = "/otherPicture"
 
-ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg','avi','mp4'])
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg','avi','mp4','mov'])
 ALLOWED_PICTURE = set(['png', 'jpg', 'jpeg'])
-ALLOWED_VIDEO = set(['avi','mp4'])
+ALLOWED_VIDEO = set(['avi','mp4','mov'])
 
 app.config["UPLOAD_FOLDER"] =UPLOAD_FOLDER
 app.config["JSON_AS_ASCII"] = False
@@ -744,6 +744,8 @@ def upload():
                     )
                     
                 return jsonify({'result' : result})
+            else:
+                return jsonify({'result' : "不被允許的檔案"})
         else:
             face = flask.request.files['face']
             leftFace = flask.request.files['leftFace']
