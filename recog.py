@@ -220,5 +220,3 @@ def createFolder(directory):
         print ('Error: Creating directory. ' + directory)
         
 
-if __name__=='__main__':
-    main()

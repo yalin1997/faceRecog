@@ -24,6 +24,7 @@ import dbService.getEmbedService as getDataService
 import dbService.loginService as loginService
 import dbService.insertDbService as insertService
 import recog
+import new_face_recognition
 import json
 from werkzeug.utils import secure_filename
 import os
@@ -95,32 +96,6 @@ def saveUploadFile(uploadedFile):
         return True
     else:
         return False
-
-# 上傳影片api
-@app.route("/recognition", methods=['GET','POST'])
-def Upload():
-    if request.method == 'POST':
-        if 'uploaded_file' not in flask.request.files:
-            flask.flash('No file part')
-            print('No file')
-            return "no file finded"
-        file = flask.request.files['uploaded_file']
-        if file.filename == '':
-            flask.flash('No selected file')
-            print('No select file')
-            return flask.redirect(flask.request.url)
-        if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            filePath = os.path.join(app.config["UPLOAD_FOLDER"], filename)
-            
-            file.save(filePath)
-            print('filePath:'+filePath)
-            # 人臉辨識
-            recog.main(filePath,filename,embList,model_Path[0][0],nameList)
-        return jsonify({"errno": 0, "errmsg": "上傳成功"})
-    else:
-        return "hello"
-
 
 def allowed_file(filename):
     print(str(filename))
@@ -579,7 +554,7 @@ def recogTask(videoId ,filename, filePath , date , classNo, classId ,  memberLis
     embList = getEmb.getEmbList( model_Path[0][0], picturePathList)# 算出 Emb 得到 ndarray
     print("get Emb End ")
     insertService.editRecogStatus(videoId , 2)
-    recog.main(videoId , filePath,filename,embList,model_Path[0][0],pictureNameList,date,classNo,classId)
+    new_face_recognition.main(picturePathList , videoId , filePath,filename,embList,model_Path[0][0],pictureNameList,date,classNo,classId)
 
     
 
