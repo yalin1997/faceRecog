@@ -26,7 +26,7 @@ def getEmbList(modelPath , picturePathList):
                     prewhitened = facenet.prewhiten(img)
                     image.append(prewhitened)
                     nrof_images=nrof_images+1
-
+                print(str(image))
                 images=np.stack(image)
                 feed_dict = { images_placeholder: images, phase_train_placeholder:False }
                 # 輸出 emb 向量
