@@ -57,6 +57,7 @@ def main():
             faceVideoDictionary = {}
 
             for i in os.listdir(emb_dir):
+                print(str(i)
                 all_obj.append(i)
                 img = misc.imread(os.path.join(emb_dir,i), mode='RGB')
                 prewhitened = facenet.prewhiten(img)
