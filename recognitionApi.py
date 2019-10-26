@@ -572,7 +572,7 @@ def recogTask(videoId ,filename, filePath , date , classNo, classId ,  memberLis
     picturePathList = []
     pictureNameList = []
     for i in range(len(memberList)):
-        picturePathList.append(memberList[i][2])
+        picturePathList.append(memberList[i][3])
         pictureNameList.append(str(memberList[i][1]) + str(memberList[i][2])+ "_" + str(memberList[i][0]))
     print("get Emb start")
 
