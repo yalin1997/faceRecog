@@ -124,7 +124,7 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
                             if(fin_obj[rec_position] != 'unknow'):
                                  # 生成cv寫入影片物件
                                 if(str(fin_obj[rec_position]) not in faceVideoDictionary.keys()):
-                                    faceVideoFileName = 'video/faceVideo_' + str(fin_obj[rec_position]) + '_' + str(uuid()) + '.mp4'
+                                    faceVideoFileName = 'video/faceVideo_' + str(fin_obj[rec_position]) + '_' + str(uuid.uuid1()) + '.mp4'
                                     faceVideoUrl = filePath + faceVideoFileName
                                     faceVideoDictionary[str(fin_obj[rec_position])] = cv2.VideoWriter(faceVideoUrl,fourcc4FaceVideo,fps4FaceVideo,(400,480))#最后一个是保存图片的尺寸
                                     insertService.InsertVideoInfo(date , classNo , classId ,'/upload/' + faceVideoFileName , "" , 1 , faceVideoFileName , faceVideoUrl)
