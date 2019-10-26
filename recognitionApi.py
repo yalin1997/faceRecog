@@ -764,11 +764,11 @@ def upload():
             else:
                 return render_template('upload.html', form=uploadform)
         else:
-            isFaceExit = getDataService.getFaceCountByType(current_user.id , 'face') > 0
-            isLeftFaceExit = getDataService.getFaceCountByType(current_user.id , 'left_face') > 0
-            isRightFaceExit = getDataService.getFaceCountByType(current_user.id , 'right_face') > 0
-            isUpFaceExit = getDataService.getFaceCountByType(current_user.id , 'up_face') > 0
-            isDownFaceExit = getDataService.getFaceCountByType(current_user.id , 'down_face') > 0
+            isFaceExit = int(getDataService.getFaceCountByType(current_user.id , 'face')[0][0]) > 0
+            isLeftFaceExit = int(getDataService.getFaceCountByType(current_user.id , 'left_face')[0][0]) > 0
+            isRightFaceExit = int(getDataService.getFaceCountByType(current_user.id , 'right_face')[0][0]) > 0
+            isUpFaceExit = int(getDataService.getFaceCountByType(current_user.id , 'up_face')[0][0]) > 0
+            isDownFaceExit = int(getDataService.getFaceCountByType(current_user.id , 'down_face')[0][0]) > 0
             print(str(isFaceExit))
             return render_template('upload.html', form=uploadform ,
                 isFaceExit = isFaceExit,
@@ -788,7 +788,7 @@ def faceLocateTask( face , leftFace , rightFace , upFace , downFace ):
                 pictureName = current_user.lastname+'_'+current_user.firstname+'_' + current_user.id + '_'+str(key)+'.jpg'
                 filePath = os.path.join(app.config["UPLOAD_FOLDER"]+picturePath , pictureName)
                 faceDict[key].save(filePath)
-                if not isFaceExit:
+                if not int(isFaceExit[0][0]) > 0:
                     faceDetect.detectSinglePicture(app.config["UPLOAD_FOLDER"]+picturePath,pictureName)# 尋找臉部
                     insertService.insertFaceInfo(current_user.id ,"/upload/"+pictureName , key , filePath , pictureName)
                 else:
