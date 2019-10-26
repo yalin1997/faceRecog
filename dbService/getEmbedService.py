@@ -249,9 +249,16 @@ def getFaceById(uid):
     Connector.quit()
     return queryResult
 
-def getFaceByType(uid , type):
+def getFaceCountByType(uid , type):
     Connector.connect()
     sql = "SELECT COUNT(*) FROM face_data WHERE user_id = {} AND face_type = '{}'".format(uid , type)
+    queryResult = Connector.sqlQuery(sql)
+    Connector.quit()
+    return queryResult
+
+def getFaceByType(uid , type):
+    Connector.connect()
+    sql = "SELECT * FROM face_data WHERE user_id = {} AND face_type = '{}'".format(uid , type)
     queryResult = Connector.sqlQuery(sql)
     Connector.quit()
     return queryResult

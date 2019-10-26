@@ -762,11 +762,11 @@ def upload():
             else:
                 return render_template('upload.html', form=uploadform)
         else:
-            isFaceExit = getDataService.getFaceByType(current_user.id , 'face')
-            isLeftFaceExit = getDataService.getFaceByType(current_user.id , 'left_face')
-            isRightFaceExit = getDataService.getFaceByType(current_user.id , 'right_face')
-            isUpFaceExit = getDataService.getFaceByType(current_user.id , 'up_face')
-            isDownFaceExit = getDataService.getFaceByType(current_user.id , 'down_face')
+            isFaceExit = getDataService.getFaceCountByType(current_user.id , 'face')
+            isLeftFaceExit = getDataService.getFaceCountByType(current_user.id , 'left_face')
+            isRightFaceExit = getDataService.getFaceCountByType(current_user.id , 'right_face')
+            isUpFaceExit = getDataService.getFaceCountByType(current_user.id , 'up_face')
+            isDownFaceExit = getDataService.getFaceCountByType(current_user.id , 'down_face')
             return render_template('upload.html', form=uploadform ,
                 isFaceExit = len(isFaceExit) > 0,
                 isLeftFaceExit = len(isLeftFaceExit) > 0,
@@ -781,13 +781,18 @@ def faceLocateTask( face , leftFace , rightFace , upFace , downFace ):
         if faceDict[key] :
             filename = secure_filename(faceDict[key].filename)
             if allowed_picture(filename):
+                isFaceExit = getDataService.getFaceCountByType(current_user.id , key)
                 pictureName = current_user.lastname+'_'+current_user.firstname+'_' + current_user.id + '_'+str(key)+'.jpg'
-                filePath = os.path.join(app.config["UPLOAD_FOLDER"]+picturePath, pictureName)
+                filePath = os.path.join(app.config["UPLOAD_FOLDER"]+picturePath , pictureName)
                 faceDict[key].save(filePath)
-                
-                faceDetect.detectSinglePicture(app.config["UPLOAD_FOLDER"]+picturePath,pictureName)# 尋找臉部
-                insertService.insertFaceInfo(current_user.id ,"/upload/"+pictureName , key , filePath , pictureName)
-                faceDict[key] = "/upload/"+pictureName
+                if not isFaceExit:
+                    faceDetect.detectSinglePicture(app.config["UPLOAD_FOLDER"]+picturePath,pictureName)# 尋找臉部
+                    insertService.insertFaceInfo(current_user.id ,"/upload/"+pictureName , key , filePath , pictureName)
+                else:
+                    faceData = getDataService.getFaceByType(current_user.id , key)
+                    faceDetect.detectSinglePicture(app.config["UPLOAD_FOLDER"]+picturePath,pictureName)# 尋找臉部
+                    insertService.editFaceInfo(int(faceData[0][0]) ,"/upload/"+pictureName , key)
+
 
 # 取得資料
 @app.route('/upload/<filename>')
