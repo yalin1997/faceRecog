@@ -24,7 +24,6 @@ import dbService.getEmbedService as getDataService
 import dbService.loginService as loginService
 import dbService.insertDbService as insertService
 import recog
-import new_face_recognition
 import json
 from werkzeug.utils import secure_filename
 import os
@@ -549,12 +548,12 @@ def recogTask(videoId ,filename, filePath , date , classNo, classId ,  memberLis
     for i in range(len(memberList)):
         picturePathList.append(memberList[i][3])
         pictureNameList.append(str(memberList[i][1]) + str(memberList[i][2])+ "_" + str(memberList[i][0]))
-    #print("get Emb start")
+    print("get Emb start")
 
-    #embList = getEmb.getEmbList( model_Path[0][0], picturePathList)# 算出 Emb 得到 ndarray
-    #print("get Emb End ")
+    embList = getEmb.getEmbList( model_Path[0][0], picturePathList)# 算出 Emb 得到 ndarray
+    print("get Emb End ")
     insertService.editRecogStatus(videoId , 2)
-    new_face_recognition.main(picturePathList , videoId , filePath,filename,embList,model_Path[0][0],pictureNameList,date,classNo,classId)
+    recog.main(videoId , filePath,filename,embList,model_Path[0][0],pictureNameList,date,classNo,classId)
 
     
 
