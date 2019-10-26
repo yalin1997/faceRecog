@@ -19,9 +19,9 @@ def InsertVideoInfo(date,classNo,cid,videoPath,coverPath,isRecoged , fileName , 
     Connector.quit()
     return True
 # 修改影片
-def editVideoInfo(vid,videoPath):
+def editVideoInfo(vid,videoPath,filePath,fileName):
     Connector.connect()
-    sql = "UPDATE video_face SET video_url = '{}'  , video_is_recoged = {} , file_path , file_name WHERE video_id = {}".format(videoPath,1,vid)
+    sql = "UPDATE video_face SET video_url = '{}'  , video_is_recoged = {} , file_path='{}' , file_name='{}' WHERE video_id = {}".format(videoPath,1,filePath,fileName,vid)
     Connector.sqlExecute(sql)
     Connector.quit()
     return True

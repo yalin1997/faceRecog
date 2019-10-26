@@ -159,7 +159,7 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
             capture.release()
             out.release()
             print("finish and insert data!")
-            insertService.editFaceInfo(videoId,outputUrl)
+            insertService.editVideoInfo(videoId,outputUrl,outputPath,videoName)
 
 
 
