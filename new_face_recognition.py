@@ -51,7 +51,7 @@ def main():
 
             # 这里要改为自己emb_img文件夹的位置
             # 讀取資料夾中的圖片產出 emb , emb 為 128 維
-            emb_dir='./static/upload'
+            emb_dir='./static/upload/face'
             all_obj=[]
             # 出現過的人名與產生臉部特寫影片的物件對照
             faceVideoDictionary = {}
@@ -70,7 +70,7 @@ def main():
             compare_num=len(compare_emb)
 
             #capture =cv2.VideoCapture(video)
-            capture =cv2.VideoCapture("test.mp4")
+            capture =cv2.VideoCapture("./static/upload/video/463CE90F-F609-4F4C-B4B4-31909D78D244.MOV")
             # 使用 XVID 編碼
             fourcc = cv2.VideoWriter_fourcc(*'XVID')
             width = int(capture.get(cv2.CAP_PROP_FRAME_WIDTH))
