@@ -793,7 +793,7 @@ def faceLocateTask( face , leftFace , rightFace , upFace , downFace ):
                 else:
                     faceData = getDataService.getFaceByType(current_user.id , key)
                     faceDetect.detectSinglePicture(app.config["UPLOAD_FOLDER"]+picturePath,pictureName)# 尋找臉部
-                    insertService.editFaceInfo(int(faceData[0][0]) ,"/upload/"+pictureName , key)
+                    insertService.editFaceInfo(int(faceData[0][0]) ,"/upload/"+pictureName , key , filePath , pictureName)
 
 
 # 取得資料
