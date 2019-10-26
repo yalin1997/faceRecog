@@ -549,10 +549,10 @@ def recogTask(videoId ,filename, filePath , date , classNo, classId ,  memberLis
     for i in range(len(memberList)):
         picturePathList.append(memberList[i][3])
         pictureNameList.append(str(memberList[i][1]) + str(memberList[i][2])+ "_" + str(memberList[i][0]))
-    print("get Emb start")
+    #print("get Emb start")
 
-    embList = getEmb.getEmbList( model_Path[0][0], picturePathList)# 算出 Emb 得到 ndarray
-    print("get Emb End ")
+    #embList = getEmb.getEmbList( model_Path[0][0], picturePathList)# 算出 Emb 得到 ndarray
+    #print("get Emb End ")
     insertService.editRecogStatus(videoId , 2)
     new_face_recognition.main(picturePathList , videoId , filePath,filename,embList,model_Path[0][0],pictureNameList,date,classNo,classId)
 
@@ -765,11 +765,11 @@ def faceLocateTask( face , leftFace , rightFace , upFace , downFace ):
                 faceDict[key].save(filePath)
                 if not int(isFaceExit[0][0]) > 0:
                     faceDetect.detectSinglePicture(app.config["UPLOAD_FOLDER"]+picturePath,pictureName)# 尋找臉部
-                    insertService.insertFaceInfo(current_user.id ,"/upload/"+pictureName , key , filePath , pictureName)
+                    insertService.insertFaceInfo(current_user.id ,"/upload/"+pictureName , key , os.path.join(app.config["UPLOAD_FOLDER"]+embPath , pictureName) , pictureName)
                 else:
                     faceData = getDataService.getFaceByType(current_user.id , key)
                     faceDetect.detectSinglePicture(app.config["UPLOAD_FOLDER"]+picturePath,pictureName)# 尋找臉部
-                    insertService.editFaceInfo(int(faceData[0][0]) ,"/upload/"+pictureName , key , filePath , pictureName)
+                    insertService.editFaceInfo(int(faceData[0][0]) ,"/upload/"+pictureName , key , os.path.join(app.config["UPLOAD_FOLDER"]+embPath , pictureName) , pictureName)
 
 
 # 取得資料
