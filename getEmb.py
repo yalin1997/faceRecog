@@ -27,7 +27,7 @@ def getEmbList(modelPath , picturePathList):
                     image.append(prewhitened)
                     nrof_images=nrof_images+1
                 images=np.stack(image)
-                print(str(images.shape)
+                print(str(images.shape))
                 feed_dict = { images_placeholder: images, phase_train_placeholder:False }
                 # 輸出 emb 向量
                 compare_emb = sess.run(embeddings, feed_dict=feed_dict)
