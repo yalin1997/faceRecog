@@ -764,17 +764,18 @@ def upload():
             else:
                 return render_template('upload.html', form=uploadform)
         else:
-            isFaceExit = getDataService.getFaceCountByType(current_user.id , 'face')
-            isLeftFaceExit = getDataService.getFaceCountByType(current_user.id , 'left_face')
-            isRightFaceExit = getDataService.getFaceCountByType(current_user.id , 'right_face')
-            isUpFaceExit = getDataService.getFaceCountByType(current_user.id , 'up_face')
-            isDownFaceExit = getDataService.getFaceCountByType(current_user.id , 'down_face')
+            isFaceExit = getDataService.getFaceCountByType(current_user.id , 'face') > 0
+            isLeftFaceExit = getDataService.getFaceCountByType(current_user.id , 'left_face') > 0
+            isRightFaceExit = getDataService.getFaceCountByType(current_user.id , 'right_face') > 0
+            isUpFaceExit = getDataService.getFaceCountByType(current_user.id , 'up_face') > 0
+            isDownFaceExit = getDataService.getFaceCountByType(current_user.id , 'down_face') > 0
+            print(str(isFaceExit))
             return render_template('upload.html', form=uploadform ,
-                isFaceExit = len(isFaceExit) > 0,
-                isLeftFaceExit = len(isLeftFaceExit) > 0,
-                isRightFaceExit = len(isRightFaceExit) > 0,
-                isUpFaceExit = len(isUpFaceExit) > 0,
-                isDownFaceExit = len(isDownFaceExit) > 0
+                isFaceExit = isFaceExit,
+                isLeftFaceExit = isLeftFaceExit,
+                isRightFaceExit = isRightFaceExit,
+                isUpFaceExit = isUpFaceExit,
+                isDownFaceExit = isDownFaceExit
             )
 
 def faceLocateTask( face , leftFace , rightFace , upFace , downFace ):

@@ -22,7 +22,6 @@ def getEmbList(modelPath , picturePathList):
                 image=[]
                 nrof_images=0
                 for path in picturePathList:
-                    print(path)
                     img = misc.imread( path , mode='RGB')
                     prewhitened = facenet.prewhiten(img)
                     image.append(prewhitened)
