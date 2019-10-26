@@ -10,9 +10,12 @@ $( document ).ready(function() {
             processData: false,
             contentType: false
         }).done(function(res) {
-            if(res.result){
+            if(res.result == true){
                 alert("上傳成功");
                 window.location.reload();
+            }
+            else{
+                alert(res.result);
             }
         }).fail(function(res) { console.log(res);});
     });
