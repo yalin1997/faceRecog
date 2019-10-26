@@ -18,6 +18,30 @@ def InsertVideoInfo(date,classNo,cid,videoPath,coverPath,isRecoged , fileName , 
     Connector.sqlExecute(sql)
     Connector.quit()
     return True
+
+def InsertFocusVideoInfo(date,classNo,cid,videoPath,coverPath,isRecoged , fileName , filePath):
+    Connector.connect()
+    sql = '''INSERT INTO 
+    video_face( date,class_no,class_id,video_url,cover,video_is_recoged , is_focus , file_name , file_path ) 
+    VALUES( '{}' , '{}' , '{}' , '{}' , '{}' , {} , True , '{}' , '{}' )'''.format(date,
+    classNo,
+    cid,
+    videoPath,
+    coverPath,
+    isRecoged,
+    fileName,
+    filePath)
+    Connector.sqlExecute(sql)
+    Connector.quit()
+    return True
+
+def insertRecogedUser(vid , uid):
+    Connector.connect()
+    sql = 'INSERT INTO recoged_user(video_id , user_id) VALUES({} , {})'.format(vid , uid)
+    Connector.sqlExecute(sql)
+    Connector.quit()
+    return True
+
 # 修改影片
 def editVideoInfo(vid,videoPath,filePath,fileName):
     Connector.connect()

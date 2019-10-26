@@ -573,7 +573,7 @@ def recogTask(videoId ,filename, filePath , date , classNo, classId ,  memberLis
     pictureNameList = []
     for i in range(len(memberList)):
         picturePathList.append(memberList[i][2])
-        pictureNameList.append(str(memberList[i][0]) + str(memberList[i][1]))
+        pictureNameList.append(str(memberList[i][1]) + str(memberList[i][2])+ "_" + str(memberList[i][0]))
     print("get Emb start")
 
     embList = getEmb.getEmbList( model_Path[0][0], picturePathList)# 算出 Emb 得到 ndarray

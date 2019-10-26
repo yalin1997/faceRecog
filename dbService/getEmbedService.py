@@ -165,7 +165,7 @@ def getClassGroupById(cid):
 
 def getStudentsPicture(classId):
     Connector.connect()
-    sql = '''SELECT last_name , first_name , file_path
+    sql = '''SELECT class_member.user_id ,last_name , first_name , file_path
         FROM 
         (class_member 
             INNER JOIN 
