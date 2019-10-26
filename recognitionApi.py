@@ -536,14 +536,13 @@ def videoManage():
             allVideo = getDataService.getVideo(lastname,firstname,"0","0","0",classId)
             videoFilterForm = videoFilterUser()
         else:
-            allVideo = getDataService.getVideo(current_user.lastname , current_user.firstname , "0" , "0" , "0" , classId)
+            allVideo = getDataService.getVideo("0" , "0" , "0" , "0" , "0" , classId)
         videoList = []
         
         for i in range(len(allVideo)):
             videoCover = str(allVideo[i][1])
             if allVideo[i][1] == None :
                 videoCover = "/upload/others/img_avatar.jpg"
-            print("recoged code : "+ str(allVideo[i][2]))
             videoList.append(video(str(allVideo[i][0]) , videoCover , int(allVideo[i][2]) , str(allVideo[i][3]) , str(allVideo[i][4]) ))
     
         if permission == "manager":
