@@ -51,7 +51,7 @@ def insertFaceInfo(uid,uri,faceType , facePath , faceName):
 #修改臉
 def editFaceInfo(targetId,url,faceType):
     Connector.connect()
-    sql = "UPDATE face_data SET face_url = '{}' , face_type = '{}' WHERE face_id = {}".format(url,targetId,faceType)
+    sql = "UPDATE face_data SET face_url = '{}' , face_type = '{}' WHERE face_id = {}".format(url,faceType,targetId)
     Connector.sqlExecute(sql)
     Connector.quit()
     return True
