@@ -55,17 +55,19 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
             #capture =cv2.VideoCapture(video)
             capture =cv2.VideoCapture(uploadFile)
             # 使用 XVID 編碼
-            fourcc = 0x00000021
-            fourcc4FaceVideo = 0x00000021
+            fourcc = cv2.VideoWriter_fourcc(*"mp4v")
+            fourcc4FaceVideo = cv2.VideoWriter_fourcc(*"mp4v")
             fps4FaceVideo = 20.0
             width = int(capture.get(cv2.CAP_PROP_FRAME_WIDTH))
             height = int(capture.get(cv2.CAP_PROP_FRAME_HEIGHT))
             # 建立 VideoWriter 物件，輸出影片至 output.avi，FPS 值為 20.0
             videoUUID = str(uuid.uuid1())
+            videoNameTmp = 'output_'+videoUUID+'tmp.mp4'
             videoName = 'output_'+videoUUID+'.mp4'
             filePath = "/home/nknu/文件/faceRecog/static/upload/"
+            outputPathTmp = '/home/nknu/文件/faceRecog/static/upload/video/'+videoNameTmp
             outputPath = '/home/nknu/文件/faceRecog/static/upload/video/'+videoName
-            outputUrl = '/upload/'+videoName
+            outputUrl = '/upload/'+videoNameTmp
             coverPath = filePath +'otherPicture/cover_' + timeFrame + '.jpg'
             coverUrl =  '/upload/others/cover_' + timeFrame + '.jpg'
             # 影片中辨識出的臉
@@ -74,7 +76,7 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
 
 
             createFolder(facePicPath)
-            out = cv2.VideoWriter(outputPath, fourcc, 20.0, (width, height))
+            out = cv2.VideoWriter(outputPathTmp, fourcc, 20.0, (width, height))
             timer=0
             # 出現過的人名與產生臉部特寫影片的物件對照
             faceVideoDictionary = {}
@@ -160,6 +162,7 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
             capture.release()
             out.release()
             print("finish and insert data!")
+            os.system("ffmpeg -i "+outputPathTmp+" -vcodec libx264 "+outputPath)
             insertService.editVideoInfo(videoId,outputUrl,outputPath,videoName)
 
 
