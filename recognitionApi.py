@@ -38,7 +38,7 @@ import uuid
 import sys
 
 app = flask.Flask(__name__)
-executor = ThreadPoolExecutor(2)
+executor = ThreadPoolExecutor(500)
 
 app.secret_key = os.urandom(24)
 UPLOAD_FOLDER = "/home/nknu/文件/faceRecog/static/upload"
@@ -533,8 +533,8 @@ def videoRecog():
         classId = int(result[0][4])
         memberList = getDataService.getStudentsPicture(classId)
         if len(memberList) > 0:
-            # executor.submit(recogTask, videoId , result[0][2] , result[0][3] , result[0][5] , result[0][6] , classId ,memberList)
-            recogTask( videoId , result[0][2] , result[0][3] , result[0][5] , result[0][7] , classId ,memberList)
+            executor.submit(recogTask, videoId , result[0][2] , result[0][3] , result[0][5] , result[0][6] , classId ,memberList)
+            #recogTask( videoId , result[0][2] , result[0][3] , result[0][5] , result[0][7] , classId ,memberList)
             return jsonify({'result':True})
         else:
             return jsonify({'result':"沒有辨識目標，請加入學生"})
@@ -726,8 +726,8 @@ def upload():
             rightFace = flask.request.files['rightFace']
             upFace = flask.request.files['upFace']
             downFace = flask.request.files['downFace']
-            faceLocateTask(face , leftFace , rightFace , upFace , downFace)
-            #executor.submit(faceLocateTask , face , leftFace , rightFace , upFace , downFace)
+            #faceLocateTask(face , leftFace , rightFace , upFace , downFace)
+            executor.submit(faceLocateTask , face , leftFace , rightFace , upFace , downFace)
             return jsonify({'result' : True})
     else:
         if permission == 'manager':
