@@ -165,7 +165,7 @@ def getClassGroupById(cid):
 
 def getStudentsPicture(classId):
     Connector.connect()
-    sql = '''SELECT last_name , first_name , file_path
+    sql = '''SELECT class_member.user_id ,last_name , first_name , file_path
         FROM 
         (class_member 
             INNER JOIN 
@@ -201,9 +201,6 @@ def getAllStudents(classId):
     Connector.quit()
     studentsList = []
     
-    print(str(faceResult))
-    print(str(faceUrlList))
-    print(str(isDataCompleteList))
     for i in range(len(queryResult)):
         studentsList.append(students(queryResult[i][0] , str(queryResult[i][1]) , str(queryResult[i][2]) , str(queryResult[i][3]) , str(queryResult[i][4]) , str(faceUrlList[i]) , isDataCompleteList[i]))
     return studentsList
@@ -245,6 +242,20 @@ def getStudents(classId , lastname , firstname):
 def getFaceById(uid):
     Connector.connect()
     sql = "SELECT face_url , face_type FROM face_data WHERE user_id = {}".format(uid)
+    queryResult = Connector.sqlQuery(sql)
+    Connector.quit()
+    return queryResult
+
+def getFaceCountByType(uid , type):
+    Connector.connect()
+    sql = "SELECT COUNT(*) FROM face_data WHERE user_id = {} AND face_type = '{}'".format(uid , type)
+    queryResult = Connector.sqlQuery(sql)
+    Connector.quit()
+    return queryResult
+
+def getFaceByType(uid , type):
+    Connector.connect()
+    sql = "SELECT * FROM face_data WHERE user_id = {} AND face_type = '{}'".format(uid , type)
     queryResult = Connector.sqlQuery(sql)
     Connector.quit()
     return queryResult

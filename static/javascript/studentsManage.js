@@ -6,7 +6,7 @@ function deleteEvent(targetId){
         data:  JSON.stringify ({id: targetId.split("_")[1]}), // or JSON.stringify ({name: 'jonas'}),
         success: function(data) {  
             alert("刪除成功");
-            window.location.href="/pictureManage";
+            window.location.reload();
         },
         contentType: "application/json",
         dataType: 'json'

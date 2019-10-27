@@ -10,16 +10,19 @@ $( document ).ready(function() {
             processData: false,
             contentType: false
         }).done(function(res) {
-            if(res.result){
+            if(res.result == true){
                 alert("上傳成功");
                 window.location.reload();
+            }
+            else{
+                alert(res.result);
             }
         }).fail(function(res) { console.log(res);});
     });
 });
 function uploadFileChange(){
     var picType =  ['jpg', 'png', 'jpeg'];
-    var videoType =  ['avi','mp4'];
+    var videoType =  ['avi','mp4' ,'MOV'];
     var fileType = getFileExtension3($("#uploaded_file").val());
     if(fileType != ""){
         if(picType.indexOf(fileType) != -1){

@@ -18,10 +18,34 @@ def InsertVideoInfo(date,classNo,cid,videoPath,coverPath,isRecoged , fileName , 
     Connector.sqlExecute(sql)
     Connector.quit()
     return True
-# 修改影片
-def editVideoInfo(vid,videoPath):
+
+def InsertFocusVideoInfo(date,classNo,cid,videoPath,coverPath,isRecoged , fileName , filePath):
     Connector.connect()
-    sql = "UPDATE video_face SET video_url = '{}'  , video_is_recoged = {} , file_path , file_name WHERE video_id = {}".format(videoPath,1,vid)
+    sql = '''INSERT INTO 
+    video_face( date,class_no,class_id,video_url,cover,video_is_recoged , is_focus , file_name , file_path ) 
+    VALUES( '{}' , '{}' , '{}' , '{}' , '{}' , {} , True , '{}' , '{}' )'''.format(date,
+    classNo,
+    cid,
+    videoPath,
+    coverPath,
+    isRecoged,
+    fileName,
+    filePath)
+    Connector.sqlExecute(sql)
+    Connector.quit()
+    return True
+
+def insertRecogedUser(vid , uid):
+    Connector.connect()
+    sql = 'INSERT INTO recoged_user(video_id , user_id) VALUES({} , {})'.format(vid , uid)
+    Connector.sqlExecute(sql)
+    Connector.quit()
+    return True
+
+# 修改影片
+def editVideoInfo(vid,videoPath,filePath,fileName):
+    Connector.connect()
+    sql = "UPDATE video_face SET video_url = '{}'  , video_is_recoged = {} , file_path='{}' , file_name='{}' WHERE video_id = {}".format(videoPath,1,filePath,fileName,vid)
     Connector.sqlExecute(sql)
     Connector.quit()
     return True
@@ -49,9 +73,9 @@ def insertFaceInfo(uid,uri,faceType , facePath , faceName):
     return True
 
 #修改臉
-def editFaceInfo(targetId,url,lastName,firstName):
+def editFaceInfo(targetId,url,faceType,filePath,fileName):
     Connector.connect()
-    sql = "UPDATE face_data SET face_url = '{}' , last_name = '{}',first_name = '{}' WHERE face_id = {}".format(url,lastName,firstName,targetId)
+    sql = "UPDATE face_data SET face_url = '{}' , face_type = '{}' , file_path = '{}' , file_name = '{}' WHERE face_id = {}".format(url,faceType,filePath, fileName,targetId)
     Connector.sqlExecute(sql)
     Connector.quit()
     return True
@@ -84,6 +108,29 @@ def insertClassName(className  , classYear , classDay , classStime , classEtime 
     result = Connector.sqlExecuteWithReturn(sql)
     Connector.quit()
     return result
+
+# 修改學生資料
+def editStudentInfo(sid , email , newPassword , lastname , firstname , account ):
+    Connector.connect()
+    sql = "UPDATE user_data SET"
+
+    if not email == "" :
+        sql = sql + " email = '{}', ".format(email)
+    if not newPassword == "" :
+        sql = sql + " password = '{}', ".format(newPassword)
+    if not lastname == "" :
+        sql = sql + " last_name = '{}', ".format(lastname)
+    if not firstname == "" :
+        sql = sql + " first_name = '{}', ".format(firstname)   
+    if not account == "" :
+        sql = sql + " account = '{}', ".format(account)
+    sql = sql.strip().lstrip().rstrip(',')
+    print(sql)
+    sql = sql + " WHERE user_id = {}".format(sid)
+
+    Connector.sqlExecute(sql)
+    Connector.quit()
+    return True
 
 # 刪除班群
 def deleteClassGroup(cid):

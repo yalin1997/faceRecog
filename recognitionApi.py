@@ -49,9 +49,9 @@ videoPath = "/video"
 picturePath = "/picture"
 otherPicturePath = "/otherPicture"
 
-ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg','avi','mp4'])
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg','avi','mp4','mov'])
 ALLOWED_PICTURE = set(['png', 'jpg', 'jpeg'])
-ALLOWED_VIDEO = set(['avi','mp4'])
+ALLOWED_VIDEO = set(['avi','mp4','mov'])
 
 app.config["UPLOAD_FOLDER"] =UPLOAD_FOLDER
 app.config["JSON_AS_ASCII"] = False
@@ -65,7 +65,7 @@ model_Path = getDataService.getModelPath() # 取模型路徑 tuple list
 # flask Bootstrap randerer
 bootstrap = Bootstrap(app)
 
-
+#login
 login_manager = LoginManager()
 login_manager.session_protection='strong'
 login_manager.login_view = 'login'
@@ -73,6 +73,8 @@ app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=30)
 login_manager.remember_cookie_duration=timedelta(days=1)
 login_manager.init_app(app)
 
+# general used var
+faceDirectDic = {"face" : "正面" , "left_face" : "左側臉" , "right_face" : "右側臉" , "up_face" : "上側臉" , "down_face" : "下側臉"}
 
 
 # 儲存檔案
@@ -94,33 +96,8 @@ def saveUploadFile(uploadedFile):
     else:
         return False
 
-# 上傳影片api
-@app.route("/recognition", methods=['GET','POST'])
-def Upload():
-    if request.method == 'POST':
-        if 'uploaded_file' not in flask.request.files:
-            flask.flash('No file part')
-            print('No file')
-            return "no file finded"
-        file = flask.request.files['uploaded_file']
-        if file.filename == '':
-            flask.flash('No selected file')
-            print('No select file')
-            return flask.redirect(flask.request.url)
-        if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            filePath = os.path.join(app.config["UPLOAD_FOLDER"], filename)
-            
-            file.save(filePath)
-            print('filePath:'+filePath)
-            # 人臉辨識
-            recog.main(filePath,filename,embList,model_Path[0][0],nameList)
-        return jsonify({"errno": 0, "errmsg": "上傳成功"})
-    else:
-        return "hello"
-
-
 def allowed_file(filename):
+    print(str(filename))
     return '.' in filename and \
             filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS 
 
@@ -345,33 +322,59 @@ def studentsManage():
         else:
             return redirect('/videoManage')
 
-@app.route('/studentInfo' , methods = ['GET'])
+@app.route('/studentInfo' , methods = ['GET' , 'POST'])
 @login_required
 def studentInfo():
-    faceDirectDic = {"face" : "正面" , "left_face" : "左側臉" , "right_face" : "右側臉" , "up_face" : "上側臉" , "down_face" : "下側臉"}
-    faceUrlDic = {}
-    studentId = request.args.get('studentId')
-    studentData = getDataService.getUserDataById(studentId)
-    studentFace = getDataService.getFaceById(studentId)
-    faceList = []
-    userFaceSet = set()
-    faceSet = set(['face' , 'left_face' , 'right_face' , 'up_face' , 'down_face'])
-    for i in range(len(studentFace)):
-        faceList.append(str(studentFace[i][0]))
-        userFaceSet.add(str(studentFace[i][1]))
-        faceUrlDic[str(studentFace[i][1])] = str(studentFace[i][0])
-
-    if len(faceSet - userFaceSet) > 0:
-        flashMsg = "缺少: "
-        isDataComplete = False
-        for faceMsg in faceSet - userFaceSet:
-            flashMsg = flashMsg + faceDirectDic[faceMsg] + " "
+    if request.method == 'POST':
+        editData =  request.get_json(force=True)
+        studentId = editData['studentId']
+        if 'newPassword' in editData and 'newPasswordConfirm' in editData:
+            newPassword = str(editData['newPassword'])
+            newPasswordConfirm = str(editData['newPasswordConfirm'])
+            if newPassword == newPasswordConfirm:
+                hashPassword = User.generateHash(newPassword)
+                return jsonify({'result':insertService.editStudentInfo(studentId , "" , hashPassword , "" , "" , "")})
+            else :
+                return jsonify({'result':'確認密碼與密碼不相同'})
+        else:
+            if current_user.permission == 'manager':
+                email = str(editData['email'])
+                account = str(editData['account'])
+                lastname = str(editData['lastname'])
+                firstname = str(editData['firstname'])
+                if not (email == "" and account == "" and lastname == "" and firstname == ""):
+                    return jsonify({'result':insertService.editStudentInfo(studentId , email , "" , lastname , firstname , account)})
+                else:
+                    return jsonify({'result':'請至少填寫一個欄位'})
+            else:
+                email = str(editData['email'])
+                return jsonify({'result':insertService.editStudentInfo(studentId , email , "" , "" , "" , "")})
     else:
-        flashMsg = "資料完整"
-        isDataComplete = True
-    print(str(faceUrlDic))
-    return render_template('studentInfo.html' , student = students(studentData[0][0] , str(studentData[0][1]) , str(studentData[0][2]) , str(studentData[0][3]) , str(studentData[0][4]) , "" , isDataComplete) ,
-      faceUrlDic = faceUrlDic , msg = flashMsg)
+        faceUrlDic = {}
+        studentId = request.args.get('studentId')
+        studentData = getDataService.getUserDataById(studentId)
+        studentFace = getDataService.getFaceById(studentId)
+        faceList = []
+        userFaceSet = set()
+        faceSet = set(['face' , 'left_face' , 'right_face' , 'up_face' , 'down_face'])
+        canUserEdit = current_user.id == studentId 
+        canManagerEdit = current_user.permission == 'manager'
+        for i in range(len(studentFace)):
+            faceList.append(str(studentFace[i][0]))
+            userFaceSet.add(str(studentFace[i][1]))
+            faceUrlDic[str(studentFace[i][1])] = str(studentFace[i][0])
+
+        if len(faceSet - userFaceSet) > 0:
+            flashMsg = "缺少: "
+            isDataComplete = False
+            for faceMsg in faceSet - userFaceSet:
+                flashMsg = flashMsg + faceDirectDic[faceMsg] + " "
+        else:
+            flashMsg = "資料完整"
+            isDataComplete = True
+        print(str(faceUrlDic))
+        return render_template('studentInfo.html' , student = students(studentData[0][0] , str(studentData[0][1]) , str(studentData[0][2]) , str(studentData[0][3]) , str(studentData[0][4]) , "" , isDataComplete) ,
+        faceUrlDic = faceUrlDic , msg = flashMsg , canUserEdit = canUserEdit , canManagerEdit = canManagerEdit)
 
 @app.route('/studentVideo' , methods = ['GET' , 'POST'])
 @login_required
@@ -507,14 +510,13 @@ def videoManage():
             allVideo = getDataService.getVideo(lastname,firstname,"0","0","0",classId)
             videoFilterForm = videoFilterUser()
         else:
-            allVideo = getDataService.getVideo(current_user.lastname , current_user.firstname , "0" , "0" , "0" , classId)
+            allVideo = getDataService.getVideo("0" , "0" , "0" , "0" , "0" , classId)
         videoList = []
         
         for i in range(len(allVideo)):
             videoCover = str(allVideo[i][1])
             if allVideo[i][1] == None :
                 videoCover = "/upload/others/img_avatar.jpg"
-            print("recoged code : "+ str(allVideo[i][2]))
             videoList.append(video(str(allVideo[i][0]) , videoCover , int(allVideo[i][2]) , str(allVideo[i][3]) , str(allVideo[i][4]) ))
     
         if permission == "manager":
@@ -530,9 +532,9 @@ def videoRecog():
         result = getDataService.getVideoById(videoId)
         classId = int(result[0][4])
         memberList = getDataService.getStudentsPicture(classId)
-        if len(picturePathList) > 0:
+        if len(memberList) > 0:
             # executor.submit(recogTask, videoId , result[0][2] , result[0][3] , result[0][5] , result[0][6] , classId ,memberList)
-            recogTask( videoId , result[0][2] , result[0][3] , result[0][5] , result[0][6] , classId ,memberList)
+            recogTask( videoId , result[0][2] , result[0][3] , result[0][5] , result[0][7] , classId ,memberList)
             return jsonify({'result':True})
         else:
             return jsonify({'result':"沒有辨識目標，請加入學生"})
@@ -544,8 +546,8 @@ def recogTask(videoId ,filename, filePath , date , classNo, classId ,  memberLis
     picturePathList = []
     pictureNameList = []
     for i in range(len(memberList)):
-        picturePathList.append(memberList[i][2])
-        pictureNameList.append(str(memberList[i][0]) + str(memberList[i][1]))
+        picturePathList.append(memberList[i][3])
+        pictureNameList.append(str(memberList[i][1]) + str(memberList[i][2])+ "_" + str(memberList[i][0]))
     print("get Emb start")
 
     embList = getEmb.getEmbList( model_Path[0][0], picturePathList)# 算出 Emb 得到 ndarray
@@ -716,6 +718,8 @@ def upload():
                     )
                     
                 return jsonify({'result' : result})
+            else:
+                return jsonify({'result' : "不被允許的檔案"})
         else:
             face = flask.request.files['face']
             leftFace = flask.request.files['leftFace']
@@ -734,7 +738,19 @@ def upload():
             else:
                 return render_template('upload.html', form=uploadform)
         else:
-             return render_template('upload.html', form=uploadform)
+            isFaceExit = int(getDataService.getFaceCountByType(current_user.id , 'face')[0][0]) > 0
+            isLeftFaceExit = int(getDataService.getFaceCountByType(current_user.id , 'left_face')[0][0]) > 0
+            isRightFaceExit = int(getDataService.getFaceCountByType(current_user.id , 'right_face')[0][0]) > 0
+            isUpFaceExit = int(getDataService.getFaceCountByType(current_user.id , 'up_face')[0][0]) > 0
+            isDownFaceExit = int(getDataService.getFaceCountByType(current_user.id , 'down_face')[0][0]) > 0
+            print(str(isFaceExit))
+            return render_template('upload.html', form=uploadform ,
+                isFaceExit = isFaceExit,
+                isLeftFaceExit = isLeftFaceExit,
+                isRightFaceExit = isRightFaceExit,
+                isUpFaceExit = isUpFaceExit,
+                isDownFaceExit = isDownFaceExit
+            )
 
 def faceLocateTask( face , leftFace , rightFace , upFace , downFace ):
     faceDict = {'face':face,'left_face':leftFace,'right_face':rightFace,'up_face':upFace,'down_face':downFace}
@@ -742,13 +758,18 @@ def faceLocateTask( face , leftFace , rightFace , upFace , downFace ):
         if faceDict[key] :
             filename = secure_filename(faceDict[key].filename)
             if allowed_picture(filename):
-                pictureName = current_user.lastname+'_'+current_user.firstname+'_'+str(key)+'.jpg'
-                filePath = os.path.join(app.config["UPLOAD_FOLDER"]+picturePath, pictureName)
+                isFaceExit = getDataService.getFaceCountByType(current_user.id , key)
+                pictureName = current_user.lastname+'_'+current_user.firstname+'_' + current_user.id + '_'+str(key)+'.jpg'
+                filePath = os.path.join(app.config["UPLOAD_FOLDER"]+picturePath , pictureName)
                 faceDict[key].save(filePath)
-                
-                faceDetect.detectSinglePicture(app.config["UPLOAD_FOLDER"]+picturePath,pictureName)# 尋找臉部
-                insertService.insertFaceInfo(current_user.id ,"/upload/"+pictureName , key , filePath , pictureName)
-                faceDict[key] = "/upload/"+pictureName
+                if not int(isFaceExit[0][0]) > 0:
+                    faceDetect.detectSinglePicture(app.config["UPLOAD_FOLDER"]+picturePath,pictureName)# 尋找臉部
+                    insertService.insertFaceInfo(current_user.id ,"/upload/"+pictureName , key , os.path.join(app.config["UPLOAD_FOLDER"]+embPath , pictureName) , pictureName)
+                else:
+                    faceData = getDataService.getFaceByType(current_user.id , key)
+                    faceDetect.detectSinglePicture(app.config["UPLOAD_FOLDER"]+picturePath,pictureName)# 尋找臉部
+                    insertService.editFaceInfo(int(faceData[0][0]) ,"/upload/"+pictureName , key , os.path.join(app.config["UPLOAD_FOLDER"]+embPath , pictureName) , pictureName)
+
 
 # 取得資料
 @app.route('/upload/<filename>')

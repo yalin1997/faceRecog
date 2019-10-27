@@ -72,7 +72,6 @@ function createCard(data){
                         "編輯"+
                     "</button>"+
                     "<div class='dropdown-menu'>"+
-                        "<li><a class='dropdown-item' href='/upload?classId="+ data.allMatchData[i].id +"'>上傳影片</a></li>"+
                         "<li><a class='dropdown-item' href='/videoManage?classId="+ data.allMatchData[i].id +"'>管理影片</a></li>"+
                     "</div>"+
                 "</div>"+

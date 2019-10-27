@@ -28,7 +28,7 @@ import dbService.insertDbService as insertService
 import json
 
 # 參數分別為收到的檔案,資料庫取得之embs , facenet model 位置 , 比對庫中的名字
-def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date , classNo , className):      
+def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date , classNo , classId):      
     print("start recog!!")
     timeFrame = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
     with tf.Graph().as_default():
@@ -112,7 +112,7 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
                                 dist_list.append(dist)
                             min_value=min(dist_list)# 得到歐式距離的最小值
                             print(min_value)
-                            if(min_value>0.65):#0.65
+                            if(min_value>0.7):#0.65
                                 fin_obj.append('unknow')
                             else:
                                 fin_obj.append(all_name[dist_list.index(min_value)])
@@ -124,10 +124,11 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
                             if(fin_obj[rec_position] != 'unknow'):
                                  # 生成cv寫入影片物件
                                 if(str(fin_obj[rec_position]) not in faceVideoDictionary.keys()):
-                                    faceVideoFileName = 'video/faceVideo_' + str(fin_obj[rec_position]) + '_' + str(uuid()) + '.mp4'
-                                    faceVideoUrl = filePath + faceVideoFileName
+                                    faceVideoFileName = 'faceVideo_' + str(fin_obj[rec_position]) + '_' + str(uuid.uuid1()) + '.mp4'
+                                    faceVideoUrl = filePath + 'video/' + faceVideoFileName
                                     faceVideoDictionary[str(fin_obj[rec_position])] = cv2.VideoWriter(faceVideoUrl,fourcc4FaceVideo,fps4FaceVideo,(400,480))#最后一个是保存图片的尺寸
-                                    insertService.InsertVideoInfo(date , classNo , classId ,'/upload/' + faceVideoFileName , "" , 1 , faceVideoFileName , faceVideoUrl)
+                                    insertService.InsertFocusVideoInfo(date , classNo , classId ,'/upload/' + faceVideoFileName , "" , 1 , faceVideoFileName , faceVideoUrl)
+                                    insertService.insertRecogedUser(videoId , int(str(fin_obj[rec_position]).split('_')[1]))
                                 
                                 picturePath = facePicPath + str(fin_obj[rec_position]) + "_" + str(uuid.uuid1()) + ".png"
                                 facePicFrame = frame[bounding_box[rec_position,1]:bounding_box[rec_position,3],bounding_box[rec_position,0]:bounding_box[rec_position,2]]
@@ -159,7 +160,7 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
             capture.release()
             out.release()
             print("finish and insert data!")
-            insertService.editFaceInfo(videoId,outputUrl)
+            insertService.editVideoInfo(videoId,outputUrl,outputPath,videoName)
 
 
 
@@ -219,5 +220,3 @@ def createFolder(directory):
         print ('Error: Creating directory. ' + directory)
         
 
-if __name__=='__main__':
-    main()
