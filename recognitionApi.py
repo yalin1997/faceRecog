@@ -773,6 +773,7 @@ def faceLocateTask( face , leftFace , rightFace , upFace , downFace ):
 
 # 取得資料
 @app.route('/upload/<filename>')
+@login_required
 def uploaded_file(filename):
     if allowed_picture(filename) :
         print(filename)
@@ -783,6 +784,7 @@ def uploaded_file(filename):
         return send_from_directory(app.config['UPLOAD_FOLDER'],filename)
 
 @app.route('/upload/others/<filename>')
+@login_required
 def getOtherFile(filename):
     if allowed_picture(filename) :
         print(filename)
