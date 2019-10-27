@@ -533,8 +533,8 @@ def videoRecog():
         classId = int(result[0][4])
         memberList = getDataService.getStudentsPicture(classId)
         if len(memberList) > 0:
-            executor.submit(recogTask, videoId , result[0][2] , result[0][3] , result[0][5] , result[0][6] , classId ,memberList)
-            #recogTask( videoId , result[0][2] , result[0][3] , result[0][5] , result[0][7] , classId ,memberList)
+            #executor.submit(recogTask, videoId , result[0][2] , result[0][3] , result[0][5] , result[0][6] , classId ,memberList)
+            recogTask( videoId , result[0][2] , result[0][3] , result[0][5] , result[0][7] , classId ,memberList)
             return jsonify({'result':True})
         else:
             return jsonify({'result':"沒有辨識目標，請加入學生"})

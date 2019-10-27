@@ -55,8 +55,8 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
             #capture =cv2.VideoCapture(video)
             capture =cv2.VideoCapture(uploadFile)
             # 使用 XVID 編碼
-            fourcc = cv2.VideoWriter_fourcc(*'H264')
-            fourcc4FaceVideo = cv2.VideoWriter_fourcc(*'H264')
+            fourcc = 0x00000021
+            fourcc4FaceVideo = 0x00000021
             fps4FaceVideo = 20.0
             width = int(capture.get(cv2.CAP_PROP_FRAME_WIDTH))
             height = int(capture.get(cv2.CAP_PROP_FRAME_HEIGHT))
