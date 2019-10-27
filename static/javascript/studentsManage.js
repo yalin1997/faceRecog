@@ -44,7 +44,7 @@ function createCard(data){
                                 "<img src='"+ data.allMatchData[i].faceUrl +"' title='fuck you chrome' class='img-circle studentManage' id='facePicture_"+data.allMatchData[i].id+"' onclick='clickFacePicture(id)'>"+ 
                                 "<h5 class='card-title'>"+data.allMatchData[i].lastname + data.allMatchData[i].firstname +"</h5>"+  
                                 "<div class='btn-group'>"+
-                                    "<button type='button' class='btn btn-primary my-btn dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>"+
+                                    "<button type='button' class='btn btn-primary my-btn dropdown-toggle m-1' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>"+
                                         "功能"+
                                     "</button>"+
                                     "<div class='dropdown-menu'>"+
@@ -62,7 +62,7 @@ function createCard(data){
                                 "<img src='"+ data.allMatchData[i].faceUrl +"' title='Responsive image' class='img-circle studentManage' id='facePicture_"+data.allMatchData[i].id+"' onclick='clickFacePicture(id)'>"+  
                                 "<h5 class='card-title'>"+data.allMatchData[i].lastname + data.allMatchData[i].firstname +"(資料未齊全)</h5>"+ 
                                 "<div class='btn-group'>"+
-                                    "<button type='button' class='btn btn-primary my-btn dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>"+
+                                    "<button type='button' class='btn btn-primary my-btn dropdown-toggle m-1' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>"+
                                         "功能"+
                                     "</button>"+
                                     "<div class='dropdown-menu'>"+
