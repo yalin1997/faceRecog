@@ -22,6 +22,22 @@ function pustInRecogQueue(videoId){
         dataType: 'json'
     });
 }
+
+function deleteEvent(targetId){
+    if(confirm("確定要刪除嗎?")){
+        $.ajax({
+            type: 'POST',
+            url: '/videoEdit/delete',
+            data:  JSON.stringify ({id: targetId.split("_")[1]}),
+            success: function() {  
+                alert("刪除成功");
+                window.location.reload();
+            },
+            contentType: "application/json",
+            dataType: 'json'
+        });
+    }
+}
 function filterEvent(id){
     csrfVal = $("#csrf_token").val() == ""? "0" : $("#csrf_token").val();
     lastNameVal =  $("#lastName").val() == ""?  "0" : $("#lastName").val();
@@ -60,6 +76,7 @@ function createCard(data){
                     "<img src='" + data.allMatchData[i].videoUrl +"' alt='Avatar' style='width:100%;opacity:0.85'>"+
                 "<div class='container'>"+
                     "<p>第" + data.allMatchData[i].classNo + "節</p>"+  
+                    " <button class='btn btn-primary my-btn' id='delete_" + data.allMatchData[i].id + "' onclick='deleteEvent(id)'>刪除影片</button>"+
                 "</div>"+
             "</div>"
         }
@@ -69,6 +86,7 @@ function createCard(data){
                                 "<img src='" + data.allMatchData[i].videoUrl +"' alt='Avatar' style='width:100%;opacity:0.85'>"+
                             "<div class='container'>"+
                                 "<p>第" + data.allMatchData[i].classNo + "節</p>"+  
+                                " <button class='btn btn-primary my-btn' id='delete_" + data.allMatchData[i].id + "' onclick='deleteEvent(id)'>刪除影片</button>"+
                             "</div>"+
                         "</div>"
         }
@@ -80,6 +98,7 @@ function createCard(data){
                             "<div class='container'>"+
                                 "<p>第" + data.allMatchData[i].classNo + "節</p>"+  
                                 " <button class='btn btn-primary my-btn' id='" + data.allMatchData[i].id + "' onclick='pustInRecogQueue(id)'>執行辨識</button>"+
+                                " <button class='btn btn-primary my-btn' id='delete_" + data.allMatchData[i].id + "' onclick='deleteEvent(id)'>刪除影片</button>"+
                                 "</div>"+
                         "</div>"
         }

@@ -163,6 +163,7 @@ def logout():
 
 def next_is_valid(url):
     validList = ['/videoManage',
+    '/videoManage/delete',
     '/pictureManage',
     '/upload',
     '/videoEdit',
@@ -524,6 +525,7 @@ def videoManage():
             return render_template('videoManage.html',form = videoFilterForm , videoData = videoList , classId = classId)
         else:
             return render_template('videoManage.html', videoData = videoList , classId = classId)
+
 
 @app.route('/videoRecog' , methods = ['POST'])
 @login_required

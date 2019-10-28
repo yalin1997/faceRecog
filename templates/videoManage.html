@@ -45,7 +45,8 @@
                         <img src="/upload/others/img_avatar.jpg" alt='Avatar' style='width:100%;opacity:0.85'>
                     {% endif %}
                     <div class='container'>
-                        <p>第{{video.classNo}}節</p>  
+                        <p>第{{video.classNo}}節</p> 
+                        <button class="btn btn-primary my-btn" id="delete_{{video.id}}" onclick="deleteEvent(id)">刪除影片</button> 
                     </div>
                 </div>  
             {% elif video.isRecoged == 2 %}
@@ -57,7 +58,8 @@
                         <img src="/upload/others/img_avatar.jpg" alt='Avatar' style='width:100%;opacity:0.85'>
                     {% endif %}
                     <div class='container'>
-                        <p>第{{video.classNo}}節</p>  
+                        <p>第{{video.classNo}}節</p> 
+                        <button class="btn btn-primary my-btn" id="delete_{{video.id}}" onclick="deleteEvent(id)">刪除影片</button> 
                     </div>
                 </div>
             {% else %}
@@ -71,6 +73,7 @@
                     <div class='container'>
                         <p>第{{video.classNo}}節</p>  
                         <button class="btn btn-primary my-btn" id="{{video.id}}" onclick="pustInRecogQueue(id)">執行辨識</button>
+                        <button class="btn btn-primary my-btn" id="delete_{{video.id}}" onclick="deleteEvent(id)">刪除影片</button>
                     </div>
                 </div>
             {% endif %} 

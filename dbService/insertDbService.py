@@ -56,11 +56,14 @@ def editRecogStatus(vid , status):
     Connector.sqlExecute(sql)
     Connector.quit()
     return True
+
 # 刪除影片
 def deleteVideoInfo(vid):
     Connector.connect()
-    sql = "DELETE FROM video_face WHERE video_id = {}".format(vid)
+    sql = "DELETE FROM recoged_user WHERE video_id = {}".format(vid)
     Connector.sqlExecute(sql)
+    sql2 = "DELETE FROM video_face WHERE video_id = {}".format(vid)
+    Connector.sqlExecute(sql2)
     Connector.quit()
     return True
 
