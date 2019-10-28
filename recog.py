@@ -67,7 +67,7 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
             filePath = "/home/nknu/文件/faceRecog/static/upload/"
             outputPathTmp = '/home/nknu/文件/faceRecog/static/upload/video/'+videoNameTmp
             outputPath = '/home/nknu/文件/faceRecog/static/upload/video/'+videoName
-            outputUrl = '/upload/'+videoNameTmp
+            outputUrl = '/upload/'+videoName
             coverPath = filePath +'otherPicture/cover_' + timeFrame + '.jpg'
             coverUrl =  '/upload/others/cover_' + timeFrame + '.jpg'
             # 影片中辨識出的臉
