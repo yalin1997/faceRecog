@@ -40,7 +40,8 @@ import sys
 app = flask.Flask(__name__)
 executor = ThreadPoolExecutor(500)
 
-app.secret_key = '\x93\xf88\xd9Y\x9f`\xf3`\xe5\xa5\x91\xd6\xe5\x12\x0c\xbd\x99\x87\xb8T\xb0E\xc'
+app.secret_key = os.urandom(24)
+print(str(app.secret_key))
 UPLOAD_FOLDER = "/home/nknu/文件/faceRecog/static/upload"
 #UPLOAD_FOLDER = "D:/faceRecog/static/upload"
 
