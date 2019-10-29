@@ -23,17 +23,20 @@ function filterEvent(){
     });
 }
 function deleteEvent(targetId){
-    $.ajax({
-        type: 'POST',
-        url: '/editClassGroup/delete',
-        data:  JSON.stringify ({id: targetId.split("_")[1]}),
-        success: function(data) {
-            alert("刪除成功");
-            window.location.href="/manageClassGroup";
-        },
-        contentType: "application/json",
-        dataType: 'json'
-    });
+    if(confirm("確定要刪除嗎?")){
+        $.ajax({
+            type: 'POST',
+            url: '/editClassGroup/delete',
+            data:  JSON.stringify ({id: targetId.split("_")[1]}),
+            success: function(data) {
+                alert("刪除成功");
+                window.location.href="/manageClassGroup";
+            },
+            contentType: "application/json",
+            dataType: 'json'
+        });
+    }
+
 }
 
 function createCard(data){

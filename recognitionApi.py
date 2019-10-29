@@ -38,9 +38,10 @@ import uuid
 import sys
 
 app = flask.Flask(__name__)
-executor = ThreadPoolExecutor(2)
+executor = ThreadPoolExecutor(500)
 
 app.secret_key = os.urandom(24)
+print(str(app.secret_key))
 UPLOAD_FOLDER = "/home/nknu/文件/faceRecog/static/upload"
 #UPLOAD_FOLDER = "D:/faceRecog/static/upload"
 
@@ -164,6 +165,7 @@ def logout():
 
 def next_is_valid(url):
     validList = ['/videoManage',
+    '/videoManage/delete',
     '/pictureManage',
     '/upload',
     '/videoEdit',
@@ -526,6 +528,7 @@ def videoManage():
         else:
             return render_template('videoManage.html', videoData = videoList , classId = classId)
 
+
 @app.route('/videoRecog' , methods = ['POST'])
 @login_required
 def videoRecog():
@@ -535,8 +538,8 @@ def videoRecog():
         classId = int(result[0][4])
         memberList = getDataService.getStudentsPicture(classId)
         if len(memberList) > 0:
-            # executor.submit(recogTask, videoId , result[0][2] , result[0][3] , result[0][5] , result[0][6] , classId ,memberList)
-            recogTask( videoId , result[0][2] , result[0][3] , result[0][5] , result[0][7] , classId ,memberList)
+            executor.submit(recogTask, videoId , result[0][2] , result[0][3] , result[0][5] , result[0][6] , classId ,memberList)
+            #recogTask( videoId , result[0][2] , result[0][3] , result[0][5] , result[0][7] , classId ,memberList)
             return jsonify({'result':True})
         else:
             return jsonify({'result':"沒有辨識目標，請加入學生"})
@@ -579,7 +582,7 @@ def videoEdit():
     else:
         videoId = request.args.get('videoId')  
         videoData = getDataService.getVideoById(videoId)
-        editVideo = video(videoId,str(videoData[0][1]) , videoData[0][6] , str(videoData[0][5]) , videoData[0][-1])
+        editVideo = video(videoId,str(videoData[0][1]) , videoData[0][3] , str(videoData[0][4]) , videoData[0][5] ,  videoData[0][6] ,  videoData[0][7])
         permission = current_user.permission
         return render_template('videoEdit.html',editVideo=editVideo,form=editVideoForm,permission = permission)
 
@@ -728,8 +731,8 @@ def upload():
             rightFace = flask.request.files['rightFace']
             upFace = flask.request.files['upFace']
             downFace = flask.request.files['downFace']
-            faceLocateTask(face , leftFace , rightFace , upFace , downFace)
-            #executor.submit(faceLocateTask , face , leftFace , rightFace , upFace , downFace)
+            #faceLocateTask(face , leftFace , rightFace , upFace , downFace)
+            executor.submit(faceLocateTask , face , leftFace , rightFace , upFace , downFace)
             return jsonify({'result' : True})
     else:
         if permission == 'manager':
@@ -775,6 +778,7 @@ def faceLocateTask( face , leftFace , rightFace , upFace , downFace ):
 
 # 取得資料
 @app.route('/upload/<filename>')
+@login_required
 def uploaded_file(filename):
     if allowed_picture(filename) :
         print(filename)
@@ -785,6 +789,7 @@ def uploaded_file(filename):
         return send_from_directory(app.config['UPLOAD_FOLDER'],filename)
 
 @app.route('/upload/others/<filename>')
+@login_required
 def getOtherFile(filename):
     if allowed_picture(filename) :
         print(filename)
@@ -796,6 +801,6 @@ def getOtherFile(filename):
 
 if __name__ == "__main__":
     if sys.argv[1]:
-        app.run(host = '140.127.74.249' , port=int(sys.argv[1]))
+        app.run(host = '127.0.0.1' , port=int(sys.argv[1]))
     else:
-        app.run(host = '140.127.74.249' , port=5000)
+        app.run(host = '127.0.0.1' , port=5000)

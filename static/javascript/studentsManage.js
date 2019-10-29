@@ -1,16 +1,18 @@
 
 function deleteEvent(targetId){
-    $.ajax({
-        type: 'POST',
-        url: '/studentsEdit/delete',
-        data:  JSON.stringify ({id: targetId.split("_")[1]}), // or JSON.stringify ({name: 'jonas'}),
-        success: function(data) {  
-            alert("刪除成功");
-            window.location.reload();
-        },
-        contentType: "application/json",
-        dataType: 'json'
-    });
+    if(confirm("確定要刪除嗎?")){
+        $.ajax({
+            type: 'POST',
+            url: '/studentsEdit/delete',
+            data:  JSON.stringify ({id: targetId.split("_")[1]}), // or JSON.stringify ({name: 'jonas'}),
+            success: function(data) {  
+                alert("刪除成功");
+                window.location.reload();
+            },
+            contentType: "application/json",
+            dataType: 'json'
+        });
+    }
 }
 function addClassMember(id){
     window.location = "/addClassMember?classId=" + id;
