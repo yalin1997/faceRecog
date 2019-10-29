@@ -66,7 +66,7 @@ def getPictureById(pictureId):
 # 篩選影片
 def getVideo(lastName,firstName,sTime,eTime,classNo , cid):
     Connector.connect()
-    sql = '''SELECT video_face.video_id , cover , video_is_recoged , video_face.date , class_no
+    sql = '''SELECT video_face.video_id , cover , video_is_recoged , video_face.date , class_no , class_group.class_id , class_group.class_name
             FROM (  
                     video_face 
                         LEFT JOIN 
