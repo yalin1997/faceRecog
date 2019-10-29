@@ -15,50 +15,53 @@
 
 </div>
 <div class="row d-flex justify-content-center">
-    <div class="col-12 col-md-10 col-lg-8 p-0 mt-3 mb-3  border rounded"></div>
+    <div class="col-12 col-md-10 col-lg-8 p-0 mt-3 mb-3  border rounded">
 
-    <div class="d-flex justify-content-between p-3">
-        <h4>影片資料</h4>
-        <button type="button" class="btn btn-outline-info" id="btnEditInfo">編輯資料</button>
-        <button type="button" class="btn btn-outline-danger" id="btnCancelEditInfo" style="display: none;">取消編輯資料</button>
+            <div class="d-flex justify-content-between p-3">
+                    <h4>影片資料</h4>
+                    <button type="button" class="btn btn-outline-info" id="btnEditInfo">編輯資料</button>
+                    <button type="button" class="btn btn-outline-danger" id="btnCancelEditInfo" style="display: none;">取消編輯資料</button>
+                </div>
+            
+                <table style="width: 100%;" class="table table-hover table-striped">
+                    <tr>
+                        <th style="text-align: center;">
+                            課程
+                        </th>
+                        <td id="infoclassName">
+                            <span>{{ editVideo.className }}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th style="text-align: center;">
+                            日期
+                        </th>
+                        <td id="infoClassData">
+                            <span>{{ editVideo.date }}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th style="text-align: center;">
+                            節數
+                        </th>
+                        <td id="infoClassNo">
+                            <span>{{ editVideo.classNo }}</span>
+                        </td>
+                    </tr>
+                    {% if editVideo == True %}
+                    <tr>
+                        <th style="text-align: center;">
+                            辨識結果
+                        </th>
+                        <td id="infoClassNo">
+                            <span>HungYun</span>
+                        </td>
+                    </tr>
+                    {% endif %}
+                </table>
     </div>
 
-    <table style="width: 100%;" class="table table-hover table-striped">
-        <tr>
-            <th style="text-align: center;">
-                課程
-            </th>
-            <td id="infoclassName">
-                <span>{{ editVideo.className }}</span>
-            </td>
-        </tr>
-        <tr>
-            <th style="text-align: center;">
-                日期
-            </th>
-            <td id="infoClassData">
-                <span>{{ editVideo.date }}</span>
-            </td>
-        </tr>
-        <tr>
-            <th style="text-align: center;">
-                節數
-            </th>
-            <td id="infoClassNo">
-                <span>{{ editVideo.classNo }}</span>
-            </td>
-        </tr>
-        {% if editVideo == True %}
-        <tr>
-            <th style="text-align: center;">
-                辨識結果
-            </th>
-            <td id="infoClassNo">
-                <span>HungYun</span>
-            </td>
-        </tr>
-        {% endif %}
-    </table>
+   
 </div>
 
     
