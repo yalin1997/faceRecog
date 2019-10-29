@@ -144,9 +144,11 @@ def login():
                     return flask.abort(400)
                 return flask.redirect(nextUrl or flask.url_for('manageClassGroup'))
             else:
-                return "帳號密碼錯誤"
+                flask.flash('帳號或密碼錯誤!')
+                return render_template('login.html', form=form)
         else:
-            return "帳號不存在"
+            flask.flash('帳號或密碼錯誤!')
+            return render_template('login.html', form=form)
     else:
         if current_user.is_authenticated:
             return redirect(flask.url_for('manageClassGroup'))
