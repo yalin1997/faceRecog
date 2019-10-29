@@ -7,12 +7,12 @@
     <link href="{{ url_for('static', filename = 'css/studentInfo.css') }}" rel="stylesheet">
 {% endblock %}
 {% block page_content %}
+<div class="alert alert-warning col-10 col-md-8 col-lg-4" role="alert">
+    {{ msg }}
+</div>
 <div class="row d-flex justify-content-center">
     <div class="col-12 col-md-10 col-lg-8 border rounded p-3">
         <div class="row d-flex justify-content-center">
-            <div class="alert alert-warning col-10 col-md-8 col-lg-4" role="alert">
-                {{ msg }}
-            </div>
             <div class="flexslider col-10 col-md-8 col-lg-4">
                 <ul class="slides">
                     {% if 'face' in faceUrlDic.keys() %}
