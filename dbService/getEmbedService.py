@@ -123,8 +123,8 @@ def getAllVideo(uid , cid):
 
 def getVideoById(vid):
     Connector.connect()
-    sql = '''SELECT video_id , video_url , file_name , file_path , class_id , date , video_is_recoged , class_no
-            FROM video_face 
+    sql = '''SELECT video_id , video_url , file_name , class_id , class_name , date , video_is_recoged , class_no
+            FROM video_face LEFT JOIN class_group ON video_face.class_id = class_group.class_id
             WHERE video_id = {}'''.format(vid)
     queryResult = Connector.sqlQuery(sql)
     Connector.quit()
