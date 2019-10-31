@@ -535,7 +535,7 @@ def videoRecog():
     videoId = request.get_json(force=True)["videoId"]
     if videoId and current_user.permission == 'manager':
         result = getDataService.getVideoById(videoId)
-        classId = int(result[0][4])
+        classId = int(result[0][3])
         memberList = getDataService.getStudentsPicture(classId)
         if len(memberList) > 0:
             executor.submit(recogTask, videoId , result[0][2] , result[0][3] , result[0][5] , result[0][6] , classId ,memberList)
