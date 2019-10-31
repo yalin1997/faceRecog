@@ -134,7 +134,7 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
                                 
                                 facePicFrame = frame[bounding_box[rec_position,1]:bounding_box[rec_position,3],bounding_box[rec_position,0]:bounding_box[rec_position,2]]
                                 emotion = emotionDetect.detectEmotion(facePicFrame)
-
+                                print(str(emotion))
                                 resizeFacePicFrame=cv2.resize(facePicFrame,(400,480))
                                 cv2.putText(
                                         resizeFacePicFrame,
@@ -157,7 +157,7 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
                             cv2.FONT_HERSHEY_COMPLEX_SMALL, 
                             0.8, 
                             (0, 0 ,255), 
-                            thickness = 2, 
+                            thickness = 2,
                             lineType = 2)
                         out.write(frame)
 
