@@ -11,6 +11,7 @@ import os
 import copy
 import argparse
 import facenet
+import emotionDetect
 import align.detect_face
 import random
 
@@ -57,7 +58,7 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
             # 使用 XVID 編碼
             fourcc = cv2.VideoWriter_fourcc(*"mp4v")
             fourcc4FaceVideo = cv2.VideoWriter_fourcc(*"mp4v")
-            fps4FaceVideo = 20.0
+            fps4FaceVideo = 24.0
             width = int(capture.get(cv2.CAP_PROP_FRAME_WIDTH))
             height = int(capture.get(cv2.CAP_PROP_FRAME_HEIGHT))
             # 建立 VideoWriter 物件，輸出影片至 output.avi，FPS 值為 20.0
@@ -80,6 +81,7 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
             timer=0
             # 出現過的人名與產生臉部特寫影片的物件對照
             faceVideoDictionary = {}
+            faceVideoPath = {}
             print("capture is open!")
             while (capture.isOpened()):
                 ret, frame = capture.read() 
@@ -127,19 +129,33 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
                                  # 生成cv寫入影片物件
                                 if(str(fin_obj[rec_position]) not in faceVideoDictionary.keys()):
                                     faceVideoFileName = 'faceVideo_' + str(fin_obj[rec_position]) + '_' + str(uuid.uuid1()) + '.mp4'
+                                    faceVideoFileNameTmp = 'faceVideo_' + str(fin_obj[rec_position]) + '_' + str(uuid.uuid1()) + 'Tmp.mp4'
                                     faceVideoUrl = filePath + 'video/' + faceVideoFileName
-                                    faceVideoDictionary[str(fin_obj[rec_position])] = cv2.VideoWriter(faceVideoUrl,fourcc4FaceVideo,fps4FaceVideo,(400,480))#最后一个是保存图片的尺寸
+                                    faceVideoUrlTmp = filePath + 'video/' + faceVideoFileNameTmp
+                                    faceVideoDictionary[str(fin_obj[rec_position])] = cv2.VideoWriter(faceVideoUrlTmp,fourcc4FaceVideo,fps4FaceVideo,(400,480))#最后一个是保存图片的尺寸
+                                    faceVideoPath[str(faceVideoUrlTmp)] = faceVideoUrl
                                     insertService.InsertFocusVideoInfo(date , classNo , classId ,'/upload/' + faceVideoFileName , "" , 1 , faceVideoFileName , faceVideoUrl)
                                     insertService.insertRecogedUser(videoId , int(str(fin_obj[rec_position]).split('_')[1]))
                                 
                                 picturePath = facePicPath + str(fin_obj[rec_position]) + "_" + str(uuid.uuid1()) + ".png"
                                 facePicFrame = frame[bounding_box[rec_position,1]:bounding_box[rec_position,3],bounding_box[rec_position,0]:bounding_box[rec_position,2]]
                                 cv2.imwrite(picturePath,facePicFrame)
-                                
+                                emotion = emotionDetect.detectEmotion(facePicFrame)
+
                                 resizeFacePicFrame=cv2.resize(facePicFrame,(400,480))
+                                cv2.putText(
+                                        resizeFacePicFrame,
+                                        emotion, 
+                                        (200 , 0),
+                                        cv2.FONT_HERSHEY_COMPLEX_SMALL, 
+                                        0.8, 
+                                        (0, 0 ,255), 
+                                        thickness = 2, 
+                                        lineType = 2)
                                  # 用相對應的寫入物件寫入
                                 faceVideoDictionary[ str(fin_obj[rec_position])].write(resizeFacePicFrame)
-        
+                                for item in  
+
                             cv2.rectangle(frame,(bounding_box[rec_position,0],bounding_box[rec_position,1]),(bounding_box[rec_position,2],bounding_box[rec_position,3]),(0, 255, 0), 2, 8, 0)
 
                             cv2.putText(
@@ -164,6 +180,9 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
             print("finish and insert data!")
             os.system("ffmpeg -i "+outputPathTmp+" -vcodec libx264 "+outputPath)
             insertService.editVideoInfo(videoId,outputUrl,outputPath,videoName)
+            for item in faceVideoPath.keys():
+                os.system("ffmpeg -i "+item+" -vcodec libx264 "+faceVideoPath[item])
+                
 
 
 
