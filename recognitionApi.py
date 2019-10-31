@@ -538,7 +538,7 @@ def videoRecog():
         classId = int(result[0][3])
         memberList = getDataService.getStudentsPicture(classId)
         if len(memberList) > 0:
-            executor.submit(recogTask, videoId , result[0][2] , result[0][8] , result[0][5] , result[0][7] , classId ,memberList)
+            executor.submit(recogTask, videoId , str(result[0][2]) , str(result[0][8]) , result[0][5] , result[0][7] , classId ,memberList)
             #recogTask( videoId , result[0][2] , result[0][8] , result[0][5] , result[0][7] , classId ,memberList)
             return jsonify({'result':True})
         else:
