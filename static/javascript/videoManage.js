@@ -86,7 +86,6 @@ function createCard(data){
                                 "<img src='" + data.allMatchData[i].videoUrl +"' alt='Avatar' style='width:100%;opacity:0.85'>"+
                             "<div class='container'>"+
                                 "<p>第" + data.allMatchData[i].classNo + "節</p>"+  
-                                " <button class='btn btn-primary my-btn' id='delete_" + data.allMatchData[i].id + "' onclick='deleteEvent(id)'>刪除影片</button>"+
                             "</div>"+
                         "</div>"
         }
