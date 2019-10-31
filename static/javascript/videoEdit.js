@@ -48,3 +48,23 @@ function editSubmitEvent(){
         }
     }).fail(function(res) { console.log(res);});
 }
+function pustInRecogQueue(videoId){
+    $.ajax({
+        type: 'POST',
+        url: '/videoRecog',
+        data:JSON.stringify ({
+            videoId : videoId
+                    }),
+        success: function(data){
+            if (data.result == true){
+                alert("已經加入辨識");
+                location.reload();
+            }
+            else{
+                alert( "失敗! 原因 : " + data.result );
+            }
+        },
+        contentType: "application/json",
+        dataType: 'json'
+    });
+}
