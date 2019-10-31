@@ -154,7 +154,6 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
                                         lineType = 2)
                                  # 用相對應的寫入物件寫入
                                 faceVideoDictionary[ str(fin_obj[rec_position])].write(resizeFacePicFrame)
-                                for item in  
 
                             cv2.rectangle(frame,(bounding_box[rec_position,0],bounding_box[rec_position,1]),(bounding_box[rec_position,2],bounding_box[rec_position,3]),(0, 255, 0), 2, 8, 0)
 
