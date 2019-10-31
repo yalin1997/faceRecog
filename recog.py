@@ -71,12 +71,7 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
             outputUrl = '/upload/'+videoName
             coverPath = filePath +'otherPicture/cover_' + timeFrame + '.jpg'
             coverUrl =  '/upload/others/cover_' + timeFrame + '.jpg'
-            # 影片中辨識出的臉
-            facePicPath = filePath + fileName + videoUUID + '_facePicture/'
 
-
-
-            createFolder(facePicPath)
             out = cv2.VideoWriter(outputPathTmp, fourcc, 20.0, (width, height))
             timer=0
             # 出現過的人名與產生臉部特寫影片的物件對照
@@ -137,9 +132,7 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
                                     insertService.InsertFocusVideoInfo(date , classNo , classId ,'/upload/' + faceVideoFileName , "" , 1 , faceVideoFileName , faceVideoUrl)
                                     insertService.insertRecogedUser(videoId , int(str(fin_obj[rec_position]).split('_')[1]))
                                 
-                                picturePath = facePicPath + str(fin_obj[rec_position]) + "_" + str(uuid.uuid1()) + ".png"
                                 facePicFrame = frame[bounding_box[rec_position,1]:bounding_box[rec_position,3],bounding_box[rec_position,0]:bounding_box[rec_position,2]]
-                                cv2.imwrite(picturePath,facePicFrame)
                                 emotion = emotionDetect.detectEmotion(facePicFrame)
 
                                 resizeFacePicFrame=cv2.resize(facePicFrame,(400,480))
