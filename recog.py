@@ -34,151 +34,151 @@ import traceback
 def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date , classNo , classId):      
     file.write("start recog!!")
     timeFrame = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-    try:
-        with tf.Graph().as_default():
-            config = tf.ConfigProto(allow_soft_placement=True)
-            config.gpu_options.allow_growth = True 
-            with tf.Session(config=config) as sess:     
-                # Load the model 
-                facenet.load_model(modelPath)
-        
-                # Get input and output tensors
-                images_placeholder = tf.get_default_graph().get_tensor_by_name("input:0")
-                embeddings = tf.get_default_graph().get_tensor_by_name("embeddings:0")
-                phase_train_placeholder = tf.get_default_graph().get_tensor_by_name("phase_train:0")
 
-                firstShot = True
-                image=[]
-                nrof_images=0
-                # 存本影像片段被識別出的所有人
-                nameList = []
-                # 取得輸入之 emb 向量
-                compare_emb = emdList
-                compare_num=len(compare_emb)
+    with tf.Graph().as_default():
+        config = tf.ConfigProto(allow_soft_placement=True)
+        config.gpu_options.allow_growth = True 
+        with tf.Session(config=config) as sess:     
+            # Load the model 
+            facenet.load_model(modelPath)
+    
+            # Get input and output tensors
+            images_placeholder = tf.get_default_graph().get_tensor_by_name("input:0")
+            embeddings = tf.get_default_graph().get_tensor_by_name("embeddings:0")
+            phase_train_placeholder = tf.get_default_graph().get_tensor_by_name("phase_train:0")
 
-                #capture =cv2.VideoCapture(video)
-                capture =cv2.VideoCapture(uploadFile)
-                # 使用 XVID 編碼
-                fourcc = cv2.VideoWriter_fourcc(*"mp4v")
-                fourcc4FaceVideo = cv2.VideoWriter_fourcc(*"mp4v")
-                fps4FaceVideo = 24.0
-                width = int(capture.get(cv2.CAP_PROP_FRAME_WIDTH))
-                height = int(capture.get(cv2.CAP_PROP_FRAME_HEIGHT))
-                # 建立 VideoWriter 物件，輸出影片至 output.avi，FPS 值為 20.0
-                videoUUID = str(uuid.uuid1())
-                videoNameTmp = 'output_'+videoUUID+'tmp.mp4'
-                videoName = 'output_'+videoUUID+'.mp4'
-                filePath = "/home/nknu/文件/faceRecog/static/upload/"
-                outputPathTmp = '/home/nknu/文件/faceRecog/static/upload/video/'+videoNameTmp
-                outputPath = '/home/nknu/文件/faceRecog/static/upload/video/'+videoName
-                outputUrl = '/upload/'+videoName
-                coverPath = filePath +'otherPicture/cover_' + timeFrame + '.jpg'
-                coverUrl =  '/upload/others/cover_' + timeFrame + '.jpg'
+            firstShot = True
+            image=[]
+            nrof_images=0
+            # 存本影像片段被識別出的所有人
+            nameList = []
+            # 取得輸入之 emb 向量
+            compare_emb = emdList
+            compare_num=len(compare_emb)
 
-                out = cv2.VideoWriter(outputPathTmp, fourcc, 20.0, (width, height))
-                timer=0
-                # 出現過的人名與產生臉部特寫影片的物件對照
-                faceVideoDictionary = {}
-                faceVideoPath = {}
-                file.write("capture is open!")
-                while (capture.isOpened()):
-                    ret, frame = capture.read() 
-                    if(not ret):
-                        break
-                    if frame is None:
-                        break
-                    # rgb frame np.ndarray 480*640*3
-                    rgb_frame=cv2.cvtColor(frame,cv2.COLOR_BGR2RGB)
-                    
-                    # 封面
-                    if(firstShot):
-                        cv2.imwrite(coverPath ,rgb_frame)
-                        firstShot = False
-                    
-                    mark,bounding_box,crop_image=load_and_align_data(rgb_frame,160,44)
-                    timer+=1
-                    if(1):
-                        
-                        # print(timer)
-                        if(mark):
-                            feed_dict = { images_placeholder: crop_image, phase_train_placeholder:False }
-                            emb = sess.run(embeddings, feed_dict=feed_dict)
-                            temp_num=len(emb)
+            #capture =cv2.VideoCapture(video)
+            capture =cv2.VideoCapture(uploadFile)
+            # 使用 XVID 編碼
+            fourcc = cv2.VideoWriter_fourcc(*"mp4v")
+            fourcc4FaceVideo = cv2.VideoWriter_fourcc(*"mp4v")
+            fps4FaceVideo = 24.0
+            width = int(capture.get(cv2.CAP_PROP_FRAME_WIDTH))
+            height = int(capture.get(cv2.CAP_PROP_FRAME_HEIGHT))
+            # 建立 VideoWriter 物件，輸出影片至 output.avi，FPS 值為 20.0
+            videoUUID = str(uuid.uuid1())
+            videoNameTmp = 'output_'+videoUUID+'tmp.mp4'
+            videoName = 'output_'+videoUUID+'.mp4'
+            filePath = "/home/nknu/文件/faceRecog/static/upload/"
+            outputPathTmp = '/home/nknu/文件/faceRecog/static/upload/video/'+videoNameTmp
+            outputPath = '/home/nknu/文件/faceRecog/static/upload/video/'+videoName
+            outputUrl = '/upload/'+videoName
+            coverPath = filePath +'otherPicture/cover_' + timeFrame + '.jpg'
+            coverUrl =  '/upload/others/cover_' + timeFrame + '.jpg'
 
-                            fin_obj=[]
-
-                            for i in range(temp_num):
-                                dist_list=[]
-                                for j in range(compare_num):
-                                    dist = np.sqrt(np.sum(np.square(np.subtract(emb[i,:], compare_emb[j,:]))))# 計算兩個向量間的歐式距離
-                                    dist_list.append(dist)
-                                min_value=min(dist_list)# 得到歐式距離的最小值
-                                file.write(str(min_value))
-                                if(min_value>0.7):#0.65
-                                    fin_obj.append('unknow')
-                                else:
-                                    fin_obj.append(all_name[dist_list.index(min_value)])
-                                    if all_name[dist_list.index(min_value)] not in nameList:
-                                        nameList.append(all_name[dist_list.index(min_value)])    
-
-
-                            for rec_position in range(temp_num):
-                                if(fin_obj[rec_position] != 'unknow'):
-                                    # 生成cv寫入影片物件
-                                    if(str(fin_obj[rec_position]) not in faceVideoDictionary.keys()):
-                                        faceVideoFileName = 'faceVideo_' + str(fin_obj[rec_position]) + '_' + str(uuid.uuid1()) + '.mp4'
-                                        faceVideoFileNameTmp = 'faceVideo_' + str(fin_obj[rec_position]) + '_' + str(uuid.uuid1()) + 'Tmp.mp4'
-                                        faceVideoUrl = filePath + 'video/' + faceVideoFileName
-                                        faceVideoUrlTmp = filePath + 'video/' + faceVideoFileNameTmp
-                                        faceVideoDictionary[str(fin_obj[rec_position])] = cv2.VideoWriter(faceVideoUrlTmp,fourcc4FaceVideo,fps4FaceVideo,(400,480))#最后一个是保存图片的尺寸
-                                        faceVideoPath[str(faceVideoUrlTmp)] = faceVideoUrl
-                                        insertService.InsertFocusVideoInfo(date , classNo , classId ,'/upload/' + faceVideoFileName , "" , 1 , faceVideoFileName , faceVideoUrl)
-                                        insertService.insertRecogedUser(videoId , int(str(fin_obj[rec_position]).split('_')[1]))
-                                    
-                                    facePicFrame = frame[bounding_box[rec_position,1]:bounding_box[rec_position,3],bounding_box[rec_position,0]:bounding_box[rec_position,2]]
-                                    #emotion = emotionDetect.detectEmotion(facePicFrame)
-                                    #file.write(str(emotion))
-                                    resizeFacePicFrame=cv2.resize(facePicFrame,(400,480))
-                                    '''cv2.putText(
-                                            resizeFacePicFrame,
-                                            emotion, 
-                                            (200 , 0),
-                                            cv2.FONT_HERSHEY_COMPLEX_SMALL, 
-                                            0.8, 
-                                            (0, 0 ,255), 
-                                            thickness = 2, 
-                                            lineType = 2)'''
-                                    # 用相對應的寫入物件寫入
-                                    faceVideoDictionary[ str(fin_obj[rec_position])].write(resizeFacePicFrame)
-
-                                cv2.rectangle(frame,(bounding_box[rec_position,0],bounding_box[rec_position,1]),(bounding_box[rec_position,2],bounding_box[rec_position,3]),(0, 255, 0), 2, 8, 0)
-
-                                cv2.putText(
-                                    frame,
-                                fin_obj[rec_position], 
-                                (bounding_box[rec_position,0],bounding_box[rec_position,1]),
-                                cv2.FONT_HERSHEY_COMPLEX_SMALL, 
-                                0.8, 
-                                (0, 0 ,255), 
-                                thickness = 2,
-                                lineType = 2)
-                            out.write(frame)
-
-                    key = cv2.waitKey(3)
-                    if key == 27:
-                        file.write("esc break...")
-                        break
+            out = cv2.VideoWriter(outputPathTmp, fourcc, 20.0, (width, height))
+            timer=0
+            # 出現過的人名與產生臉部特寫影片的物件對照
+            faceVideoDictionary = {}
+            faceVideoPath = {}
+            file.write("capture is open!")
+            while (capture.isOpened()):
+                ret, frame = capture.read() 
+                if(not ret):
+                    break
+                if frame is None:
+                    break
+                # rgb frame np.ndarray 480*640*3
+                rgb_frame=cv2.cvtColor(frame,cv2.COLOR_BGR2RGB)
                 
+                # 封面
+                if(firstShot):
+                    cv2.imwrite(coverPath ,rgb_frame)
+                    firstShot = False
+                
+                mark,bounding_box,crop_image=load_and_align_data(rgb_frame,160,44)
+                timer+=1
+                if(1):
+                    
+                    # print(timer)
+                    if(mark):
+                        feed_dict = { images_placeholder: crop_image, phase_train_placeholder:False }
+                        emb = sess.run(embeddings, feed_dict=feed_dict)
+                        temp_num=len(emb)
 
-                capture.release()
-                out.release()
-                file.write("finish and insert data!")
-                os.system("ffmpeg -i "+outputPathTmp+" -vcodec libx264 "+outputPath)
-                insertService.editVideoInfo(videoId,outputUrl,outputPath,videoName)
-                for item in faceVideoPath.keys():
-                    os.system("ffmpeg -i "+item+" -vcodec libx264 "+faceVideoPath[item])
-    except:
-        file.write(str(traceback.print_exc()))
+                        fin_obj=[]
+
+                        for i in range(temp_num):
+                            dist_list=[]
+                            for j in range(compare_num):
+                                dist = np.sqrt(np.sum(np.square(np.subtract(emb[i,:], compare_emb[j,:]))))# 計算兩個向量間的歐式距離
+                                dist_list.append(dist)
+                            min_value=min(dist_list)# 得到歐式距離的最小值
+                            file.write(str(min_value))
+                            if(min_value>0.7):#0.65
+                                fin_obj.append('unknow')
+                            else:
+                                fin_obj.append(all_name[dist_list.index(min_value)])
+                                if all_name[dist_list.index(min_value)] not in nameList:
+                                    nameList.append(all_name[dist_list.index(min_value)])    
+
+
+                        for rec_position in range(temp_num):
+                            if(fin_obj[rec_position] != 'unknow'):
+                                # 生成cv寫入影片物件
+                                if(str(fin_obj[rec_position]) not in faceVideoDictionary.keys()):
+                                    faceVideoFileName = 'faceVideo_' + str(fin_obj[rec_position]) + '_' + str(uuid.uuid1()) + '.mp4'
+                                    faceVideoFileNameTmp = 'faceVideo_' + str(fin_obj[rec_position]) + '_' + str(uuid.uuid1()) + 'Tmp.mp4'
+                                    faceVideoUrl = filePath + 'video/' + faceVideoFileName
+                                    faceVideoUrlTmp = filePath + 'video/' + faceVideoFileNameTmp
+                                    faceVideoDictionary[str(fin_obj[rec_position])] = cv2.VideoWriter(faceVideoUrlTmp,fourcc4FaceVideo,fps4FaceVideo,(400,480))#最后一个是保存图片的尺寸
+                                    faceVideoPath[str(faceVideoUrlTmp)] = faceVideoUrl
+                                    insertService.InsertFocusVideoInfo(date , classNo , classId ,'/upload/' + faceVideoFileName , "" , 1 , faceVideoFileName , faceVideoUrl)
+                                    insertService.insertRecogedUser(videoId , int(str(fin_obj[rec_position]).split('_')[1]))
+                                
+                                facePicFrame = frame[bounding_box[rec_position,1]:bounding_box[rec_position,3],bounding_box[rec_position,0]:bounding_box[rec_position,2]]
+                                #emotion = emotionDetect.detectEmotion(facePicFrame)
+                                #file.write(str(emotion))
+                                resizeFacePicFrame=cv2.resize(facePicFrame,(400,480))
+                                '''cv2.putText(
+                                        resizeFacePicFrame,
+                                        emotion, 
+                                        (200 , 0),
+                                        cv2.FONT_HERSHEY_COMPLEX_SMALL, 
+                                        0.8, 
+                                        (0, 0 ,255), 
+                                        thickness = 2, 
+                                        lineType = 2)'''
+                                # 用相對應的寫入物件寫入
+                                faceVideoDictionary[ str(fin_obj[rec_position])].write(resizeFacePicFrame)
+
+                            cv2.rectangle(frame,(bounding_box[rec_position,0],bounding_box[rec_position,1]),(bounding_box[rec_position,2],bounding_box[rec_position,3]),(0, 255, 0), 2, 8, 0)
+
+                            cv2.putText(
+                                frame,
+                            fin_obj[rec_position], 
+                            (bounding_box[rec_position,0],bounding_box[rec_position,1]),
+                            cv2.FONT_HERSHEY_COMPLEX_SMALL, 
+                            0.8, 
+                            (0, 0 ,255), 
+                            thickness = 2,
+                            lineType = 2)
+                        out.write(frame)
+
+                key = cv2.waitKey(3)
+                if key == 27:
+                    file.write("esc break...")
+                    break
+            
+
+            capture.release()
+            out.release()
+            file.write("finish and insert data!")
+            os.system("ffmpeg -i "+outputPathTmp+" -vcodec libx264 "+outputPath)
+            insertService.editVideoInfo(videoId,outputUrl,outputPath,videoName)
+            for item in faceVideoPath.keys():
+                print(str(item))
+                os.system("ffmpeg -i "+item+" -vcodec libx264 "+faceVideoPath[item])
+
 
 
 
