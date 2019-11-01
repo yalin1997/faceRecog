@@ -134,7 +134,7 @@ def getClassGroup(className , classYear , classDay , id):
     Connector.connect()
     sql = "SELECT class_id , class_name , class_year , class_day FROM class_group WHERE manager_id = {}".format(id)
     if className:
-        sql = sql + " AND class_name = '{}' ".format(className)
+        sql = sql + " AND class_name LIKE '%{}%' ".format(className)
     if classYear:  
         sql = sql + " AND class_year = {} ".format(classYear)
     if classDay:
