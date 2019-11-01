@@ -28,10 +28,10 @@ import tensorflow as tf
 import dbService.insertDbService as insertService
 import json
 
+
 # 參數分別為收到的檔案,資料庫取得之embs , facenet model 位置 , 比對庫中的名字
 def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date , classNo , classId):      
     file.write("start recog!!")
-    file= open("log.txt","w+")
     timeFrame = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
     try:
         with tf.Graph().as_default():
@@ -183,7 +183,7 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
 
 
 
-
+file= open("log.txt","w+")s
 file.write('Creating networks and loading parameters')
 with tf.Graph().as_default():
     gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.8)
