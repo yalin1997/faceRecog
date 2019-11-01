@@ -210,8 +210,8 @@ def load_and_align_data(img, image_size, margin):
 
     det=bounding_boxes
 
-    file.write(det.shape)
-    file.write(type(det))
+    file.write(str(det.shape))
+    file.write(str(type(det)))
 
     det[:,0] = np.maximum(det[:,0]-margin/2, 0)
     det[:,1] = np.maximum(det[:,1]-margin/2, 0)
