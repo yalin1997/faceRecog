@@ -172,11 +172,13 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
 
             capture.release()
             out.release()
+            for writer in faceVideoDictionary.keys():
+                faceVideoDictionary[writer].release()
             print("finish and insert data!")
             os.system("ffmpeg -i "+outputPathTmp+" -vcodec libx264 "+outputPath)
             insertService.editVideoInfo(videoId,outputUrl,outputPath,videoName)
             for item in faceVideoPath.keys():
-                print(str(item))
+                print("videoFile : "+str(item))
                 os.system("ffmpeg -i "+item+" -vcodec libx264 "+faceVideoPath[item])
 
 
