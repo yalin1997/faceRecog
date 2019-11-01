@@ -8,10 +8,10 @@ import glob
 emotion_model_path = './emotion_detector_models/_mini_XCEPTION.102-0.66.hdf5'
 EMOTIONS = ["angry" ,"disgust","scared", "happy", "sad", "surprised",
  "neutral"]
+clear_session()
 emotion_classifier = load_model(emotion_model_path, compile=False)
 
 def detectEmotion(face_image):
-    clear_session()
     face_image = cv2.resize(face_image, (64, 64))
     roi = cv2.cvtColor(face_image, cv2.COLOR_BGR2GRAY)
     roi = roi.astype("float") / 255.0
