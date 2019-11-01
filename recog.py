@@ -27,6 +27,7 @@ from sklearn.externals import joblib
 import tensorflow as tf
 import dbService.insertDbService as insertService
 import json
+import traceback
 
 
 # 參數分別為收到的檔案,資料庫取得之embs , facenet model 位置 , 比對庫中的名字
