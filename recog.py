@@ -137,7 +137,7 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
                                     
                                     facePicFrame = frame[bounding_box[rec_position,1]:bounding_box[rec_position,3],bounding_box[rec_position,0]:bounding_box[rec_position,2]]
                                     #emotion = emotionDetect.detectEmotion(facePicFrame)
-                                    file.write(str(emotion))
+                                    #file.write(str(emotion))
                                     resizeFacePicFrame=cv2.resize(facePicFrame,(400,480))
                                     '''cv2.putText(
                                             resizeFacePicFrame,
