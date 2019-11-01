@@ -11,7 +11,7 @@ import os
 import copy
 import argparse
 import facenet
-import emotionDetect
+#import emotionDetect
 import align.detect_face
 import random
 
@@ -136,10 +136,10 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
                                         insertService.insertRecogedUser(videoId , int(str(fin_obj[rec_position]).split('_')[1]))
                                     
                                     facePicFrame = frame[bounding_box[rec_position,1]:bounding_box[rec_position,3],bounding_box[rec_position,0]:bounding_box[rec_position,2]]
-                                    emotion = emotionDetect.detectEmotion(facePicFrame)
+                                    #emotion = emotionDetect.detectEmotion(facePicFrame)
                                     file.write(str(emotion))
                                     resizeFacePicFrame=cv2.resize(facePicFrame,(400,480))
-                                    cv2.putText(
+                                    '''cv2.putText(
                                             resizeFacePicFrame,
                                             emotion, 
                                             (200 , 0),
@@ -147,7 +147,7 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
                                             0.8, 
                                             (0, 0 ,255), 
                                             thickness = 2, 
-                                            lineType = 2)
+                                            lineType = 2)'''
                                     # 用相對應的寫入物件寫入
                                     faceVideoDictionary[ str(fin_obj[rec_position])].write(resizeFacePicFrame)
 
