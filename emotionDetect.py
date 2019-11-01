@@ -1,5 +1,6 @@
 from keras.models import load_model
 from keras.preprocessing.image import img_to_array
+from keras.backend import clear_session
 import numpy as np
 import cv2
 import glob
@@ -10,6 +11,7 @@ EMOTIONS = ["angry" ,"disgust","scared", "happy", "sad", "surprised",
 emotion_classifier = load_model(emotion_model_path, compile=False)
 
 def detectEmotion(face_image):
+    clear_session()
     face_image = cv2.resize(face_image, (64, 64))
     roi = cv2.cvtColor(face_image, cv2.COLOR_BGR2GRAY)
     roi = roi.astype("float") / 255.0
