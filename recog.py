@@ -32,7 +32,7 @@ import traceback
 
 # 參數分別為收到的檔案,資料庫取得之embs , facenet model 位置 , 比對庫中的名字
 def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date , classNo , classId):      
-    file.write("start recog!!")
+    print("start recog!!")
     timeFrame = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
 
     with tf.Graph().as_default():
@@ -80,7 +80,7 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
             # 出現過的人名與產生臉部特寫影片的物件對照
             faceVideoDictionary = {}
             faceVideoPath = {}
-            file.write("capture is open!")
+            print("capture is open!")
             while (capture.isOpened()):
                 ret, frame = capture.read() 
                 if(not ret):
@@ -113,7 +113,7 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
                                 dist = np.sqrt(np.sum(np.square(np.subtract(emb[i,:], compare_emb[j,:]))))# 計算兩個向量間的歐式距離
                                 dist_list.append(dist)
                             min_value=min(dist_list)# 得到歐式距離的最小值
-                            file.write(str(min_value))
+                            print(str(min_value))
                             if(min_value>0.7):#0.65
                                 fin_obj.append('unknow')
                             else:
@@ -166,13 +166,13 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
 
                 key = cv2.waitKey(3)
                 if key == 27:
-                    file.write("esc break...")
+                    print("esc break...")
                     break
             
 
             capture.release()
             out.release()
-            file.write("finish and insert data!")
+            print("finish and insert data!")
             os.system("ffmpeg -i "+outputPathTmp+" -vcodec libx264 "+outputPath)
             insertService.editVideoInfo(videoId,outputUrl,outputPath,videoName)
             for item in faceVideoPath.keys():
@@ -185,7 +185,7 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
 
 
 file= open("log.txt","w+")
-file.write('Creating networks and loading parameters')
+print('Creating networks and loading parameters')
 with tf.Graph().as_default():
     gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.8)
     sess = tf.Session(config=tf.ConfigProto(gpu_options=gpu_options, log_device_placement=False))
@@ -212,6 +212,8 @@ def load_and_align_data(img, image_size, margin):
 
     file.write(str(det.shape))
     file.write(str(type(det)))
+    print(str(det.shape))
+    print(str(det.shape))
 
     det[:,0] = np.maximum(det[:,0]-margin/2, 0)
     det[:,1] = np.maximum(det[:,1]-margin/2, 0)
