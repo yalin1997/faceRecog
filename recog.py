@@ -113,7 +113,7 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
                                     dist = np.sqrt(np.sum(np.square(np.subtract(emb[i,:], compare_emb[j,:]))))# 計算兩個向量間的歐式距離
                                     dist_list.append(dist)
                                 min_value=min(dist_list)# 得到歐式距離的最小值
-                                file.write(min_value)
+                                file.write(str(min_value))
                                 if(min_value>0.7):#0.65
                                     fin_obj.append('unknow')
                                 else:
