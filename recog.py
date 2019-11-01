@@ -183,7 +183,7 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
 
 
 
-file= open("log.txt","w+")s
+file= open("log.txt","w+")
 file.write('Creating networks and loading parameters')
 with tf.Graph().as_default():
     gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.8)
