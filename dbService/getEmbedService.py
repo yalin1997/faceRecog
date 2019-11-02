@@ -130,6 +130,16 @@ def getVideoById(vid):
     Connector.quit()
     return queryResult
 
+def getRecogName(vid):
+    Connector.connect()
+    sql = '''SELECT last_name , first_name 
+            FROM recoged_user LEFT JOIN user_data
+            ON recoged_user.user_id = user_data.user_id
+            WHERE video_id = {}'''.format(vid)
+    queryResult = Connector.sqlQuery(sql)
+    Connector.quit()
+    return queryResult
+
 def getClassGroup(className , classYear , classDay , id):
     Connector.connect()
     sql = "SELECT class_id , class_name , class_year , class_day FROM class_group WHERE manager_id = {}".format(id)

@@ -579,8 +579,12 @@ def videoEdit():
         videoId = request.args.get('videoId')  
         videoData = getDataService.getVideoById(videoId)
         editVideo = video(videoId,str(videoData[0][1]) , videoData[0][3] , str(videoData[0][4]) , videoData[0][5] ,  videoData[0][6] ,  videoData[0][7])
+        recogedName = getDataService.getRecogName(int(videoId))
+        recogedNameList = []
+        for i in range(len(recogedName)):
+            recogedNameList.append(str(recogedName[i][0])+str(recogedName[i][1]))
         permission = current_user.permission
-        return render_template('videoEdit.html',editVideo=editVideo,form=editVideoForm,permission = permission)
+        return render_template('videoEdit.html',editVideo=editVideo,form=editVideoForm,permission = permission , recogedName=recogedNameList)
 
 @app.route('/videoEdit/delete',methods=['POST'])
 @login_required
