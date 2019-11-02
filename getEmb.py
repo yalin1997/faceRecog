@@ -33,10 +33,10 @@ def getEmbList(modelPath , picturePathList):
                     nrof_images=nrof_images+1
                 
                 images=np.stack(image)
-                print(str(images.shape))
                 feed_dict = { images_placeholder: images, phase_train_placeholder:False }
                 # 輸出 emb 向量
                 compare_emb = sess.run(embeddings, feed_dict=feed_dict)
                 compare_num=len(compare_emb)
+                print(str(compare_num))
                 return compare_emb
                 # service.InsertEmbInfo(all_obj,compare_emb)
