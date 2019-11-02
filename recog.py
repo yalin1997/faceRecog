@@ -71,7 +71,7 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
             # 使用 XVID 編碼
             fourcc = cv2.VideoWriter_fourcc(*"mp4v")
             fourcc4FaceVideo = cv2.VideoWriter_fourcc(*"mp4v")
-            fps4FaceVideo = 24.0
+            fps4FaceVideo = 10.0
             width = int(capture.get(cv2.CAP_PROP_FRAME_WIDTH))
             height = int(capture.get(cv2.CAP_PROP_FRAME_HEIGHT))
             # 建立 VideoWriter 物件，輸出影片至 output.avi，FPS 值為 20.0
@@ -151,7 +151,7 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
                                 cv2.putText(
                                         resizeFacePicFrame,
                                         emotion, 
-                                        (200 , 0),
+                                        (150 , 100),
                                         cv2.FONT_HERSHEY_COMPLEX_SMALL, 
                                         0.8, 
                                         (0, 0 ,255), 
