@@ -29,6 +29,14 @@ import dbService.insertDbService as insertService
 import json
 import traceback
 
+# load model
+file= open("log.txt","w+")
+print('Creating networks and loading parameters')
+with tf.Graph().as_default():
+    gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.8)
+    sess = tf.Session(config=tf.ConfigProto(gpu_options=gpu_options, log_device_placement=False))
+    with sess.as_default():
+        pnet, rnet, onet = align.detect_face.create_mtcnn(sess, None)
 
 # 參數分別為收到的檔案,資料庫取得之embs , facenet model 位置 , 比對庫中的名字
 def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date , classNo , classId):      
@@ -180,20 +188,6 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
             for item in faceVideoPath.keys():
                 print("videoFile : "+str(item))
                 os.system("ffmpeg -i "+item+" -vcodec libx264 "+faceVideoPath[item])
-
-
-
-
-
-
-file= open("log.txt","w+")
-print('Creating networks and loading parameters')
-with tf.Graph().as_default():
-    gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.8)
-    sess = tf.Session(config=tf.ConfigProto(gpu_options=gpu_options, log_device_placement=False))
-    with sess.as_default():
-        pnet, rnet, onet = align.detect_face.create_mtcnn(sess, None)
-
 
 def load_and_align_data(img, image_size, margin):
 
