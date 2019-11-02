@@ -23,7 +23,7 @@ def InsertFocusVideoInfo(date,classNo,cid,videoPath,coverPath,isRecoged , fileNa
     Connector.connect()
     sql = '''INSERT INTO 
     video_face( date,class_no,class_id,video_url,cover,video_is_recoged , is_focus , file_name , file_path ) 
-    VALUES( '{}' , '{}' , '{}' , '{}' , '{}' , {} , True , '{}' , '{}' )'''.format(date,
+    VALUES( '{}' , '{}' , '{}' , '{}' , '{}' , {} , True , '{}' , '{}' )  RETURNING video_id'''.format(date,
     classNo,
     cid,
     videoPath,
@@ -31,9 +31,9 @@ def InsertFocusVideoInfo(date,classNo,cid,videoPath,coverPath,isRecoged , fileNa
     isRecoged,
     fileName,
     filePath)
-    Connector.sqlExecute(sql)
+    videoId = Connector.sqlExecuteWithReturn(sql)
     Connector.quit()
-    return True
+    return int(videoId)
 
 def insertRecogedUser(vid , uid):
     Connector.connect()

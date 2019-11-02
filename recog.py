@@ -142,8 +142,9 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
                                     faceVideoUrlTmp = filePath + 'video/' + faceVideoFileNameTmp
                                     faceVideoDictionary[str(fin_obj[rec_position])] = cv2.VideoWriter(faceVideoUrlTmp,fourcc4FaceVideo,fps4FaceVideo,(400,480))#最后一个是保存图片的尺寸
                                     faceVideoPath[str(faceVideoUrlTmp)] = faceVideoUrl
-                                    insertService.InsertFocusVideoInfo(date , classNo , classId ,'/upload/' + faceVideoFileName , "" , 1 , faceVideoFileName , faceVideoUrl)
+                                    faceVideoId = insertService.InsertFocusVideoInfo(date , classNo , classId ,'/upload/' + faceVideoFileName , "" , 1 , faceVideoFileName , faceVideoUrl)
                                     insertService.insertRecogedUser(videoId , int(str(fin_obj[rec_position]).split('_')[1]))
+                                    insertService.insertRecogedUser(faceVideoId , int(str(fin_obj[rec_position]).split('_')[1]))
                                 
                                 facePicFrame = frame[bounding_box[rec_position,1]:bounding_box[rec_position,3],bounding_box[rec_position,0]:bounding_box[rec_position,2]]
                                 emotion = emotionDetect.detectEmotion(facePicFrame)
