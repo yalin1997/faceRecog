@@ -582,7 +582,7 @@ def videoEdit():
         recogedName = getDataService.getRecogName(int(videoId))
         recogedNameList = []
         for i in range(len(recogedName)):
-            recogedNameList.append(str(recogedName[i][0])+str(recogedName[i][1]))
+            recogedNameList.append(str(recogedName[i][0])+str(recogedName[i][1])+"_"+str(recogedName[i][2]))
         permission = current_user.permission
         return render_template('videoEdit.html',editVideo=editVideo,form=editVideoForm,permission = permission , recogedName=recogedNameList)
 

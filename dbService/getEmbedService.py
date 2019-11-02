@@ -132,7 +132,7 @@ def getVideoById(vid):
 
 def getRecogName(vid):
     Connector.connect()
-    sql = '''SELECT last_name , first_name 
+    sql = '''SELECT last_name , first_name , user_data.user_id
             FROM recoged_user LEFT JOIN user_data
             ON recoged_user.user_id = user_data.user_id
             WHERE video_id = {}'''.format(vid)

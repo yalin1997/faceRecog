@@ -51,7 +51,7 @@
                         </th>
                         <td id="infoClassNo">
                             {% for name in recogedName %}
-                                <span>{{ name }}</span>
+                                <a href="{% name.split('_')[1] %}">{% name.split('_')[0] %}</a>
                             {% endfor %}
                         </td>
                     </tr>
