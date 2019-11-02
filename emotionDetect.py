@@ -10,6 +10,7 @@ EMOTIONS = ["angry" ,"disgust","scared", "happy", "sad", "surprised",
  "neutral"]
 clear_session()
 emotion_classifier = load_model(emotion_model_path, compile=False)
+emotion_classifier._make_predict_function()
 
 def detectEmotion(face_image):
     face_image = cv2.resize(face_image, (64, 64))
