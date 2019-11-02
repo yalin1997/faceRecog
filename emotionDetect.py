@@ -25,10 +25,11 @@ def detectEmotion(face_image):
     roi = img_to_array(roi)
     roi = np.expand_dims(roi, axis=0)
     
+    print("++++++++++++++++ start predict emotion +++++++++++++++++++")
     preds = emotion_classifier.predict(roi)[0]
     emotion_probability = np.max(preds)
     label = EMOTIONS[preds.argmax()]
-    print(str(label))
+    print("!!!!!!!!!!!!!!!!!!!!!!!! Label : " + str(label))
     return label
 
 
