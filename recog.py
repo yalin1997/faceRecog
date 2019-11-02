@@ -124,7 +124,7 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
                                 dist_list.append(dist)
                             min_value=min(dist_list)# 得到歐式距離的最小值
                             print(str(min_value))
-                            if(min_value>0.7):#0.65
+                            if(min_value>0.9):
                                 fin_obj.append('unknow')
                             else:
                                 fin_obj.append(all_name[dist_list.index(min_value)])
