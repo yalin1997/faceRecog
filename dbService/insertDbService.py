@@ -33,8 +33,7 @@ def InsertFocusVideoInfo(date,classNo,cid,videoPath,coverPath,isRecoged , fileNa
     filePath)
     videoId = Connector.sqlExecuteWithReturn(sql)
     Connector.quit()
-    print(str(videoId[0][0]))
-    return videoId
+    return int(videoId[0][0])
 
 def insertRecogedUser(vid , uid):
     Connector.connect()
