@@ -12,11 +12,13 @@ EMOTIONS = ["angry" ,"disgust","scared", "happy", "sad", "surprised",
 
  # load model
 emotionGraph = tf.Graph()
-with emotionGraph.as_default():
-    clear_session()
-    emotion_classifier = load_model(emotion_model_path, compile=False)
-    emotion_classifier._make_predict_function()
-    print("+++++++++++++++++++++++ load emotion model finish +++++++++++++++++++++++")
+with tf.Graph().as_default():
+    configEmotion = tf.ConfigProto(allow_soft_placement=True)
+    configEmotion.gpu_options.allow_growth = True 
+    with tf.Session(config=configEmotion) as sessEmotion:    
+        emotion_classifier = load_model(emotion_model_path, compile=False)
+        emotion_classifier._make_predict_function()
+        print("+++++++++++++++++++++++ load emotion model finish +++++++++++++++++++++++")
 
 def detectEmotion(face_image):
 
