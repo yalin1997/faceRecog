@@ -552,7 +552,7 @@ def recogTask(videoId ,filename, filePath , date , classNo, classId ,  memberLis
     print("get Emb start")
 
     embList = getEmb.getEmbList( model_Path[0][0], picturePathList)# 算出 Emb 得到 ndarray
-    print("get Emb End ")
+    print("get Emb End embList 長:" + str(len(embList)) + "nameList 長:" +  str(len(pictureNameList)) )
     insertService.editRecogStatus(videoId , 2)
     recog.main(videoId , filePath,filename,embList,model_Path[0][0],pictureNameList,date,classNo,classId)
 
