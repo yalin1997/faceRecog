@@ -4,6 +4,7 @@ from keras.backend import clear_session
 import numpy as np
 import cv2
 import glob
+import tensorflow as tf
 
 emotion_model_path = './emotion_detector_models/_mini_XCEPTION.102-0.66.hdf5'
 EMOTIONS = ["angry" ,"disgust","scared", "happy", "sad", "surprised",
