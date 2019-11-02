@@ -32,7 +32,10 @@ import traceback
 # load model
 file= open("log.txt","w+")
 print('Creating networks and loading parameters')
-with tf.Graph().as_default():
+
+mtcnnGraph = tf.Graph()
+
+with mtcnnGraph.as_default():
     gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.8)
     sess = tf.Session(config=tf.ConfigProto(gpu_options=gpu_options, log_device_placement=False))
     with sess.as_default():
@@ -42,8 +45,8 @@ with tf.Graph().as_default():
 def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date , classNo , classId):      
     print("start recog!!")
     timeFrame = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-
-    with tf.Graph().as_default():
+    facenetGraph = tf.Graph()
+    with facenetGraph.as_default():
         config = tf.ConfigProto(allow_soft_placement=True)
         config.gpu_options.allow_growth = True 
         with tf.Session(config=config) as sess:     
