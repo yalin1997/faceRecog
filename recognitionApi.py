@@ -41,9 +41,8 @@ app = flask.Flask(__name__)
 executor = ThreadPoolExecutor(500)
 
 app.secret_key = os.urandom(24)
-print(str(app.secret_key))
+
 UPLOAD_FOLDER = "/home/nknu/文件/faceRecog/static/upload"
-#UPLOAD_FOLDER = "D:/faceRecog/static/upload"
 
 embPath = "/face"
 videoPath = "/video"
@@ -56,9 +55,6 @@ ALLOWED_VIDEO = set(['avi','mp4','mov'])
 
 app.config["UPLOAD_FOLDER"] =UPLOAD_FOLDER
 app.config["JSON_AS_ASCII"] = False
-
-#savePath = '/home/nknu/文件/faceRecog/embDir'
-
 
 model_Path = getDataService.getModelPath() # 取模型路徑 tuple list
 
