@@ -13,6 +13,7 @@ EMOTIONS = ["angry" ,"disgust","scared", "happy", "sad", "surprised",
  # load model
 emotionGraph = tf.Graph()
 with emotionGraph.as_default():
+    clear_session()
     emotion_classifier = load_model(emotion_model_path, compile=False)
     emotion_classifier._make_predict_function()
     print("+++++++++++++++++++++++ load emotion model finish +++++++++++++++++++++++")
