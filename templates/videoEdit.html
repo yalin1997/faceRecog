@@ -44,7 +44,7 @@
                             <span>{{ editVideo.classNo }}</span>
                         </td>
                     </tr>
-                    {% if editVideo == True %}
+                    {% if editVideo.isRecoged == True %}
                     <tr>
                         <th style="text-align: center;">
                             辨識結果
@@ -55,7 +55,9 @@
                     </tr>
                     {% endif %}
                 </table>
-                <button class="btn btn-primary my-btn" id="{{editVideo.id}}" onclick="pustInRecogQueue(id)">執行辨識</button>
+                {% if editVideo.isRecoged == False %}
+                    <button class="btn btn-primary my-btn" id="{{editVideo.id}}" onclick="pustInRecogQueue(id)">執行辨識</button>
+                {% endif %}
     </div>
 
    
