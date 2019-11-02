@@ -15,7 +15,7 @@ EMOTIONS = ["angry" ,"disgust","scared", "happy", "sad", "surprised",
 def detectEmotion(face_image):
     # load model
     emotionGraph = tf.Graph()
-    with tf.Graph().as_default():
+    with emotionGraph.as_default():
         configEmotion = tf.ConfigProto(allow_soft_placement=True)
         configEmotion.gpu_options.allow_growth = True 
         with tf.Session(config=configEmotion) as sessEmotion:    
