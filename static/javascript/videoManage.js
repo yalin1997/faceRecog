@@ -16,6 +16,7 @@ function pustInRecogQueue(videoId){
             }
             else{
                 alert( "失敗! 原因 : " + data.result );
+                window.location.reload();
             }
         },
         contentType: "application/json",
