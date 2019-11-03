@@ -3,6 +3,7 @@ $( document ).ready(function() {
 });
 
 function pustInRecogQueue(videoId){
+    $("#"+videoId).hide();
     $.ajax({
         type: 'POST',
         url: '/videoRecog',
@@ -11,8 +12,7 @@ function pustInRecogQueue(videoId){
                     }),
         success: function(data){
             if (data.result == true){
-                alert("已經加入辨識");
-                location.reload();
+                alert("已經加入辨識，請耐心等待");
             }
             else{
                 alert( "失敗! 原因 : " + data.result );
