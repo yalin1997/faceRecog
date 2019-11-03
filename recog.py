@@ -142,7 +142,7 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
                                     faceVideoUrlTmp = filePath + 'video/' + faceVideoFileNameTmp
                                     faceVideoDictionary[str(fin_obj[rec_position])] = cv2.VideoWriter(faceVideoUrlTmp,fourcc4FaceVideo,fps4FaceVideo,(400,480))#最后一个是保存图片的尺寸
                                     faceVideoPath[str(faceVideoUrlTmp)] = faceVideoUrl
-                                    faceVideoId = insertService.InsertFocusVideoInfo(date , classNo , classId ,'/upload/' + faceVideoFileName , "" , 1 , faceVideoFileName , faceVideoUrl)
+                                    faceVideoId = insertService.InsertFocusVideoInfo(date , classNo , classId ,'/upload/' + faceVideoFileName , coverUrl , 1 , faceVideoFileName , faceVideoUrl)
                                     insertService.insertRecogedUser(videoId , int(str(fin_obj[rec_position]).split('_')[1]))
                                     insertService.insertRecogedUser(faceVideoId , int(str(fin_obj[rec_position]).split('_')[1]))
                                 
@@ -186,7 +186,7 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
                 faceVideoDictionary[writer].release()
             print("finish and insert data!")
             os.system("ffmpeg -i "+outputPathTmp+" -vcodec libx264 "+outputPath)
-            insertService.editVideoInfo(videoId,outputUrl,outputPath,videoName)
+            insertService.editVideoInfo(videoId,outputUrl,outputPath,videoName,coverUrl)
             for item in faceVideoPath.keys():
                 print("videoFile : "+str(item))
                 os.system("ffmpeg -i "+item+" -vcodec libx264 "+faceVideoPath[item])

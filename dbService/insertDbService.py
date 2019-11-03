@@ -43,9 +43,9 @@ def insertRecogedUser(vid , uid):
     return True
 
 # 修改影片
-def editVideoInfo(vid,videoPath,filePath,fileName):
+def editVideoInfo(vid,videoPath,filePath,fileName,cover):
     Connector.connect()
-    sql = "UPDATE video_face SET video_url = '{}'  , video_is_recoged = {} , file_path='{}' , file_name='{}' WHERE video_id = {}".format(videoPath,1,filePath,fileName,vid)
+    sql = "UPDATE video_face SET video_url = '{}'  , video_is_recoged = {} , file_path='{}' , file_name='{}' , cover='{}' WHERE video_id = {}".format(videoPath,1,filePath,fileName,cover,vid)
     Connector.sqlExecute(sql)
     Connector.quit()
     return True
