@@ -66,7 +66,7 @@ bootstrap = Bootstrap(app)
 login_manager = LoginManager()
 login_manager.session_protection='strong'
 login_manager.login_view = 'login'
-app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=30)
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=680)
 login_manager.remember_cookie_duration=timedelta(days=1)
 login_manager.init_app(app)
 
