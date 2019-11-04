@@ -16,6 +16,7 @@ def detectEmotion(face_image):
     # load model
     emotionGraph = tf.Graph()
     with emotionGraph.as_default():
+        K.set_graph(emotionGraph)
         configEmotion = tf.ConfigProto(allow_soft_placement=True)
         configEmotion.gpu_options.allow_growth = True 
         with tf.Session(config=configEmotion) as sessEmotion: 
