@@ -178,45 +178,6 @@ def next_is_valid(url):
     '/studentInfo']
     return url.split('?')[0] in validList
 
-@app.route('/join',methods=['GET','POST'])
-@login_required
-def join():
-    form = joinForm()
-    #  flask_wtf類中提供判斷是否表單提交過來的method，不需要自行利用request.method來做判斷
-
-    if request.method == 'POST':
-        account =  flask.request.form['SID']
-        email = flask.request.form['email']
-        password = flask.request.form['password']
-        lastName = flask.request.form['lastName']
-        firstName = flask.request.form['firstName']
-        className = flask.request.form['className']
-        permission = flask.request.form['permission']
-
-        isVaildate = form.validate_account(account)
-        if isVaildate :
-            registerResult = User.registerr_by_email(account,email,password,lastName,firstName,className,permission)
-            if registerResult :
-                return render_template('/registerResult/registerSuccess.html')
-            else:
-                return "發生異常 註冊失敗!"
-        else:
-            return "用戶已存在" 
-    else:
-        currentUserId = current_user.id
-        currentPermission = current_user.permission
-        if currentPermission == "manager":
-            selectFieldItem = getDataService.getClassList(current_user.id)
-            form.className.choices = []
-            if len(selectFieldItem) > 0:
-                for i in range(len(selectFieldItem)):
-                    itemName = str(selectFieldItem[i][0])
-                    form.className.choices.append((itemName,itemName))
-            #  如果不是提交過來的表單，就是GET，這時候就回傳user.html網頁
-            return render_template('join.html', form=form)
-        else :
-            return flask.redirect('/pictureManage')
-
 @app.route('/addClassName',methods = ['POST'])
 def addNewClass():
     requestJson = request.get_json()
@@ -450,28 +411,32 @@ def addClassMember():
         return render_template('/addClassMember.html',form = form)
 
 @app.route('/addManager',methods = ['GET','POST'])
+@login_required
 def addManager():
-    form = addManagerForm()
-     #  flask_wtf類中提供判斷是否表單提交過來的method，不需要自行利用request.method來做判斷
-    if request.method == 'POST' :
-        account = flask.request.form['account']
-        email = flask.request.form['email']
-        password = flask.request.form['password']
-        lastName = flask.request.form['lastName']
-        firstName = flask.request.form['firstName']
-        permission = flask.request.form['permission']
+    if current_user.permission == 'manager':
+        form = addManagerForm()
+        #  flask_wtf類中提供判斷是否表單提交過來的method，不需要自行利用request.method來做判斷
+        if request.method == 'POST':
+            account = flask.request.form['account']
+            email = flask.request.form['email']
+            password = flask.request.form['password']
+            lastName = flask.request.form['lastName']
+            firstName = flask.request.form['firstName']
+            permission = flask.request.form['permission']
 
-        isVaildate = form.validate_account(account)
-        if isVaildate :
-            registerResult = User.registerr_by_email(account,email,password,lastName,firstName,"管理員",permission)
-            if registerResult :
-                return render_template('/registerResult/registerSuccess.html')
+            isVaildate = form.validate_account(account)
+            if isVaildate :
+                registerResult = User.registerr_by_email(account,email,password,lastName,firstName,permission)
+                if registerResult :
+                    return jsonify({'result': registerResult})
+                else:
+                    return jsonify({'result': "發生異常 註冊失敗!"})
             else:
-                return "發生異常 註冊失敗!"
+                return jsonify({'result': "用戶已存在"})
         else:
-            return "用戶已存在" 
+            return render_template('addManager.html', form=form)
     else:
-        return render_template('addManager.html', form=form)
+        return jsonify({'result': "權限不足"})
 
 @app.route('/videoManage',methods=['GET','POST'])
 @login_required
