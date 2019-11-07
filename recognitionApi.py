@@ -175,6 +175,7 @@ def next_is_valid(url):
     '/studentVideo',
     '/studentsEdit',
     '/addClassMember',
+    '/addManager',
     '/studentInfo']
     return url.split('?')[0] in validList
 
