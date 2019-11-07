@@ -6,7 +6,7 @@
 {% block page_content %}
 
 <div id= "joinForm" class="row d-flex justify-content-center">
-    <form method="POST" action="{{ url_for('addManager') }}"  id="addManagerForm">
+    <form method="POST" action="{{ url_for('addManager') }}"  id="addManagerForm" , class="col-12 col-md-10 col-lg-8 border rounded p-3">
         {{ form.hidden_tag() }}
         <div class="form-group">
             {{ form.account.label }} {{ form.account }}
