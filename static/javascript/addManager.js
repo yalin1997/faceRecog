@@ -8,7 +8,7 @@ function sentManagerData(){
         processData: false,
         contentType: false
     }).done(function(data) {
-        if (data.result){
+        if (data.result == true){
             alert('新增完成!');
         }
         else{
