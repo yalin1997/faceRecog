@@ -83,7 +83,9 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
             outputPath = '/home/nknu/文件/faceRecog/static/upload/video/'+videoName
             outputUrl = '/upload/'+videoName
             coverPath = filePath +'otherPicture/cover_' + timeFrame + '.jpg'
+            faceCoverPath = filePath +'otherPicture/faceCover_' + timeFrame + '.jpg'
             coverUrl =  '/upload/others/cover_' + timeFrame + '.jpg'
+            faceCoverUrl = '/upload/others/faceCover_' + timeFrame + '.jpg'
 
             out = cv2.VideoWriter(outputPathTmp, fourcc, 20.0, (width, height))
             timer=0
@@ -142,11 +144,12 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
                                     faceVideoUrlTmp = filePath + 'video/' + faceVideoFileNameTmp
                                     faceVideoDictionary[str(fin_obj[rec_position])] = cv2.VideoWriter(faceVideoUrlTmp,fourcc4FaceVideo,fps4FaceVideo,(400,480))#最后一个是保存图片的尺寸
                                     faceVideoPath[str(faceVideoUrlTmp)] = faceVideoUrl
-                                    faceVideoId = insertService.InsertFocusVideoInfo(date , classNo , classId ,'/upload/' + faceVideoFileName , coverUrl , 1 , faceVideoFileName , faceVideoUrl)
+                                    faceVideoId = insertService.InsertFocusVideoInfo(date , classNo , classId ,'/upload/' + faceVideoFileName , faceCoverUrl , 1 , faceVideoFileName , faceVideoUrl)
                                     insertService.insertRecogedUser(videoId , int(str(fin_obj[rec_position]).split('_')[1]))
                                     insertService.insertRecogedUser(faceVideoId , int(str(fin_obj[rec_position]).split('_')[1]))
                                 
                                 facePicFrame = frame[bounding_box[rec_position,1]:bounding_box[rec_position,3],bounding_box[rec_position,0]:bounding_box[rec_position,2]]
+                                cv2.imwrite(faceCoverPath ,facePicFrame)
                                 emotion = emotionDetect.detectEmotion(facePicFrame)
                                 resizeFacePicFrame=cv2.resize(facePicFrame,(400,480))
                                 cv2.putText(

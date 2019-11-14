@@ -1,6 +1,6 @@
 from keras.models import load_model
 from keras.preprocessing.image import img_to_array
-from keras.backend import clear_session
+import keras.backend as K
 import numpy as np
 import cv2
 import glob
@@ -18,7 +18,8 @@ def detectEmotion(face_image):
     with emotionGraph.as_default():
         configEmotion = tf.ConfigProto(allow_soft_placement=True)
         configEmotion.gpu_options.allow_growth = True 
-        with tf.Session(config=configEmotion) as sessEmotion:    
+        with tf.Session(config=configEmotion) as sessEmotion: 
+            K.set_session(sessEmotion)
             emotion_classifier = load_model(emotion_model_path, compile=False)
             emotion_classifier._make_predict_function()
             print("+++++++++++++++++++++++ load emotion model finish +++++++++++++++++++++++")
