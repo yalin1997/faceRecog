@@ -71,7 +71,11 @@ login_manager.remember_cookie_duration=timedelta(days=1)
 login_manager.init_app(app)
 
 # general used var
-faceDirectDic = {"face" : "正面" , "left_face" : "左側臉" , "right_face" : "右側臉" , "up_face" : "上側臉" , "down_face" : "下側臉"}
+faceDirectDic = {"face" : "正面" ,
+ "left_face" : "左側臉" ,
+  "right_face" : "右側臉" ,
+   "up_face" : "上側臉" ,
+    "down_face" : "下側臉"}
 
 
 # 儲存檔案
@@ -218,6 +222,7 @@ def join():
             return flask.redirect('/pictureManage')
 
 @app.route('/addClassName',methods = ['POST'])
+@login_required
 def addNewClass():
     requestJson = request.get_json()
     newClass = requestJson['newClassName']
@@ -244,6 +249,7 @@ def addClassGroup():
         if permission == 'manager':
             form.classYear.choices = []
             for i in range(5):
+                # 產生學年
                 form.classYear.choices.append((datetime.now().year-i-1911,datetime.now().year-i-1911))
             return render_template('/addClassGroup.html',form = form)
         else:
@@ -314,6 +320,7 @@ def studentsManage():
             })
         return jsonify({'allMatchData':matchData})
     else:
+        # 產生初始的畫面
         currentUserId = current_user.id
         currentPermission = current_user.permission
         if currentPermission == 'manager':
@@ -350,6 +357,7 @@ def studentInfo():
                 email = str(editData['email'])
                 return jsonify({'result':insertService.editStudentInfo(studentId , email , "" , "" , "" , "")})
     else:
+        # 產生初始的畫面
         faceUrlDic = {}
         studentId = request.args.get('studentId')
         studentData = getDataService.getUserDataById(studentId)
@@ -397,6 +405,7 @@ def studentVideo():
                 matchData.append( {'id':str(resultVideo[i][0]),'pictureUrl': cover , 'date' : resultVideo[i][3] , 'classNo' : resultVideo[i][4]})
             return jsonify({'allMatchData':matchData})
     else:
+        # 產生初始畫面
         classId = request.args.get('classId')
         if current_user.permission == 'manager':
             studentId = request.args.get('studentId')
