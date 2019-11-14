@@ -73,7 +73,7 @@ function createCard(data){
     for(var i = 0;i < data.allMatchData.length;i++){
         if(data.allMatchData[i].isRecoged == 1){
             var card = "<div class='card' id='card_" + data.allMatchData[i].id + "' style='width:92%;max-width:300px;' onclick='CardClickedEvent(id)'>"+
-                "<div class='card-header'>" + data.allMatchData[i].date + "</div>"+
+                "<div class='card-header'>" + data.allMatchData[i].date + " " + data.allMatchData[i].name+"</div>"+
                     "<img src='" + data.allMatchData[i].videoUrl +"' alt='Avatar' style='width:100%;opacity:0.85'>"+
                 "<div class='container'>"+
                     "<p>第" + data.allMatchData[i].classNo + "節</p>"+  
@@ -83,7 +83,7 @@ function createCard(data){
         }
         else if(data.allMatchData[i].isRecoged == 2){
             var card = "<div class='card bg-warning text-white' id='card_" + data.allMatchData[i].id + "' style='width:92%;max-width:300px;' onclick='CardClickedEvent(id)'>"+
-                            "<div class='card-header'>" + data.allMatchData[i].date +" (辨識中)"+ "</div>"+
+                            "<div class='card-header'>" + data.allMatchData[i].date + " " +  data.allMatchData[i].name + " (辨識中)"+ "</div>"+
                                 "<img src='" + data.allMatchData[i].videoUrl +"' alt='Avatar' style='width:100%;opacity:0.85'>"+
                             "<div class='container'>"+
                                 "<p>第" + data.allMatchData[i].classNo + "節</p>"+  
@@ -93,7 +93,7 @@ function createCard(data){
         else{
 
             var card = "<div class='card text-white bg-danger' id='card_" + data.allMatchData[i].id + "' style='width:92%;max-width:300px;' onclick='CardClickedEvent(id)'>"+
-                            "<div class='card-header'>" + data.allMatchData[i].date +" (尚未辨識)"+ "</div>"+
+                            "<div class='card-header'>" + data.allMatchData[i].date + " " +  data.allMatchData[i].name + " (尚未辨識)"+ "</div>"+
                                 "<img src='" + data.allMatchData[i].videoUrl +"' alt='Avatar' style='width:100%;opacity:0.85'>"+
                             "<div class='container'>"+
                                 "<p>第" + data.allMatchData[i].classNo + "節</p>"+  

@@ -474,7 +474,7 @@ def videoManage():
             cover = str(result[i][1])
             if result[i][1] == "" :
                 cover = "/upload/others/img_avatar.jpg"
-            matchData.append( {'id':result[i][0],'videoUrl': cover , 'isRecoged' : int(result[i][2]) , 'date': str(result[i][3]) , 'classNo' : str(result[i][4]) })
+            matchData.append( {'id':result[i][0],'videoUrl': cover , 'isRecoged' : int(result[i][2]) , 'date': str(result[i][3]) , 'classNo' : str(result[i][4]) , 'videoName' : str(result[i][-1]) })
         return jsonify({'allMatchData':matchData})
     else:
         permission = current_user.permission
@@ -482,6 +482,7 @@ def videoManage():
         firstname = current_user.firstname
         classId = request.args.get('classId')
         if permission != "manager":
+            # 0 表示空值
             allVideo = getDataService.getVideo(lastname,firstname,"0","0","0",classId)
             videoFilterForm = videoFilterUser()
         else:
@@ -492,7 +493,7 @@ def videoManage():
             videoCover = str(allVideo[i][1])
             if allVideo[i][1] == None :
                 videoCover = "/upload/others/img_avatar.jpg"
-            videoList.append(video(str(allVideo[i][0]) , videoCover , int(allVideo[i][5]) , str(allVideo[i][6]) , allVideo[i][3] , allVideo[i][2] , int(allVideo[i][4]) ))
+            videoList.append(video(str(allVideo[i][0]) , videoCover , int(allVideo[i][5]) , str(allVideo[i][6]) , allVideo[i][3] , allVideo[i][2] , int(allVideo[i][4]) , str(allVideo[i][-1]) ))
     
         if permission == "manager":
             return render_template('videoManage.html',form = videoFilterForm , videoData = videoList , classId = classId)
@@ -684,6 +685,7 @@ def upload():
                     filePath = os.path.join(app.config["UPLOAD_FOLDER"]+videoPath, filename)
                     file.save(filePath)
                     classId = flask.request.form['classId']
+                    videoName = flask.request.form['videoName']
                     className = flask.request.form['className']
                     dateTime = flask.request.form['dateTime']
                     classNo = flask.request.form['classNo']
@@ -694,7 +696,8 @@ def upload():
                         "",
                         0,
                         filename,
-                        filePath 
+                        filePath,
+                        videoName
                     )
                     
                 return jsonify({'result' : result})
