@@ -364,7 +364,7 @@ def studentVideo():
                 cover = str(resultVideo[i][1])
                 if resultVideo[i][1] == None :
                     cover = "/upload/others/img_avatar.jpg"
-                matchData.append( {'id':str(resultVideo[i][0]),'pictureUrl': cover , 'date' : resultVideo[i][3] , 'classNo' : resultVideo[i][4]})
+                matchData.append( {'id':resultVideo[i][0],'videoUrl': cover , 'isRecoged' : int(resultVideo[i][2]) , 'date': str(resultVideo[i][3]) , 'classNo' : str(resultVideo[i][4]) , 'videoName' : str(resultVideo[i][-1]) })
             return jsonify({'allMatchData':matchData})
     else:
         # 產生初始畫面

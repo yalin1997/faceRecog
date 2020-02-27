@@ -28,28 +28,25 @@ function fillinDate(){
     $("#sdate").val(Today);
     $("#edate").val(Today);
 }
+
 function createCard(data){
     var content = ""
 
     for(var i = 0;i < data.allMatchData.length;i++){
-        coverPath = "/upload/others/img_avatar.jpg"
-        if(data.allMatchData[i].pictureUrl != ""){
-            coverPath = data.allMatchData[i].pictureUrl
-        }
-        
-        var card = "<div class='card' id='card_"+data.allMatchData[i].id+"' style='width:92%;max-width:300px;' onclick='CardClickedEvent(id)'>"+
-                        "<img src='"+coverPath+"' alt='Avatar' style='width:100%;opacity:0.85'>"+
-                        "<div class='container'>"+
-                            "<h5><b>"+data.allMatchData[i].date+"</b></h5>"+    
-                            "<p>"+data.allMatchData[i].classNo+"</p>"+   
-                        "</div>"+ 
-                    "</div>";
+        var card = "<div class='card' id='card_" + data.allMatchData[i].id + "' style='width:92%;max-width:300px;' onclick='CardClickedEvent(id)'>"+
+            "<div class='card-header'>" + data.allMatchData[i].date + " " + data.allMatchData[i].name+"</div>"+
+                "<img src='" + data.allMatchData[i].videoUrl +"' alt='Avatar' style='width:100%;opacity:0.85'>"+
+            "<div class='container'>"+
+                "<p>第" + data.allMatchData[i].classNo + "節</p>"+  
+                " <button class='btn btn-primary my-btn' id='delete_" + data.allMatchData[i].id + "' onclick='deleteEvent(id)'>刪除影片</button>"+
+            "</div>"+
+        "</div>"
         content+=card;
     }
-
     $("#renderVideoArea").html(content);
 }
+
 function CardClickedEvent(id){
-    //window.location = "/videoEdit?videoId=" + id.split("_")[1];
+    window.location = "/videoEdit?videoId=" + id.split("_")[1];
 }
 
