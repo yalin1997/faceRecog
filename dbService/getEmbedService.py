@@ -113,7 +113,7 @@ def getFocusVideo(uid , cid , sdate , edate , classNo):
                 class_group
                     ON
                 video_face.class_id = class_group.class_id
-            WHERE class_id = {} AND recoged_user.user_id = {} AND is_focus = True'''.format(cid , uid)
+            WHERE video_face.class_id = {} AND recoged_user.user_id = {} AND is_focus = True'''.format(cid , uid)
     if sdate :
         sql = sql + " AND date >= '{}'".format(sdate)
     if edate :
