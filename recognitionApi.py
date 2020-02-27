@@ -377,7 +377,8 @@ def studentVideo():
                 videoCover = str(resultVideo[i][-1])
                 if resultVideo[i][-1] == None :
                     videoCover = "/upload/others/img_avatar.jpg"
-                videoList.append(video(str(resultVideo[i][0]) , videoCover , str(resultVideo[i][2]) , str(resultVideo[i][3]) , str(resultVideo[i][4]) ))
+                videoList.append(video(str(resultVideo[i][0]) , videoCover , int(resultVideo[i][5]) , str(resultVideo[i][6]) , resultVideo[i][3] , resultVideo[i][2] , int(resultVideo[i][4]) , str(resultVideo[i][-1]) ))
+                
             return render_template("studentVideo.html" , videoData = videoList , form = form)
         else:
             studentId = current_user.id
@@ -386,7 +387,7 @@ def studentVideo():
                 videoCover = str(resultVideo[i][-1])
                 if resultVideo[i][-1] == None :
                     videoCover = "/upload/others/img_avatar.jpg"
-                videoList.append(video(str(resultVideo[i][0]) , videoCover , str(resultVideo[i][2]) , str(resultVideo[i][3]) , str(resultVideo[i][4]) ))
+                videoList.append(video(str(resultVideo[i][0]) , videoCover , int(resultVideo[i][5]) , str(resultVideo[i][6]) , resultVideo[i][3] , resultVideo[i][2] , int(resultVideo[i][4]) , str(resultVideo[i][-1]) ))
             return render_template("studentVideo.html" , videoData = videoList , form = form)
 
 @app.route('/studentsEdit/delete' , methods = ['POST'])

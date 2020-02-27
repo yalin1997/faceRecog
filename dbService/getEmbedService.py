@@ -99,10 +99,20 @@ def getVideo(lastName,firstName,sTime,eTime,classNo , cid):
 
 def getFocusVideo(uid , cid , sdate , edate , classNo):
     Connector.connect()
-    sql = '''SELECT video_face.video_id , video_url , video_is_recoged , date , class_no , cover 
-            FROM video_face 
-            LEFT JOIN recoged_user 
-            ON  video_face.video_id = recoged_user.video_id
+    sql = '''SELECT video_face.video_id , cover , video_is_recoged , video_face.date , class_no , class_group.class_id , class_group.class_name , video_name 
+            FROM (
+                video_face 
+                    LEFT JOIN recoged_user 
+                ON  video_face.video_id = recoged_user.video_id
+                )
+                    LEFT JOIN 
+                user_data 
+                    ON 
+                recoged_user.user_id = user_data.user_id 
+                    LEFT JOIN
+                class_group
+                    ON
+                video_face.class_id = class_group.class_id
             WHERE class_id = {} AND recoged_user.user_id = {} AND is_focus = True'''.format(cid , uid)
     if sdate :
         sql = sql + " AND date >= '{}'".format(sdate)
