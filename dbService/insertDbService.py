@@ -20,18 +20,19 @@ def InsertVideoInfo(date,classNo,cid,videoPath,coverPath,isRecoged , fileName , 
     Connector.quit()
     return True
 
-def InsertFocusVideoInfo(date,classNo,cid,videoPath,coverPath,isRecoged , fileName , filePath):
+def InsertFocusVideoInfo(date,classNo,cid,videoPath,coverPath,isRecoged , fileName , filePath , videoName):
     Connector.connect()
     sql = '''INSERT INTO 
-    video_face( date,class_no,class_id,video_url,cover,video_is_recoged , is_focus , file_name , file_path ) 
-    VALUES( '{}' , '{}' , '{}' , '{}' , '{}' , {} , True , '{}' , '{}' )  RETURNING video_id'''.format(date,
+    video_face( date,class_no,class_id,video_url,cover,video_is_recoged , is_focus , file_name , file_path , video_name ) 
+    VALUES( '{}' , '{}' , '{}' , '{}' , '{}' , {} , True , '{}' , '{}' , '{}')  RETURNING video_id'''.format(date,
     classNo,
     cid,
     videoPath,
     coverPath,
     isRecoged,
     fileName,
-    filePath)
+    filePath,
+    videoName)
     videoId = Connector.sqlExecuteWithReturn(sql)
     Connector.quit()
     return int(videoId[0][0])
