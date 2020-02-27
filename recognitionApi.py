@@ -361,8 +361,8 @@ def studentVideo():
             resultVideo = getDataService.getFocusVideo(studentId , classId , sDate , eDate , classNo)
             matchData = []
             for i in range(len(resultVideo)):
-                cover = str(resultVideo[i][-1])
-                if resultVideo[i][-1] == None :
+                cover = str(resultVideo[i][1])
+                if resultVideo[i][1] == None :
                     cover = "/upload/others/img_avatar.jpg"
                 matchData.append( {'id':str(resultVideo[i][0]),'pictureUrl': cover , 'date' : resultVideo[i][3] , 'classNo' : resultVideo[i][4]})
             return jsonify({'allMatchData':matchData})
@@ -374,8 +374,8 @@ def studentVideo():
             resultVideo = getDataService.getFocusVideo(studentId , classId , None , None , None)
             videoList = []
             for i in range(len(resultVideo)):
-                videoCover = str(resultVideo[i][-1])
-                if resultVideo[i][-1] == None :
+                videoCover = str(resultVideo[i][1])
+                if resultVideo[i][1] == None :
                     videoCover = "/upload/others/img_avatar.jpg"
                 videoList.append(video(str(resultVideo[i][0]) , videoCover , int(resultVideo[i][5]) , str(resultVideo[i][6]) , resultVideo[i][3] , resultVideo[i][2] , int(resultVideo[i][4]) , str(resultVideo[i][-1]) ))
                 
@@ -384,8 +384,8 @@ def studentVideo():
             studentId = current_user.id
             resultVideo = getDataService.getFocusVideo(studentId , classId)
             for i in range(len(resultVideo)):
-                videoCover = str(resultVideo[i][-1])
-                if resultVideo[i][-1] == None :
+                videoCover = str(resultVideo[i][1])
+                if resultVideo[i][1] == None :
                     videoCover = "/upload/others/img_avatar.jpg"
                 videoList.append(video(str(resultVideo[i][0]) , videoCover , int(resultVideo[i][5]) , str(resultVideo[i][6]) , resultVideo[i][3] , resultVideo[i][2] , int(resultVideo[i][4]) , str(resultVideo[i][-1]) ))
             return render_template("studentVideo.html" , videoData = videoList , form = form)

@@ -22,7 +22,7 @@
     </div>
 
 </div>
-<div id="renderVideoArea" class="row d-flex justify-content-center">
+<div class="row d-flex justify-content-center" id="renderVideoArea">
     {% for video in videoData %}
         <div class='card' id="card_{{video.id}}" class="col-12 col-md-5 col-lg-3" onclick='CardClickedEvent(id)'>
             {% if video.videoUrl%}
@@ -35,6 +35,18 @@
                 <p>第{{video.classNo}}節</p>  
             </div>
         </div>
+        <div class='card col-12 col-md-5 col-lg-3' id="card_{{video.id}}" onclick='CardClickedEvent(id)'>
+            <div class="card-header">{{video.date}} {{video.name}}</div>
+            {% if video.videoUrl%}
+                <img src="{{video.videoUrl}}" alt='Avatar' style='width:100%;opacity:0.85'>
+            {% else %}
+                <img src="/upload/others/img_avatar.jpg" alt='Avatar' style='width:100%;opacity:0.85'>
+            {% endif %}
+            <div class='container'>
+                <p>第{{video.classNo}}節</p> 
+                <button class="btn btn-primary my-btn" id="delete_{{video.id}}" onclick="deleteEvent(id)">刪除影片</button> 
+            </div>
+        </div> 
     {% endfor %}
 </div>
 {% endblock page_content %}
