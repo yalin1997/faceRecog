@@ -12,6 +12,7 @@ import copy
 import argparse
 import facenet
 import emotionDetect
+import azureFaceDetect
 import align.detect_face
 import random
 
@@ -151,6 +152,12 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
                                 facePicFrame = frame[bounding_box[rec_position,1]:bounding_box[rec_position,3],bounding_box[rec_position,0]:bounding_box[rec_position,2]]
                                 cv2.imwrite(faceCoverPath ,facePicFrame)
                                 emotion = emotionDetect.detectEmotion(facePicFrame)
+
+                                # azure face cognition
+                                detected_emotion = azureFaceDetect.detectFace(facePicFrame)
+                                print("id:"+detected_emotion.face_id)
+                                print("emotion:"+azureFaceDetect.getEmotion(detected_emotion))
+
                                 resizeFacePicFrame=cv2.resize(facePicFrame,(400,480))
                                 cv2.putText(
                                         resizeFacePicFrame,
