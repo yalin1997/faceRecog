@@ -44,6 +44,15 @@ def insertRecogedUser(vid , uid):
     Connector.quit()
     return True
 
+
+def insertEmotionFrame(face_id , video_id , frame_no , emotion):
+    Connector.connect()
+    sql = 'INSERT INTO recoged_user(face_id , video_id , frame_no , emotion) VALUES({} , {} , {} , {}) RETURNING face_id'.format(face_id , video_id , frame_no , emotion)
+    returned_face_id = Connector.sqlExecuteWithReturn(sql)
+    Connector.quit()
+    print("INSERT RESULT :" + str(face_id == returned_face_id))
+    return face_id == returned_face_id
+
 # 修改影片
 def editVideoInfo(vid,videoPath,filePath,fileName,cover):
     Connector.connect()
