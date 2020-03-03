@@ -154,10 +154,10 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
                                 emotion = emotionDetect.detectEmotion(facePicFrame)
 
                                 # azure face cognition
-                                detected_emotion = azureFaceDetect.detectFace(facePicFrame)
-                                print("id:"+detected_emotion.face_id)
-                                print("azureEmotion:"+azureFaceDetect.getEmotion(detected_emotion))
-                                print("Emotion:"+emotion)
+                                #detected_emotion = azureFaceDetect.detectFace(facePicFrame)
+                                #print("id:"+detected_emotion.face_id)
+                                #print("azureEmotion:"+azureFaceDetect.getEmotion(detected_emotion))
+                                
                                 resizeFacePicFrame=cv2.resize(facePicFrame,(400,480))
                                 cv2.putText(
                                         resizeFacePicFrame,
