@@ -148,7 +148,9 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
                                     faceVideoId = insertService.InsertFocusVideoInfo(date , classNo , classId ,'/upload/' + faceVideoFileName , faceCoverUrl , 1 , faceVideoFileName , faceVideoUrl , str(fin_obj[rec_position]))
                                     insertService.insertRecogedUser(videoId , int(str(fin_obj[rec_position]).split('_')[1]))
                                     insertService.insertRecogedUser(faceVideoId , int(str(fin_obj[rec_position]).split('_')[1]))
-                                
+                                print(str(bounding_box[rec_position,1]))
+                                print(str(bounding_box[rec_position,3]))
+                                print(str(bounding_box[rec_position,3] - bounding_box[rec_position,1]))
                                 facePicFrame = frame[bounding_box[rec_position,1]:bounding_box[rec_position,3],bounding_box[rec_position,0]:bounding_box[rec_position,2]]
                                 cv2.imwrite(faceCoverPath ,facePicFrame)
                                 emotion = emotionDetect.detectEmotion(facePicFrame)
