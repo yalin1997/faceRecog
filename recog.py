@@ -152,20 +152,7 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
                                 # 調整抓取的範圍
                                 xBound = bounding_box[rec_position,3] - bounding_box[rec_position,1]
                                 yBound = bounding_box[rec_position,0] - bounding_box[rec_position,2]
-                                if bounding_box[rec_position,1] - (xBound/3) >= 0:
-                                    xPos1 = bounding_box[rec_position,1] - (xBound/3)
-                                else:
-                                    xPos1 = 0
-                                if bounding_box[rec_position,3] + (xBound/3) <= np.size(frame , 0):
-                                    xPos2 = bounding_box[rec_position,3] + (xBound/3)
-                                else:
-                                    xPos2 = np.size(frame , 0)
-                                if bounding_box[rec_position,2] + yBound <= np.size(frame , 1):
-                                    yPos = bounding_box[rec_position,2] + yBound
-                                else:
-                                    yPos = np.size(frame , 1)
-
-                                facePicFrame = frame[ xPos1 : xPos2 , bounding_box[rec_position,0]:yPos]
+                                facePicFrame = frame[ bounding_box[rec_position,1] - (xBound/3) : bounding_box[rec_position,3] + (xBound/3) , bounding_box[rec_position,0]:bounding_box[rec_position,2] + yBound]
                                 cv2.imwrite(faceCoverPath ,facePicFrame)
                                 emotion = emotionDetect.detectEmotion(facePicFrame)
                                 # azure face cognition
