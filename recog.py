@@ -12,8 +12,8 @@ import copy
 import argparse
 import facenet
 import emotionDetect
-import azureFaceDetect
-# import dect as dectector
+#　import azureFaceDetect
+import dect as dectector
 import align.detect_face
 import random
 
@@ -106,12 +106,14 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
                     cv2.imwrite(coverPath ,rgb_frame)
                     firstShot = False
                     # azure 尋找臉部與表情
-                    azureFaceDetect.detectFace(coverPath)
+                    # azureFaceDetect.detectFace(coverPath)
+                    dectector.detectFace()
                 else:
                     # 存下rgb_frame
                     cv2.imwrite( framePath + timer + '.jpg' ,rgb_frame)
-                     # azure 尋找臉部與表情
-                    azureFaceDetect.detectFace(framePath + timer + '.jpg')
+                    # azure 尋找臉部與表情
+                    # azureFaceDetect.detectFace(framePath + timer + '.jpg')
+                    dectector.detectFace()
                 timer+=1
                 print("timer = " + time)
                 # 尋找臉部
