@@ -41,14 +41,15 @@ def getEmotion(emotionStr):
     
 
 def detectFace():
+    print('load image')
     group_photo = '/home/nknu/文件/faceRecog/static/upload/otherPicture/cover_2020-03-06 00:58:39.jpg'
     # IMAGES_FOLDER = os.path.join(os.path.dirname(os.path.realpath(__file__)))
     # Get test image
     test_image_array = glob.glob(group_photo)
-    image = open(test_image_array[0], 'r+b')
+    targetImage = open(test_image_array[0], 'r+b')
 
 
-    detected_faces_stream = face_client.face.detect_with_stream(image=image , return_face_attributes=["emotion"])
+    detected_faces_stream = face_client.face.detect_with_stream(image=targetImage , return_face_attributes=["emotion"])
 
     if not detected_faces_stream:
         raise Exception('No face detected from image {}'.format(group_photo))
