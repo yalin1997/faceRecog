@@ -33,7 +33,6 @@ import traceback
 
 # load model
 file= open("log.txt","w+")
-print('Creating networks and loading parameters')
 
 
 with tf.Graph().as_default():
@@ -44,7 +43,6 @@ with tf.Graph().as_default():
 
 # 參數分別為收到的檔案,資料庫取得之embs , facenet model 位置 , 比對庫中的名字
 def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date , classNo , classId):      
-    print("start recog!!")
     timeFrame = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
 
     with tf.Graph().as_default():
@@ -133,7 +131,6 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
                                 dist = np.sqrt(np.sum(np.square(np.subtract(emb[i,:], compare_emb[j,:]))))# 計算兩個向量間的歐式距離
                                 dist_list.append(dist)
                             min_value=min(dist_list)# 得到歐式距離的最小值
-                            print(str(min_value))
                             if(min_value>0.9):
                                 fin_obj.append('unknow')
                             else:
