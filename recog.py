@@ -13,7 +13,7 @@ import argparse
 import facenet
 import emotionDetect
 # import azureFaceDetect
-import dect-face-local as dectector
+import dect as dectector
 import align.detect_face
 import random
 
