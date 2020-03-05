@@ -12,8 +12,8 @@ import copy
 import argparse
 import facenet
 import emotionDetect
-# import azureFaceDetect
-import dect as dectector
+import azureFaceDetect
+# import dect as dectector
 import align.detect_face
 import random
 
@@ -86,7 +86,7 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
             outputUrl = '/upload/'+videoName
             coverPath = filePath +'otherPicture/cover_' + timeFrame + '.jpg'
             faceCoverPath = filePath +'otherPicture/faceCover_' + timeFrame + '.jpg'
-
+            framePath = filePath +'otherPicture/frame_'
             coverUrl =  '/upload/others/cover_' + timeFrame + '.jpg'
             faceCoverUrl = '/upload/others/faceCover_' + timeFrame + '.jpg'
 
@@ -107,11 +107,13 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
                 if(firstShot):
                     cv2.imwrite(coverPath ,rgb_frame)
                     firstShot = False
+                    # azure 尋找臉部與表情
+                    azureFaceDetect.detectFace(coverPath)
                 else:
                     # 存下rgb_frame
-                    cv2.imwrite(coverPath ,rgb_frame)
-                # azure 尋找臉部與表情
-                dectector.detectFace()
+                    cv2.imwrite( framePath + timer + '.jpg' ,rgb_frame)
+                     # azure 尋找臉部與表情
+                    azureFaceDetect.detectFace(framePath + timer + '.jpg')
                 timer+=1
                 print("timer = " + time)
                 # 尋找臉部

@@ -51,12 +51,12 @@ def detectFace(imgStream):
         raise Exception('No face detected from image')
     for f in detected_faces:
         print("face id : " + f.face_id)
-        if f.face_attributes.emotion:
-            emo = getEmotion(f)
-            print("azureEmotion:"+emo)
-        else:
+        if not (f.face_attributes.emotion):
             emo = ""
             print("no face_attributes emotion!")
+        else:
+            emo = getEmotion(f)
+            print("azureEmotion:"+emo)
     return emo
 
 
