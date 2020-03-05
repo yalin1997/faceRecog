@@ -85,6 +85,7 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
             outputUrl = '/upload/'+videoName
             coverPath = filePath +'otherPicture/cover_' + timeFrame + '.jpg'
             faceCoverPath = filePath +'otherPicture/faceCover_' + timeFrame + '.jpg'
+
             coverUrl =  '/upload/others/cover_' + timeFrame + '.jpg'
             faceCoverUrl = '/upload/others/faceCover_' + timeFrame + '.jpg'
 
@@ -93,7 +94,6 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
             # 出現過的人名與產生臉部特寫影片的物件對照
             faceVideoDictionary = {}
             faceVideoPath = {}
-            print("capture is open!")
             while (capture.isOpened()):
                 ret, frame = capture.read() 
                 if(not ret):
@@ -102,17 +102,22 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
                     break
                 # rgb frame np.ndarray 480*640*3
                 rgb_frame=cv2.cvtColor(frame,cv2.COLOR_BGR2RGB)
-                
                 # 封面
                 if(firstShot):
                     cv2.imwrite(coverPath ,rgb_frame)
                     firstShot = False
-                
+                else:
+                    # 存下rgb_frame
+                    cv2.imwrite(coverPath ,rgb_frame)
+                # azure 尋找臉部與表情
+                detected_emotion = azureFaceDetect.detectFace(coverPath)
+                print("id:"+detected_emotion.face_id)
+                print("azureEmotion:"+azureFaceDetect.getEmotion(detected_emotion))
+
+                # 尋找臉部
                 mark,bounding_box,crop_image=load_and_align_data(rgb_frame,160,44)
                 timer+=1
                 if(1):
-                    
-                    # print(timer)
                     if(mark):
                         feed_dict = { images_placeholder: crop_image, phase_train_placeholder:False }
                         emb = sess.run(embeddings, feed_dict=feed_dict)
@@ -150,12 +155,7 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
                                     insertService.insertRecogedUser(faceVideoId , int(str(fin_obj[rec_position]).split('_')[1]))
 
                                 # 調整抓取的範圍
-                                xBound = bounding_box[rec_position,3] - bounding_box[rec_position,1]
-                                yBound = bounding_box[rec_position,0] - bounding_box[rec_position,2]
-                                print(type(bounding_box[rec_position,3]))
-                                print(type(xBound))
-
-                                facePicFrame = frame[bounding_box[rec_position,1] - 100 :bounding_box[rec_position,3] + 100 ,bounding_box[rec_position,0]:bounding_box[rec_position,2] + 100]
+                                facePicFrame = frame[bounding_box[rec_position,1] :bounding_box[rec_position,3]  ,bounding_box[rec_position,0]:bounding_box[rec_position,2]]
                                 cv2.imwrite(faceCoverPath ,facePicFrame)
                                 emotion = emotionDetect.detectEmotion(facePicFrame)
                                 # azure face cognition

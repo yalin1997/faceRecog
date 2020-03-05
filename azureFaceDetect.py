@@ -13,6 +13,16 @@ from azure.cognitiveservices.vision.face import FaceClient
 from msrest.authentication import CognitiveServicesCredentials
 from azure.cognitiveservices.vision.face.models import TrainingStatusType, Person, SnapshotObjectType, OperationStatusType
 
+# Set the FACE_SUBSCRIPTION_KEY environment variable with your key as the value.
+# This key will serve all examples in this document.
+KEY = os.environ['FACE_SUBSCRIPTION_KEY']
+print(KEY)
+# Set the FACE_ENDPOINT environment variable with the endpoint from your Face service in Azure.
+# This endpoint will be used in all examples in this quickstart.
+ENDPOINT = os.environ['FACE_ENDPOINT']
+print(ENDPOINT)
+# Create an authenticated FaceClient.
+face_client = FaceClient(ENDPOINT, CognitiveServicesCredentials(KEY))
 
 def getEmotion(emotionStr):
     emotionDict = {
@@ -29,18 +39,10 @@ def getEmotion(emotionStr):
 
 def detectFace(imgStream):
     print("!!!!!!!!!!!!!!!!!!!!!!!!azureStart!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-    # Set the FACE_SUBSCRIPTION_KEY environment variable with your key as the value.
-    # This key will serve all examples in this document.
-    KEY = os.environ['FACE_SUBSCRIPTION_KEY']
-    print(KEY)
-    # Set the FACE_ENDPOINT environment variable with the endpoint from your Face service in Azure.
-    # This endpoint will be used in all examples in this quickstart.
-    ENDPOINT = os.environ['FACE_ENDPOINT']
-    print(ENDPOINT)
-    # Create an authenticated FaceClient.
-    face_client = FaceClient(ENDPOINT, CognitiveServicesCredentials(KEY))
-
-    detected_faces  = face_client.face.detect_with_stream(image=imgStream , returnFaceAttributes=['emotion'])
+    # Get test image
+    test_image_array = glob.glob(imgStream)
+    image = open(test_image_array[0], 'r+b')
+    detected_faces  = face_client.face.detect_with_stream(image=image , returnFaceAttributes=['emotion'])
     if not detected_faces:
         raise Exception('No face detected from image')
     for f in detected_faces:
