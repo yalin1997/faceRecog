@@ -110,10 +110,8 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
                     # 存下rgb_frame
                     cv2.imwrite(coverPath ,rgb_frame)
                 # azure 尋找臉部與表情
-                detected_emotion = azureFaceDetect.detectFace(coverPath)
-                print("id:"+detected_emotion.face_id)
-                print("azureEmotion:"+azureFaceDetect.getEmotion(detected_emotion))
-
+                emotionResult = azureFaceDetect.detectFace(coverPath)
+                print("finish azure emotion is " + emotionResult)
                 # 尋找臉部
                 mark,bounding_box,crop_image=load_and_align_data(rgb_frame,160,44)
                 timer+=1
