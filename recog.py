@@ -12,7 +12,8 @@ import copy
 import argparse
 import facenet
 import emotionDetect
-import azureFaceDetect
+# import azureFaceDetect
+import dect-face-local as dectector
 import align.detect_face
 import random
 
@@ -110,8 +111,7 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
                     # 存下rgb_frame
                     cv2.imwrite(coverPath ,rgb_frame)
                 # azure 尋找臉部與表情
-                emotionResult = azureFaceDetect.detectFace(coverPath)
-                print("finish azure emotion is " + emotionResult)
+                dectector.detectFace()
                 # 尋找臉部
                 mark,bounding_box,crop_image=load_and_align_data(rgb_frame,160,44)
                 timer+=1
