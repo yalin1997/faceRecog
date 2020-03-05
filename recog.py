@@ -13,7 +13,7 @@ import argparse
 import facenet
 import emotionDetect
 #　import azureFaceDetect
-import dect as dectector
+# import dect as dectector
 import align.detect_face
 import random
 
@@ -103,24 +103,6 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
                 rgb_frame=cv2.cvtColor(frame,cv2.COLOR_BGR2RGB)
                 # 尋找臉部
                 mark,bounding_box,crop_image=load_and_align_data(rgb_frame,160,44)
-                
-                # 封面
-                if(firstShot):
-                    cv2.imwrite(coverPath ,rgb_frame)
-                    firstShot = False
-                    # azure 尋找臉部與表情
-                    # azureFaceDetect.detectFace(coverPath)
-                    dectector.detectFace()
-                else:
-                    # 存下rgb_frame
-                    cv2.imwrite( framePath + timer + '.jpg' ,rgb_frame)
-                    # azure 尋找臉部與表情
-                    # azureFaceDetect.detectFace(framePath + timer + '.jpg')
-                    dectector.detectFace()
-                print("out azure")
-                timer+=1
-                print("timer = " + time)
-
                 if(1):
                     if(mark):
                         feed_dict = { images_placeholder: crop_image, phase_train_placeholder:False }
