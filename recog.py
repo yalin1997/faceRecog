@@ -101,6 +101,9 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
                     break
                 # rgb frame np.ndarray 480*640*3
                 rgb_frame=cv2.cvtColor(frame,cv2.COLOR_BGR2RGB)
+                # 尋找臉部
+                mark,bounding_box,crop_image=load_and_align_data(rgb_frame,160,44)
+                
                 # 封面
                 if(firstShot):
                     cv2.imwrite(coverPath ,rgb_frame)
@@ -114,10 +117,9 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
                     # azure 尋找臉部與表情
                     # azureFaceDetect.detectFace(framePath + timer + '.jpg')
                     dectector.detectFace()
+                print("out azure")
                 timer+=1
                 print("timer = " + time)
-                # 尋找臉部
-                mark,bounding_box,crop_image=load_and_align_data(rgb_frame,160,44)
 
                 if(1):
                     if(mark):

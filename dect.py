@@ -61,4 +61,3 @@ def detectFace():
         print (face_stream.face_id)
         print("emotion : "+ getEmotion(face_stream.face_attributes.emotion))
     print("1 turn fin")
-    return True
