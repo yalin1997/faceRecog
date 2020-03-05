@@ -25,6 +25,7 @@ ENDPOINT = os.environ['FACE_ENDPOINT']
 # Create an authenticated FaceClient.
 face_client = FaceClient(ENDPOINT, CognitiveServicesCredentials(KEY))
 
+
 def getEmotion(emotionStr):
     emotionDict = {
         "anger":emotionStr.anger,
@@ -48,6 +49,7 @@ def detectFace():
 
 
     detected_faces_stream = face_client.face.detect_with_stream(image=image , return_face_attributes=["emotion"])
+
     if not detected_faces_stream:
         raise Exception('No face detected from image {}'.format(group_photo))
 
