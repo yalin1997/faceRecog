@@ -13,6 +13,17 @@ from azure.cognitiveservices.vision.face import FaceClient
 from msrest.authentication import CognitiveServicesCredentials
 from azure.cognitiveservices.vision.face.models import TrainingStatusType, Person, SnapshotObjectType, OperationStatusType
 
+# Set the FACE_SUBSCRIPTION_KEY environment variable with your key as the value.
+# This key will serve all examples in this document.
+KEY = os.environ['FACE_SUBSCRIPTION_KEY']
+print(KEY)
+
+# Set the FACE_ENDPOINT environment variable with the endpoint from your Face service in Azure.
+# This endpoint will be used in all examples in this quickstart.
+ENDPOINT = os.environ['FACE_ENDPOINT']
+print(ENDPOINT)
+# Create an authenticated FaceClient.
+face_client = FaceClient(ENDPOINT, CognitiveServicesCredentials(KEY))
 
 
 def getEmotion(emotionStr):
@@ -30,19 +41,6 @@ def getEmotion(emotionStr):
     
 
 def detectFace():
-    # Set the FACE_SUBSCRIPTION_KEY environment variable with your key as the value.
-    # This key will serve all examples in this document.
-    KEY = os.environ['FACE_SUBSCRIPTION_KEY']
-    print(KEY)
-
-    # Set the FACE_ENDPOINT environment variable with the endpoint from your Face service in Azure.
-    # This endpoint will be used in all examples in this quickstart.
-    ENDPOINT = os.environ['FACE_ENDPOINT']
-    print(ENDPOINT)
-    # Create an authenticated FaceClient.
-    face_client = FaceClient(ENDPOINT, CognitiveServicesCredentials(KEY))
-
-
     group_photo = '/home/nknu/文件/faceRecog/static/upload/otherPicture/cover_2020-03-06 00:58:39.jpg'
     # IMAGES_FOLDER = os.path.join(os.path.dirname(os.path.realpath(__file__)))
     # Get test image
