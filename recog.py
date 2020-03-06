@@ -43,7 +43,40 @@ with tf.Graph().as_default():
 # 參數分別為收到的檔案,資料庫取得之embs , facenet model 位置 , 比對庫中的名字
 def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date , classNo , classId):      
     timeFrame = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+    firstShot = True
+    image=[]
+    nrof_images=0
+    # 存本影像片段被識別出的所有人
+    nameList = []
+    # 取得輸入之 emb 向量
+    compare_emb = emdList
+    compare_num=len(compare_emb)
 
+    #capture =cv2.VideoCapture(video)
+    capture =cv2.VideoCapture(uploadFile)
+    # 使用 XVID 編碼
+    fourcc = cv2.VideoWriter_fourcc(*"mp4v")
+    fourcc4FaceVideo = cv2.VideoWriter_fourcc(*"mp4v")
+    fps4FaceVideo = 10.0
+    width = int(capture.get(cv2.CAP_PROP_FRAME_WIDTH))
+    height = int(capture.get(cv2.CAP_PROP_FRAME_HEIGHT))
+    frameCounter = 0
+    # 建立 VideoWriter 物件，輸出影片至 output.avi，FPS 值為 20.0
+    videoUUID = str(uuid.uuid1())
+    videoNameTmp = 'output_'+videoUUID+'tmp.mp4'
+    videoName = 'output_'+videoUUID+'.mp4'
+    filePath = "/home/nknu/文件/faceRecog/static/upload/"
+    outputPathTmp = '/home/nknu/文件/faceRecog/static/upload/video/'+videoNameTmp
+    outputPath = '/home/nknu/文件/faceRecog/static/upload/video/'+videoName
+    outputUrl = '/upload/'+videoName
+    videoFramePath = filePath + 'otherPicture/video_' + videoId + '/' 
+
+    coverPath = filePath +'otherPicture/cover_' + timeFrame + '.jpg'
+    faceCoverPath = filePath +'otherPicture/faceCover_' + timeFrame + '.jpg'
+    coverUrl =  '/upload/others/cover_' + timeFrame + '.jpg'
+    faceCoverUrl = '/upload/others/faceCover_' + timeFrame + '.jpg'
+    if not os.path.isdir(videoFramePath):
+        os.mkdir(videoFramePath)
     with tf.Graph().as_default():
         config = tf.ConfigProto(allow_soft_placement=True)
         config.gpu_options.allow_growth = True 
@@ -56,36 +89,7 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
             embeddings = tf.get_default_graph().get_tensor_by_name("embeddings:0")
             phase_train_placeholder = tf.get_default_graph().get_tensor_by_name("phase_train:0")
 
-            firstShot = True
-            image=[]
-            nrof_images=0
-            # 存本影像片段被識別出的所有人
-            nameList = []
-            # 取得輸入之 emb 向量
-            compare_emb = emdList
-            compare_num=len(compare_emb)
-
-            #capture =cv2.VideoCapture(video)
-            capture =cv2.VideoCapture(uploadFile)
-            # 使用 XVID 編碼
-            fourcc = cv2.VideoWriter_fourcc(*"mp4v")
-            fourcc4FaceVideo = cv2.VideoWriter_fourcc(*"mp4v")
-            fps4FaceVideo = 10.0
-            width = int(capture.get(cv2.CAP_PROP_FRAME_WIDTH))
-            height = int(capture.get(cv2.CAP_PROP_FRAME_HEIGHT))
-            # 建立 VideoWriter 物件，輸出影片至 output.avi，FPS 值為 20.0
-            videoUUID = str(uuid.uuid1())
-            videoNameTmp = 'output_'+videoUUID+'tmp.mp4'
-            videoName = 'output_'+videoUUID+'.mp4'
-            filePath = "/home/nknu/文件/faceRecog/static/upload/"
-            outputPathTmp = '/home/nknu/文件/faceRecog/static/upload/video/'+videoNameTmp
-            outputPath = '/home/nknu/文件/faceRecog/static/upload/video/'+videoName
-            outputUrl = '/upload/'+videoName
-            coverPath = filePath +'otherPicture/cover_' + timeFrame + '.jpg'
-            faceCoverPath = filePath +'otherPicture/faceCover_' + timeFrame + '.jpg'
-            framePath = filePath +'otherPicture/frame_'
-            coverUrl =  '/upload/others/cover_' + timeFrame + '.jpg'
-            faceCoverUrl = '/upload/others/faceCover_' + timeFrame + '.jpg'
+            
 
             out = cv2.VideoWriter(outputPathTmp, fourcc, 20.0, (width, height))
             timer=0
@@ -93,7 +97,9 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
             faceVideoDictionary = {}
             faceVideoPath = {}
             while (capture.isOpened()):
-                ret, frame = capture.read() 
+                ret, frame = capture.read()
+                frameCounter = frameCounter + 1
+
                 if(not ret):
                     break
                 if frame is None:
@@ -103,7 +109,15 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
                 # 封面
                 if(firstShot):
                     cv2.imwrite(coverPath ,rgb_frame)
+                    cv2.imwrite(videoFramePath+'frame_'+ str(frameCounter) + '.jpg' , rgb_frame)
                     firstShot = False
+                else:
+                    cv2.imwrite(videoFramePath+'frame_'+ str(frameCounter) + '.jpg' , rgb_frame)
+                # frame 長寬
+                frameShape = rgb_frame.shape
+                frameHeight = frameShape[0]
+                frameWidth = frameShape[1]
+
                 # 尋找臉部
                 mark,bounding_box,crop_image=load_and_align_data(rgb_frame,160,44)
 
@@ -143,15 +157,26 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
                                 insertService.insertRecogedUser(videoId , int(str(fin_obj[rec_position]).split('_')[1]))
                                 insertService.insertRecogedUser(faceVideoId , int(str(fin_obj[rec_position]).split('_')[1]))
 
+                            faceWidth = bounding_box[rec_position,2] - bounding_box[rec_position,0]
+                            faceHeigh = bounding_box[rec_position,3] - bounding_box[rec_position,1]
+                            # 判斷是否超過圖片邊界
+                            if bounding_box[rec_position , 3] + faceHeigh <= frameHeight:
+                                targetHeight = bounding_box[rec_position , 3] + faceHeigh
+                            else:
+                                targetHeight = frameHeight
+                            if bounding_box[rec_position,2] + (faceWidth / 2) <= frameWidth:
+                                targetWidth = bounding_box[rec_position,2] + (faceWidth / 2)
+                            else:
+                                targetWidth = frameWidth
+                            if bounding_box[rec_position,0] - (faceWidth / 2) >= 0:
+                                targetPoint = bounding_box[rec_position,0] - (faceWidth / 2)
+                            else:
+                                targetPoint = 0
                             # 調整抓取的範圍
-                            facePicFrame = frame[bounding_box[rec_position,1] :bounding_box[rec_position,3]  ,bounding_box[rec_position,0]:bounding_box[rec_position,2]]
+                            facePicFrame = frame[ bounding_box[rec_position,1] : targetHeight  , targetPoint:targetWidth ]
                             cv2.imwrite(faceCoverPath ,facePicFrame)
                             emotion = emotionDetect.detectEmotion(facePicFrame)
-                            # azure face cognition
-                            #detected_emotion = azureFaceDetect.detectFace(facePicFrame)
-                            #print("id:"+detected_emotion.face_id)
-                            #print("azureEmotion:"+azureFaceDetect.getEmotion(detected_emotion))
-                            
+
                             resizeFacePicFrame=cv2.resize(facePicFrame,(400,480))
                             cv2.putText(
                                     resizeFacePicFrame,
