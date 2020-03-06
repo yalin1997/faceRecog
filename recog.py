@@ -47,7 +47,8 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
     with tf.Graph().as_default():
         config = tf.ConfigProto(allow_soft_placement=True)
         config.gpu_options.allow_growth = True 
-        with tf.Session(config=config) as sess:     
+        sv = tf.train.Supervisor()
+        with sv.managed_session(config = config) as sess:     
             # Load the model 
             facenet.load_model(modelPath)
     
