@@ -12,8 +12,7 @@ import copy
 import argparse
 import facenet
 import emotionDetect
-#　import azureFaceDetect
-# import dect as dectector
+import azureFaceDetect
 import align.detect_face
 import random
 
@@ -101,78 +100,83 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
                     break
                 # rgb frame np.ndarray 480*640*3
                 rgb_frame=cv2.cvtColor(frame,cv2.COLOR_BGR2RGB)
+                # 封面
+                if(firstShot):
+                    cv2.imwrite(coverPath ,rgb_frame)
+                    firstShot = False
                 # 尋找臉部
                 mark,bounding_box,crop_image=load_and_align_data(rgb_frame,160,44)
-                if(1):
-                    if(mark):
-                        feed_dict = { images_placeholder: crop_image, phase_train_placeholder:False }
-                        emb = sess.run(embeddings, feed_dict=feed_dict)
-                        temp_num=len(emb)
 
-                        fin_obj=[]
+                #if(1):
+                if(mark):
+                    feed_dict = { images_placeholder: crop_image, phase_train_placeholder:False }
+                    emb = sess.run(embeddings, feed_dict=feed_dict)
+                    temp_num=len(emb)
 
-                        for i in range(temp_num):
-                            dist_list=[]
-                            for j in range(compare_num):
-                                dist = np.sqrt(np.sum(np.square(np.subtract(emb[i,:], compare_emb[j,:]))))# 計算兩個向量間的歐式距離
-                                dist_list.append(dist)
-                            min_value=min(dist_list)# 得到歐式距離的最小值
-                            if(min_value>0.9):
-                                fin_obj.append('unknow')
-                            else:
-                                fin_obj.append(all_name[dist_list.index(min_value)])
-                                if all_name[dist_list.index(min_value)] not in nameList:
-                                    nameList.append(all_name[dist_list.index(min_value)])    
+                    fin_obj=[]
+
+                    for i in range(temp_num):
+                        dist_list=[]
+                        for j in range(compare_num):
+                            dist = np.sqrt(np.sum(np.square(np.subtract(emb[i,:], compare_emb[j,:]))))# 計算兩個向量間的歐式距離
+                            dist_list.append(dist)
+                        min_value=min(dist_list)# 得到歐式距離的最小值
+                        if(min_value>0.9):
+                            fin_obj.append('unknow')
+                        else:
+                            fin_obj.append(all_name[dist_list.index(min_value)])
+                            if all_name[dist_list.index(min_value)] not in nameList:
+                                nameList.append(all_name[dist_list.index(min_value)])    
 
 
-                        for rec_position in range(temp_num):
-                            if(fin_obj[rec_position] != 'unknow'):
-                                # 生成cv寫入影片物件
-                                if(str(fin_obj[rec_position]) not in faceVideoDictionary.keys()):
-                                    faceVideoFileName = 'faceVideo_' + str(fin_obj[rec_position]) + '_' + str(uuid.uuid1()) + '.mp4'
-                                    faceVideoFileNameTmp = 'faceVideo_' + str(fin_obj[rec_position]) + '_' + str(uuid.uuid1()) + 'Tmp.mp4'
-                                    faceVideoUrl = filePath + 'video/' + faceVideoFileName
-                                    faceVideoUrlTmp = filePath + 'video/' + faceVideoFileNameTmp
-                                    faceVideoDictionary[str(fin_obj[rec_position])] = cv2.VideoWriter(faceVideoUrlTmp,fourcc4FaceVideo,fps4FaceVideo,(400,480))#最后一个是保存图片的尺寸
-                                    faceVideoPath[str(faceVideoUrlTmp)] = faceVideoUrl
-                                    faceVideoId = insertService.InsertFocusVideoInfo(date , classNo , classId ,'/upload/' + faceVideoFileName , faceCoverUrl , 1 , faceVideoFileName , faceVideoUrl , str(fin_obj[rec_position]))
-                                    insertService.insertRecogedUser(videoId , int(str(fin_obj[rec_position]).split('_')[1]))
-                                    insertService.insertRecogedUser(faceVideoId , int(str(fin_obj[rec_position]).split('_')[1]))
+                    for rec_position in range(temp_num):
+                        if(fin_obj[rec_position] != 'unknow'):
+                            # 生成cv寫入影片物件
+                            if(str(fin_obj[rec_position]) not in faceVideoDictionary.keys()):
+                                faceVideoFileName = 'faceVideo_' + str(fin_obj[rec_position]) + '_' + str(uuid.uuid1()) + '.mp4'
+                                faceVideoFileNameTmp = 'faceVideo_' + str(fin_obj[rec_position]) + '_' + str(uuid.uuid1()) + 'Tmp.mp4'
+                                faceVideoUrl = filePath + 'video/' + faceVideoFileName
+                                faceVideoUrlTmp = filePath + 'video/' + faceVideoFileNameTmp
+                                faceVideoDictionary[str(fin_obj[rec_position])] = cv2.VideoWriter(faceVideoUrlTmp,fourcc4FaceVideo,fps4FaceVideo,(400,480))#最后一个是保存图片的尺寸
+                                faceVideoPath[str(faceVideoUrlTmp)] = faceVideoUrl
+                                faceVideoId = insertService.InsertFocusVideoInfo(date , classNo , classId ,'/upload/' + faceVideoFileName , faceCoverUrl , 1 , faceVideoFileName , faceVideoUrl , str(fin_obj[rec_position]))
+                                insertService.insertRecogedUser(videoId , int(str(fin_obj[rec_position]).split('_')[1]))
+                                insertService.insertRecogedUser(faceVideoId , int(str(fin_obj[rec_position]).split('_')[1]))
 
-                                # 調整抓取的範圍
-                                facePicFrame = frame[bounding_box[rec_position,1] :bounding_box[rec_position,3]  ,bounding_box[rec_position,0]:bounding_box[rec_position,2]]
-                                cv2.imwrite(faceCoverPath ,facePicFrame)
-                                emotion = emotionDetect.detectEmotion(facePicFrame)
-                                # azure face cognition
-                                #detected_emotion = azureFaceDetect.detectFace(facePicFrame)
-                                #print("id:"+detected_emotion.face_id)
-                                #print("azureEmotion:"+azureFaceDetect.getEmotion(detected_emotion))
-                                
-                                resizeFacePicFrame=cv2.resize(facePicFrame,(400,480))
-                                cv2.putText(
-                                        resizeFacePicFrame,
-                                        emotion, 
-                                        (150 , 100),
-                                        cv2.FONT_HERSHEY_COMPLEX_SMALL, 
-                                        0.8, 
-                                        (0, 0 ,255), 
-                                        thickness = 2, 
-                                        lineType = 2)
-                                # 用相對應的寫入物件寫入
-                                faceVideoDictionary[ str(fin_obj[rec_position])].write(resizeFacePicFrame)
-
-                            cv2.rectangle(frame,(bounding_box[rec_position,0],bounding_box[rec_position,1]),(bounding_box[rec_position,2],bounding_box[rec_position,3]),(0, 255, 0), 2, 8, 0)
-
+                            # 調整抓取的範圍
+                            facePicFrame = frame[bounding_box[rec_position,1] :bounding_box[rec_position,3]  ,bounding_box[rec_position,0]:bounding_box[rec_position,2]]
+                            cv2.imwrite(faceCoverPath ,facePicFrame)
+                            emotion = emotionDetect.detectEmotion(facePicFrame)
+                            # azure face cognition
+                            #detected_emotion = azureFaceDetect.detectFace(facePicFrame)
+                            #print("id:"+detected_emotion.face_id)
+                            #print("azureEmotion:"+azureFaceDetect.getEmotion(detected_emotion))
+                            
+                            resizeFacePicFrame=cv2.resize(facePicFrame,(400,480))
                             cv2.putText(
-                                frame,
-                            fin_obj[rec_position], 
-                            (bounding_box[rec_position,0],bounding_box[rec_position,1]),
-                            cv2.FONT_HERSHEY_COMPLEX_SMALL, 
-                            0.8, 
-                            (0, 0 ,255), 
-                            thickness = 2,
-                            lineType = 2)
-                        out.write(frame)
+                                    resizeFacePicFrame,
+                                    emotion, 
+                                    (150 , 100),
+                                    cv2.FONT_HERSHEY_COMPLEX_SMALL, 
+                                    0.8, 
+                                    (0, 0 ,255), 
+                                    thickness = 2, 
+                                    lineType = 2)
+                            # 用相對應的寫入物件寫入
+                            faceVideoDictionary[ str(fin_obj[rec_position])].write(resizeFacePicFrame)
+
+                        cv2.rectangle(frame,(bounding_box[rec_position,0],bounding_box[rec_position,1]),(bounding_box[rec_position,2],bounding_box[rec_position,3]),(0, 255, 0), 2, 8, 0)
+
+                        cv2.putText(
+                            frame,
+                        fin_obj[rec_position], 
+                        (bounding_box[rec_position,0],bounding_box[rec_position,1]),
+                        cv2.FONT_HERSHEY_COMPLEX_SMALL, 
+                        0.8, 
+                        (0, 0 ,255), 
+                        thickness = 2,
+                        lineType = 2)
+                    out.write(frame)
 
                 key = cv2.waitKey(3)
                 if key == 27:
