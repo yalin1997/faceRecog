@@ -51,7 +51,7 @@ otherPicturePath = "/otherPicture"
 
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg','avi','mp4','mov'])
 ALLOWED_PICTURE = set(['png', 'jpg', 'jpeg'])
-ALLOWED_VIDEO = set(['avi','mp4','mov'])
+ALLOWED_VIDEO = set(['avi','mp4','mov' , 'mts'])
 
 app.config["UPLOAD_FOLDER"] =UPLOAD_FOLDER
 app.config["JSON_AS_ASCII"] = False

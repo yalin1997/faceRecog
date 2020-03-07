@@ -23,7 +23,7 @@ $( document ).ready(function() {
 });
 function uploadFileChange(){
     var picType =  ['jpg', 'png', 'jpeg'];
-    var videoType =  ['avi','mp4' ,'MOV'];
+    var videoType =  ['avi','mp4' ,'MOV' , 'MTS'];
     var fileType = getFileExtension3($("#uploaded_file").val());
     if(fileType != ""){
         if(picType.indexOf(fileType) != -1){
