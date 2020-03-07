@@ -698,7 +698,7 @@ def uploadApart():
     upload_file.save(os.path.join(app.config["UPLOAD_FOLDER"] , filename))
     return jsonify({'result' : True})
 
-@app.route('/uploadSuccess',methods=['POST'])
+@app.route('/uploadSuccess',methods=['GET','POST'])
 @login_required
 def uploadSuccess():
     targetFileName = request.args.get('filename')
