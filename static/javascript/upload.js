@@ -57,7 +57,7 @@ $( document ).ready(function() {
         'classNo':  $("#classNo").val() };
         $.get('/uploadSuccess', data);
         alert("上傳成功");
-        window.location.reload();
+        //window.location.reload();
     });
     uploader.on('uploadError', function(file) { // 上傳失敗事件
         alert("上傳失敗，請確認網路狀態或聯絡管理人員");
