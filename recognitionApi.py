@@ -718,7 +718,7 @@ def uploadSuccess():
                         source_file = open(os.path.join(app.config["UPLOAD_FOLDER"] , filename), 'rb')
                         target_file.write(source_file.read())
                         source_file.close()
-                    except IOError, msg:
+                    except IOError:
                         break
 
                     chunk += 1
@@ -739,7 +739,7 @@ def uploadSuccess():
                             source_file = open(os.path.join(app.config["UPLOAD_FOLDER"] , filename), 'rb')
                             target_file.write(source_file.read())
                             source_file.close()
-                        except IOError, msg:
+                        except IOError:
                             break
 
                         chunk += 1
