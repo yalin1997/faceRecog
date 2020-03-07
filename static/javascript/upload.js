@@ -68,14 +68,13 @@ $( document ).ready(function() {
         $('.progress-bar').addClass('progress-bar-success');
         $('.progress-bar').text('上傳成功');
         alert("上傳成功");
-        //window.location.reload();
+        window.location.reload();
     });
     uploader.on('uploadError', function(file) { // 上傳失敗事件
         alert("上傳失敗，請確認網路狀態或聯絡管理人員");
     });
 
     $("#confirm").click(function() {
-        // 轉轉
         $("#confirm").hide();
         uploader.upload();
     });
