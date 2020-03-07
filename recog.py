@@ -172,6 +172,7 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
                                 targetPoint = bounding_box[rec_position,0] - ((bounding_box[rec_position,2] - bounding_box[rec_position,0]) / 2)
                             else:
                                 targetPoint = 0
+                            print("================================= get face ==========================")
                             # 調整抓取的範圍
                             facePicFrame = frame[ bounding_box[rec_position,1] : targetHeight  , targetPoint:targetWidth ]
                             # facePicFrame = frame[bounding_box[rec_position,1] :bounding_box[rec_position,3]  ,bounding_box[rec_position,0]:bounding_box[rec_position,2]]
