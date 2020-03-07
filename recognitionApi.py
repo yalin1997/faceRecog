@@ -656,8 +656,7 @@ def pictureDelete():
     
 
 # 取得上傳檔案後將路徑與其他資訊存到 DB
-# todo
-@app.route('/upload',methods=['GET','POST'])
+@app.route('/upload',methods=['GET'])
 @login_required
 def upload():
     permission = current_user.permission
@@ -665,76 +664,100 @@ def upload():
         uploadform = uploadForm()
     else:
         uploadform = userUploadForm()
-    if request.method == 'POST':
-        if permission == 'manager':
-            file = flask.request.files['uploaded_file']
-            if file.filename == '':
-                flask.flash('No selected file')
-                print('No select file')
-                return flask.redirect(flask.request.url)
-            if file and allowed_file(file.filename):
-                filename = secure_filename(file.filename)
-                if allowed_picture(filename):
-                    lastName = flask.request.form['lastName']
-                    firstName = flask.request.form['firstName']
-                    pictureName = lastName+'_'+firstName+'_'+str(uuid.uuid1())+'.jpg'
-                    filePath = os.path.join(app.config["UPLOAD_FOLDER"]+picturePath, pictureName)
-                    file.save(filePath)
-                    faceDetect.detectSinglePicture(app.config["UPLOAD_FOLDER"]+picturePath,pictureName)
-                    result = insertService.insertFaceInfo(lastName,firstName,"/upload/"+pictureName)
-                elif allowed_video(filename):
-                    filePath = os.path.join(app.config["UPLOAD_FOLDER"]+videoPath, filename)
-                    file.save(filePath)
-                    classId = flask.request.form['classId']
-                    videoName = flask.request.form['videoName']
-                    className = flask.request.form['className']
-                    dateTime = flask.request.form['dateTime']
-                    classNo = flask.request.form['classNo']
-                    result = insertService.InsertVideoInfo(dateTime,
-                        classNo,
-                        classId,
-                        "/upload/"+filename,
-                        "",
-                        0,
-                        filename,
-                        filePath,
-                        videoName
-                    )
-                    
-                return jsonify({'result' : result})
-            else:
-                return jsonify({'result' : "不被允許的檔案"})
+    if permission == 'manager':
+        classId = request.args.get('classId')
+        if classId:
+            classGroupResult = getDataService.getClassGroupById(int(classId))
+            return render_template('upload.html', form=uploadform , classGroup = classGroup(str(classGroupResult[0][0]) , str(classGroupResult[0][1]) , str(classGroupResult[0][2]),str(classGroupResult[0][3])))
         else:
-            face = flask.request.files['face']
-            leftFace = flask.request.files['leftFace']
-            rightFace = flask.request.files['rightFace']
-            upFace = flask.request.files['upFace']
-            downFace = flask.request.files['downFace']
-            faceLocateTask(face , leftFace , rightFace , upFace , downFace)
-            #executor.submit(faceLocateTask , face , leftFace , rightFace , upFace , downFace)
-            return jsonify({'result' : True})
+            return render_template('upload.html', form=uploadform)
     else:
-        if permission == 'manager':
-            classId = request.args.get('classId')
-            if classId:
-                classGroupResult = getDataService.getClassGroupById(int(classId))
-                return render_template('upload.html', form=uploadform , classGroup = classGroup(str(classGroupResult[0][0]) , str(classGroupResult[0][1]) , str(classGroupResult[0][2]),str(classGroupResult[0][3])))
-            else:
-                return render_template('upload.html', form=uploadform)
-        else:
-            isFaceExit = int(getDataService.getFaceCountByType(current_user.id , 'face')[0][0]) > 0
-            isLeftFaceExit = int(getDataService.getFaceCountByType(current_user.id , 'left_face')[0][0]) > 0
-            isRightFaceExit = int(getDataService.getFaceCountByType(current_user.id , 'right_face')[0][0]) > 0
-            isUpFaceExit = int(getDataService.getFaceCountByType(current_user.id , 'up_face')[0][0]) > 0
-            isDownFaceExit = int(getDataService.getFaceCountByType(current_user.id , 'down_face')[0][0]) > 0
-            print(str(isFaceExit))
-            return render_template('upload.html', form=uploadform ,
-                isFaceExit = isFaceExit,
-                isLeftFaceExit = isLeftFaceExit,
-                isRightFaceExit = isRightFaceExit,
-                isUpFaceExit = isUpFaceExit,
-                isDownFaceExit = isDownFaceExit
-            )
+        isFaceExit = int(getDataService.getFaceCountByType(current_user.id , 'face')[0][0]) > 0
+        isLeftFaceExit = int(getDataService.getFaceCountByType(current_user.id , 'left_face')[0][0]) > 0
+        isRightFaceExit = int(getDataService.getFaceCountByType(current_user.id , 'right_face')[0][0]) > 0
+        isUpFaceExit = int(getDataService.getFaceCountByType(current_user.id , 'up_face')[0][0]) > 0
+        isDownFaceExit = int(getDataService.getFaceCountByType(current_user.id , 'down_face')[0][0]) > 0
+        print(str(isFaceExit))
+        return render_template('upload.html', form=uploadform ,
+            isFaceExit = isFaceExit,
+            isLeftFaceExit = isLeftFaceExit,
+            isRightFaceExit = isRightFaceExit,
+            isUpFaceExit = isUpFaceExit,
+            isDownFaceExit = isDownFaceExit
+        )
+
+# 取得上傳檔案後將路徑與其他資訊存到 DB
+@app.route('/uploadApart',methods=['POST'])
+@login_required
+def uploadApart():
+    task = request.form.get('task_id')
+    chunk = request.form.get('chunk', 0)
+    filename = '%s%s' % (task, chunk)
+
+    upload_file = request.files['file']
+    upload_file.save(os.path.join(app.config["UPLOAD_FOLDER"] , filename))
+    return jsonify({'result' : True})
+
+@app.route('/uploadSuccess',methods=['POST'])
+@login_required
+def uploadSuccess():
+    targetFileName = request.args.get('filename')
+    task = request.args.get('task_id')
+    chunk = 0
+    if targetFileName and allowed_file(targetFileName):
+        targetFileName = secure_filename(targetFileName)
+        if allowed_picture(targetFileName):
+            lastName = request.args.get('lastName')
+            firstName = request.args.get('firstName')
+            pictureName = lastName+'_'+firstName+'_'+str(uuid.uuid1())+'.jpg'
+            filePath = os.path.join(app.config["UPLOAD_FOLDER"]+picturePath, pictureName)
+            with open(filePath , 'wb') as target_file:
+                while True:
+                    try:
+                        filename = '%s%d' % (task, chunk)
+                        source_file = open(os.path.join(app.config["UPLOAD_FOLDER"] , filename), 'rb')
+                        target_file.write(source_file.read())
+                        source_file.close()
+                    except IOError, msg:
+                        break
+
+                    chunk += 1
+                    os.remove(os.path.join(app.config["UPLOAD_FOLDER"] , filename))
+            faceDetect.detectSinglePicture(app.config["UPLOAD_FOLDER"]+picturePath,pictureName)
+            result = insertService.insertFaceInfo(lastName,firstName,"/upload/"+pictureName)
+        elif allowed_video(targetFileName):
+                filePath = os.path.join(app.config["UPLOAD_FOLDER"]+videoPath, targetFileName)
+                classId = request.args.get('classId')
+                videoName = request.args.get('videoName')
+                className = request.args.get('className')
+                dateTime = request.args.get('dateTime')
+                classNo = request.args.get('classNo')
+                with open(filePath , 'wb') as target_file:
+                    while True:
+                        try:
+                            filename = '%s%d' % (task, chunk)
+                            source_file = open(os.path.join(app.config["UPLOAD_FOLDER"] , filename), 'rb')
+                            target_file.write(source_file.read())
+                            source_file.close()
+                        except IOError, msg:
+                            break
+
+                        chunk += 1
+                        os.remove(os.path.join(app.config["UPLOAD_FOLDER"] , filename))
+
+                result = insertService.InsertVideoInfo(dateTime,
+                    classNo,
+                    classId,
+                    "/upload/"+targetFileName,
+                    "",
+                    0,
+                    filename,
+                    filePath,
+                    videoName
+                )
+        return jsonify({'result' : result})
+    else:
+        return jsonify({'result' : "不被允許的檔案"})
 
 def faceLocateTask( face , leftFace , rightFace , upFace , downFace ):
     faceDict = {'face':face,'left_face':leftFace,'right_face':rightFace,'up_face':upFace,'down_face':downFace}

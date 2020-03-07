@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block head %}
     {{ super() }}
+    <link href="{{ url_for('static', filename = 'css/webuploader/webuploader.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename = 'css/upload.css') }}" rel="stylesheet">
 {% endblock %}
 
@@ -11,10 +12,7 @@
         <h4>上傳影片</h4>
         {{ form.hidden_tag() }}
         <div class="form-group">
-            {{ form.uploaded_file }}
-                {% for error in form.uploaded_file.errors %}
-                <span style="color: red;">{{ error }}</span>
-                {% endfor %}
+            <div id="picker" style="float:left;">請選擇檔案</div>
         </div>
         <div id="picUploadMsg" style="display:none">
             <div class="form-group">
@@ -30,7 +28,7 @@
             {% if classGroup %}
                 <div class="form-group">
                     <label for="className">班級</label>
-                    <input type="hidden" name="classId" value="{{ classGroup.id }}">
+                    <input type="hidden" name="classId" id="classId" value="{{ classGroup.id }}">
                     <input type="text" name="className" id="className" class="form-control" placeholder="班級" value="{{ classGroup.className }}" readonly/>
                 </div>
             {% else %}
@@ -177,5 +175,6 @@
 {% endblock page_content %}
 {% block scripts %}
 {{ super() }}
+<script src="{{ url_for('static', filename = 'javascript/webuploader/webuploader.min.js') }}" type="text/javascript"></script>
 <script src="{{ url_for('static', filename = 'javascript/upload.js') }}" type="text/javascript"></script>
 {% endblock scripts %}
