@@ -45,17 +45,28 @@ $( document ).ready(function() {
             }
         }
     });
+    uploader.on('uploadProgress', function(file, percentage) {
+        $('.progress-bar').css('width', percentage * 100 - 1 + '%');
+        $('.progress-bar').text(Math.floor(percentage * 100 - 1) + '%');
+    });
+
     uploader.on('uploadSuccess', function(file) { // 整個文件成功上傳觸發
-        var data = { 'task_id': task_id,
-        'filename': file.source['name'] ,
-        'lastName': $("#lastName").val(),
-        'firstName':  $("#firstName").val(),
-        'classId':  $("#classId").val(),
-        'videoName':  $("#videoName").val(),
-        'className':  $("#className").val(),
-        'dateTime':  $("#dateTime").val(),
-        'classNo':  $("#classNo").val() };
+        var data = { 
+            'task_id': task_id,
+            'filename': file.source['name'],
+            'lastName': $("#lastName").val(),
+            'firstName':  $("#firstName").val(),
+            'classId':  $("#classId").val(),
+            'videoName':  $("#videoName").val(),
+            'className':  $("#className").val(),
+            'dateTime':  $("#dateTime").val(),
+            'classNo':  $("#classNo").val() 
+        };
         $.get('/uploadSuccess', data);
+        $('.progress-bar').css('width', '100%');
+        $('.progress-bar').text('100%');
+        $('.progress-bar').addClass('progress-bar-success');
+        $('.progress-bar').text('上傳成功');
         alert("上傳成功");
         //window.location.reload();
     });
@@ -65,7 +76,7 @@ $( document ).ready(function() {
 
     $("#confirm").click(function() {
         // 轉轉
-        $("#uploadPanel").html("<div class='lds-spinner' style='width:100%;height:100%'><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>")
+        $("#confirm").hide();
         uploader.upload();
     });
 });

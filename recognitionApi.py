@@ -703,6 +703,7 @@ def uploadApart():
 def uploadSuccess():
     targetFileName = request.args.get('filename')
     task = request.args.get('task_id')
+
     chunk = 0
     if targetFileName and allowed_file(targetFileName):
         targetFileName = secure_filename(targetFileName)
