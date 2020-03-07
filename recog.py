@@ -157,7 +157,7 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
                                 insertService.insertRecogedUser(videoId , int(str(fin_obj[rec_position]).split('_')[1]))
                                 insertService.insertRecogedUser(faceVideoId , int(str(fin_obj[rec_position]).split('_')[1]))
 
-                            faceWidth = bounding_box[rec_position,2] - bounding_box[rec_position,0]
+                            '''faceWidth = bounding_box[rec_position,2] - bounding_box[rec_position,0]
                             faceHeigh = bounding_box[rec_position,3] - bounding_box[rec_position,1]
                             # 判斷是否超過圖片邊界
                             if bounding_box[rec_position , 3] + faceHeigh <= frameHeight:
@@ -171,9 +171,10 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
                             if bounding_box[rec_position,0] - (faceWidth / 2) >= 0:
                                 targetPoint = bounding_box[rec_position,0] - (faceWidth / 2)
                             else:
-                                targetPoint = 0
+                                targetPoint = 0'''
                             # 調整抓取的範圍
-                            facePicFrame = frame[ bounding_box[rec_position,1] : targetHeight  , targetPoint:targetWidth ]
+                            # facePicFrame = frame[ bounding_box[rec_position,1] : targetHeight  , targetPoint:targetWidth ]
+                            facePicFrame = frame[bounding_box[rec_position,1] :bounding_box[rec_position,3]  ,bounding_box[rec_position,0]:bounding_box[rec_position,2]]
                             cv2.imwrite(faceCoverPath ,facePicFrame)
                             emotion = emotionDetect.detectEmotion(facePicFrame)
 
