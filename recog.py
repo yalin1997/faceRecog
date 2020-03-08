@@ -261,7 +261,7 @@ if __name__ == "__main__":
     print("get Emb start")
     embList = getEmb.getEmbList( model_Path[0][0], picturePathList)# 算出 Emb 得到 ndarray
     insertService.editRecogStatus(int(sys.argv[1]) , 2)
-    main(int(sys.argv[1]) , sys.argv[2],sys.argv[3],embList,model_Path[0][0],pictureNameList,sys.argv[4],int(sys.argv[5]),sys.argv[6])
+    main(sys.argv[1] , sys.argv[2],sys.argv[3],embList,model_Path[0][0],pictureNameList,sys.argv[4],int(sys.argv[5]),sys.argv[6])
     
 
         
