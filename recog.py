@@ -253,15 +253,15 @@ if __name__ == "__main__":
         # 長執行任務
     picturePathList = []
     pictureNameList = []
-    memberList = getDataService.getStudentsPicture(sys.argv[6])
+    memberList = getDataService.getStudentsPicture(int(sys.argv[6]))
     model_Path = getDataService.getModelPath() # 取模型路徑 tuple list
     for i in range(len(memberList)):
         picturePathList.append(memberList[i][3])
         pictureNameList.append(str(memberList[i][1]) + str(memberList[i][2])+ "_" + str(memberList[i][0]))
     print("get Emb start")
     embList = getEmb.getEmbList( model_Path[0][0], picturePathList)# 算出 Emb 得到 ndarray
-    insertService.editRecogStatus(sys.argv[1] , 2)
-    main(sys.argv[1] , sys.argv[2],sys.argv[3],embList,model_Path[0][0],pictureNameList,sys.argv[4],sys.argv[5],sys.argv[6])
+    insertService.editRecogStatus(int(sys.argv[1]) , 2)
+    main(int(sys.argv[1]) , sys.argv[2],sys.argv[3],embList,model_Path[0][0],pictureNameList,sys.argv[4],int(sys.argv[5]),sys.argv[6])
     
 
         
