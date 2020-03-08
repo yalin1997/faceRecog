@@ -511,27 +511,16 @@ def videoRecog():
         memberList = getDataService.getStudentsPicture(classId)
         if len(memberList) > 0:
             with ThreadPoolExecutor() as executor: 
-                executor.submit(recogTask, videoId , str(result[0][2]) , str(result[0][8]) , result[0][5] , result[0][7] , classId ,memberList)
-            #recogTask( videoId , result[0][2] , result[0][8] , result[0][5] , result[0][7] , classId ,memberList)
+                executor.submit(recogTask, videoId , str(result[0][2]) , str(result[0][8]) , result[0][5] , result[0][7] , classId )
             return jsonify({'result':True})
         else:
             return jsonify({'result':"沒有辨識目標，請加入學生"})
     else:
         return jsonify({'result':"權限不足"})
 
-def recogTask(videoId ,filename, filePath , date , classNo, classId ,  memberList):
-    # 長執行任務
-    picturePathList = []
-    pictureNameList = []
-    for i in range(len(memberList)):
-        picturePathList.append(memberList[i][3])
-        pictureNameList.append(str(memberList[i][1]) + str(memberList[i][2])+ "_" + str(memberList[i][0]))
-    print("get Emb start")
+def recogTask(videoId ,filename, filePath , date , classNo, classId ):
+    os.system("python recog.py "+ videoId + ' ' + filePath + ' ' + filename + ' ' + date + ' ' + classNo + ' ' + classId )
 
-    embList = getEmb.getEmbList( model_Path[0][0], picturePathList)# 算出 Emb 得到 ndarray
-    print("get Emb End embList 長:" + str(len(embList)) + "nameList 長:" +  str(len(pictureNameList)) )
-    insertService.editRecogStatus(videoId , 2)
-    recog.main(videoId , filePath,filename,embList,pictureNameList,date,classNo,classId)
 
     
 
