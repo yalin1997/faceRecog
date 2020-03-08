@@ -7,7 +7,7 @@ $( document ).ready(function() {
           // 只允許圖片影片。
         accept: {
             title: 'imageVideo',
-            extensions: 'jpg,jpeg,bmp,png,avi,mp4,mov,mts',
+            extensions: 'jpg,jpeg,bmp,png,avi,mp4,mov,MTS',
             mimeTypes: 'image/*,video/*'
         },
         chunked: true,
