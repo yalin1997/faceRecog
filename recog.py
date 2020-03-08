@@ -40,7 +40,7 @@ with tf.Graph().as_default():
     config.gpu_options.allow_growth = True 
     with tf.Session(config=config) as sess:     
         # Load the model 
-        facenet.load_model(model_Path)
+        facenet.load_model(model_Path[0][0])
 
         # Get input and output tensors
         images_placeholder = tf.get_default_graph().get_tensor_by_name("input:0")
