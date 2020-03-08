@@ -27,17 +27,20 @@ from sklearn.externals import joblib
 
 import tensorflow as tf
 import dbService.insertDbService as insertService
+import dbService.getEmbedService as getDataService
 import json
 import traceback
 
 # load model
 file= open("log.txt","w+")
+model_Path = getDataService.getModelPath() # 取模型路徑 tuple list
+
 with tf.Graph().as_default():
     config = tf.ConfigProto(allow_soft_placement=True)
     config.gpu_options.allow_growth = True 
     with tf.Session(config=config) as sess:     
         # Load the model 
-        facenet.load_model(modelPath)
+        facenet.load_model(model_Path)
 
         # Get input and output tensors
         images_placeholder = tf.get_default_graph().get_tensor_by_name("input:0")
@@ -51,7 +54,7 @@ with tf.Graph().as_default():
         pnet, rnet, onet = align.detect_face.create_mtcnn(sess_mtcnn, None)
 
 # 參數分別為收到的檔案,資料庫取得之embs , facenet model 位置 , 比對庫中的名字
-def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date , classNo , classId):      
+def main(videoId , uploadFile , fileName , emdList , all_name , date , classNo , classId):      
     timeFrame = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
     firstShot = True
     image=[]
