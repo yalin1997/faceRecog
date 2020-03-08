@@ -253,7 +253,7 @@ if __name__ == "__main__":
         # 長執行任務
     picturePathList = []
     pictureNameList = []
-    memberList = getDataService.getStudentsPicture(sys.argv[9])
+    memberList = getDataService.getStudentsPicture(sys.argv[6])
     model_Path = getDataService.getModelPath() # 取模型路徑 tuple list
     for i in range(len(memberList)):
         picturePathList.append(memberList[i][3])
