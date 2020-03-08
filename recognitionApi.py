@@ -723,9 +723,9 @@ def uploadSuccess():
                         break
 
                     chunk += 1
-                    print "目录为: %s" %os.listdir(app.config["UPLOAD_FOLDER"])
+                    print("目录为: %s" % os.listdir(app.config["UPLOAD_FOLDER"])) 
                     os.remove(os.path.join(app.config["UPLOAD_FOLDER"] , filename))
-                    print "移除後: %s" %os.listdir(app.config["UPLOAD_FOLDER"])
+                    print("移除後: %s" %os.listdir(app.config["UPLOAD_FOLDER"]))
             faceDetect.detectSinglePicture(app.config["UPLOAD_FOLDER"]+picturePath,pictureName)
             result = insertService.insertFaceInfo(lastName,firstName,"/upload/"+pictureName)
         elif allowed_video(targetFileName):
@@ -746,9 +746,9 @@ def uploadSuccess():
                             break
 
                         chunk += 1
-                        print "目录为: %s" %os.listdir(app.config["UPLOAD_FOLDER"])
+                        print("目录为: %s" % os.listdir(app.config["UPLOAD_FOLDER"])) 
                         os.remove(os.path.join(app.config["UPLOAD_FOLDER"] , filename))
-                        print "移除後: %s" %os.listdir(app.config["UPLOAD_FOLDER"])
+                        print("移除後: %s" %os.listdir(app.config["UPLOAD_FOLDER"]))
                 result = insertService.InsertVideoInfo(dateTime,
                     classNo,
                     classId,
