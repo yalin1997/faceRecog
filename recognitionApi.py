@@ -23,11 +23,9 @@ from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 import dbService.getEmbedService as getDataService
 import dbService.loginService as loginService
 import dbService.insertDbService as insertService
-import recog
 import json
 from werkzeug.utils import secure_filename
 import os
-import getEmb
 import base64
 from datetime import timedelta
 from datetime import datetime
