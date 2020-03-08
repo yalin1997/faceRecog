@@ -32,15 +32,11 @@ import traceback
 
 # load model
 file= open("log.txt","w+")
-
-
-def getMtcnn():
-    with tf.Graph().as_default():
-        gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.8)
-        sess = tf.Session(config=tf.ConfigProto(gpu_options=gpu_options, log_device_placement=False))
-        with sess.as_default():
-            pnet, rnet, onet = align.detect_face.create_mtcnn(sess, None)
-    return pnet , rnet , onet
+with tf.Graph().as_default():
+    gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.8)
+    sess = tf.Session(config=tf.ConfigProto(gpu_options=gpu_options, log_device_placement=False))
+    with sess.as_default():
+        pnet, rnet, onet = align.detect_face.create_mtcnn(sess, None)
 
 # 參數分別為收到的檔案,資料庫取得之embs , facenet model 位置 , 比對庫中的名字
 def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date , classNo , classId):      
@@ -211,7 +207,6 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
                 os.system("ffmpeg -i "+item+" -vcodec libx264 "+faceVideoPath[item])
 
 def load_and_align_data(img, image_size, margin):
-    pnet, rnet, onet = getMtcnn()
     minsize = 20 # minimum size of face
     threshold = [ 0.6, 0.7, 0.7 ]  # three steps's threshold
     factor = 0.709 # scale factor
