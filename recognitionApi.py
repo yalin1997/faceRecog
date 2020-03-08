@@ -38,7 +38,6 @@ import uuid
 import sys
 
 app = flask.Flask(__name__)
-executor = ThreadPoolExecutor(500)
 
 app.secret_key = os.urandom(24)
 
@@ -511,7 +510,8 @@ def videoRecog():
         classId = int(result[0][3])
         memberList = getDataService.getStudentsPicture(classId)
         if len(memberList) > 0:
-            executor.submit(recogTask, videoId , str(result[0][2]) , str(result[0][8]) , result[0][5] , result[0][7] , classId ,memberList)
+            with ThreadPoolExecutor() as executor: 
+                executor.submit(recogTask, videoId , str(result[0][2]) , str(result[0][8]) , result[0][5] , result[0][7] , classId ,memberList)
             #recogTask( videoId , result[0][2] , result[0][8] , result[0][5] , result[0][7] , classId ,memberList)
             return jsonify({'result':True})
         else:
