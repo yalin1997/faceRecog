@@ -519,7 +519,9 @@ def videoRecog():
         return jsonify({'result':"權限不足"})
 
 def recogTask(videoId ,filename, filePath , date , classNo, classId ):
-    subprocess.Popen("python /home/nknu/文件/faceRecog/recog.py "+ str(videoId) + ' ' + filePath + ' ' + filename + ' ' + date + ' ' + str(classNo) + ' ' + str(classId) )
+    
+    subprocess.Popen(["python","/home/nknu/文件/faceRecog/recog.py" , str(videoId) , filePath , filename , date , str(classNo) , str(classId)])
+    # subprocess.Popen("python /home/nknu/文件/faceRecog/recog.py "+ str(videoId) + ' ' + filePath + ' ' + filename + ' ' + date + ' ' + str(classNo) + ' ' + str(classId) )
 
 
     
