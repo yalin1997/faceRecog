@@ -220,10 +220,6 @@ def load_and_align_data(img, image_size, margin):
 
     det=bounding_boxes
 
-    file.write(str(det.shape))
-    file.write(str(type(det)))
-    print(str(det.shape))
-    print(str(det.shape))
 
     det[:,0] = np.maximum(det[:,0]-margin/2, 0)
     det[:,1] = np.maximum(det[:,1]-margin/2, 0)
@@ -247,7 +243,7 @@ def createFolder(directory):
         if not os.path.exists(directory):
             os.makedirs(directory)
     except OSError:
-        file.write ('Error: Creating directory. ' + directory)
+        print ('Error: Creating directory. ' + directory)
 
 if __name__ == "__main__":
         # 長執行任務
