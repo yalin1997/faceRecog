@@ -34,6 +34,7 @@ import calculate_dection_face as faceDetect
 import os.path
 import uuid
 import sys
+import subprocess
 
 app = flask.Flask(__name__)
 
@@ -517,7 +518,7 @@ def videoRecog():
         return jsonify({'result':"權限不足"})
 
 def recogTask(videoId ,filename, filePath , date , classNo, classId ):
-    os.system("python /home/nknu/文件/faceRecog/recog.py "+ str(videoId) + ' ' + filePath + ' ' + filename + ' ' + date + ' ' + str(classNo) + ' ' + str(classId) )
+    subprocess.Popen("python /home/nknu/文件/faceRecog/recog.py "+ str(videoId) + ' ' + filePath + ' ' + filename + ' ' + date + ' ' + str(classNo) + ' ' + str(classId) )
 
 
     
