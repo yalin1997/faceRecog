@@ -80,8 +80,6 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
             embeddings = tf.get_default_graph().get_tensor_by_name("embeddings:0")
             phase_train_placeholder = tf.get_default_graph().get_tensor_by_name("phase_train:0")
 
-            
-
             out = cv2.VideoWriter(outputPathTmp, fourcc, 20.0, (width, height))
             timer=0
             # 出現過的人名與產生臉部特寫影片的物件對照

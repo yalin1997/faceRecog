@@ -508,9 +508,8 @@ def videoRecog():
         classId = int(result[0][3])
         memberList = getDataService.getStudentsPicture(classId)
         if len(memberList) > 0:
-            '''with ThreadPoolExecutor() as executor: 
-                executor.submit(recogTask, videoId , str(result[0][2]) , str(result[0][8]) , result[0][5] , result[0][7] , classId )'''
-            recogTask(videoId , str(result[0][2]) , str(result[0][8]) , str(result[0][5]) , result[0][7] , classId)
+            with ThreadPoolExecutor() as executor: 
+                executor.submit(recogTask, videoId , str(result[0][2]) , str(result[0][8]) , result[0][5] , result[0][7] , classId )
             return jsonify({'result':True})
         else:
             return jsonify({'result':"沒有辨識目標，請加入學生"})
