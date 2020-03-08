@@ -205,14 +205,14 @@ def load_and_align_data(img, image_size, margin):
         sess = tf.Session(config=tf.ConfigProto(gpu_options=gpu_options, log_device_placement=False))
         with sess.as_default():
             pnet, rnet, onet = align.detect_face.create_mtcnn(sess, None)
-    minsize = 20 # minimum size of face
-    threshold = [ 0.6, 0.7, 0.7 ]  # three steps's threshold
-    factor = 0.709 # scale factor
+            minsize = 20 # minimum size of face
+            threshold = [ 0.6, 0.7, 0.7 ]  # three steps's threshold
+            factor = 0.709 # scale factor
 
-    img_size = np.asarray(img.shape)[0:2]
+            img_size = np.asarray(img.shape)[0:2]
 
-    # bounding_boxes shape:(1,5)  type:np.ndarray
-    bounding_boxes, _ = align.detect_face.detect_face(img, minsize, pnet, rnet, onet, threshold, factor)
+            # bounding_boxes shape:(1,5)  type:np.ndarray
+            bounding_boxes, _ = align.detect_face.detect_face(img, minsize, pnet, rnet, onet, threshold, factor)
 
 
     if len(bounding_boxes) < 1:
