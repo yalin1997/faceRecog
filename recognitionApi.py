@@ -49,7 +49,7 @@ videoPath = "/video"
 picturePath = "/picture"
 otherPicturePath = "/otherPicture"
 
-ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg','avi','mp4','mov'])
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg','avi','mp4','mov','mts'])
 ALLOWED_PICTURE = set(['png', 'jpg', 'jpeg'])
 ALLOWED_VIDEO = set(['avi','mp4','mov' , 'mts'])
 
