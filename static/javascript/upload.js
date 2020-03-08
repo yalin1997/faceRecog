@@ -5,11 +5,11 @@ $( document ).ready(function() {
         server: '/uploadApart', // 上傳 URL
         pick: '#picker',
           // 只允許圖片影片。
-        accept: {
+        /*accept: {
             title: 'imageVideo',
             extensions: 'jpg,jpeg,bmp,png,avi,mp4,mov,MTS',
             mimeTypes: 'image/*,video/*'
-        },
+        },*/
         chunked: true,
         chunkSize: 20 * 1024 * 1024,
         chunkRetry: 3,
