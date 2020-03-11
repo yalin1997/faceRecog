@@ -38,7 +38,9 @@ import subprocess
 
 app = flask.Flask(__name__)
 
-app.secret_key = os.urandom(24)
+# 用常數避免多worker錯誤
+f = open('key.txt', 'r')
+app.secret_key = f.read()
 
 UPLOAD_FOLDER = "/home/nknu/文件/faceRecog/static/upload"
 
@@ -519,10 +521,8 @@ def videoRecog():
         return jsonify({'result':"權限不足"})
 
 def recogTask(videoId ,filename, filePath , date , classNo, classId ):
-    
     subprocess.Popen(["python","/home/nknu/文件/faceRecog/recog.py" , str(videoId) , filePath , filename , date , str(classNo) , str(classId)])
-    # subprocess.Popen("python /home/nknu/文件/faceRecog/recog.py "+ str(videoId) + ' ' + filePath + ' ' + filename + ' ' + date + ' ' + str(classNo) + ' ' + str(classId) )
-
+    
 
     
 

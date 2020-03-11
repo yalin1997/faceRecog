@@ -145,11 +145,9 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
                                 faceVideoId = insertService.InsertFocusVideoInfo(date , classNo , classId ,'/upload/' + faceVideoFileName , faceCoverUrl , 1 , faceVideoFileName , faceVideoUrl , str(fin_obj[rec_position]))
                                 insertService.insertRecogedUser(videoId , int(str(fin_obj[rec_position]).split('_')[1]))
                                 insertService.insertRecogedUser(faceVideoId , int(str(fin_obj[rec_position]).split('_')[1]))
-
-                            # faceWidth = bounding_box[rec_position,2] - bounding_box[rec_position,0]
-                            # faceHeigh = bounding_box[rec_position,3] - bounding_box[rec_position,1]
+   
                             # 調整抓取的範圍
-                            facePicFrame = frame[ bounding_box[rec_position,1] : frameHeight  , bounding_box[rec_position,0]:bounding_box[rec_position,2] ]
+                            facePicFrame = frame[ bounding_box[rec_position,1] - 50 if  bounding_box[rec_position,1] - 50 > 0 else 0 : frameHeight if bounding_box[rec_position,3] + 100 > frameHeight else bounding_box[rec_position,3] + 100  , bounding_box[rec_position,0] - 50 if bounding_box[rec_position,0] - 50 > 0 else 0 : frameWidth if  bounding_box[rec_position,2]+50 >= frameWidth else bounding_box[rec_position,2]+50]
                             # facePicFrame = frame[bounding_box[rec_position,1] :bounding_box[rec_position,3]  ,bounding_box[rec_position,0]:bounding_box[rec_position,2]]
                             cv2.imwrite(faceCoverPath ,facePicFrame)
                             emotion = emotionDetect.detectEmotion(facePicFrame)
@@ -196,6 +194,7 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
             for item in faceVideoPath.keys():
                 print("videoFile : "+str(item))
                 os.system("ffmpeg -i "+item+" -vcodec libx264 "+faceVideoPath[item])
+            
 
 def load_and_align_data(img, image_size, margin):
     with tf.Graph().as_default():
