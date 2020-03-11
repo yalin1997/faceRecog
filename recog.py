@@ -152,7 +152,8 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
                             facePicFrame = frame[bounding_box[rec_position,1] :bounding_box[rec_position,3]  ,bounding_box[rec_position,0]:bounding_box[rec_position,2]]
                             cv2.imwrite(faceCoverPath ,PicFrame)
                             emotion = azureFaceDetect.detectFace(faceCoverPath)
-                            # emotion = emotionDetect.detectEmotion(facePicFrame)
+                            if emotion == "":
+                                emotion = emotionDetect.detectEmotion(facePicFrame)
 
                             resizeFacePicFrame=cv2.resize(PicFrame,(400,480))
                             cv2.putText(

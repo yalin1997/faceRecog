@@ -45,7 +45,7 @@ def detectFace(imgStream):
     detected_faces  = face_client.face.detect_with_stream(image=image , returnFaceAttributes=['emotion'])
     print("get detect result from azure")
     if not detected_faces:
-        raise Exception('No face detected from image')
+        return ""
     for f in detected_faces:
         print("face id : " + f.face_id)
         if not (f.face_attributes):
