@@ -48,7 +48,7 @@ def detectFace(imgStream):
         raise Exception('No face detected from image')
     for f in detected_faces:
         print("face id : " + f.face_id)
-        if not (f.face_attributes.emotion):
+        if not (f.face_attributes):
             emo = ""
             print("no face_attributes emotion!")
         else:
