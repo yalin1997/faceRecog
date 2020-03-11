@@ -106,7 +106,7 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
                 frameShape = rgb_frame.shape
                 frameHeight = frameShape[0]
                 frameWidth = frameShape[1]
-                azureFaceDetect.detectFace(videoFramePath+'frame_'+ str(frameCounter) + '.jpg')
+                
 
                 # 尋找臉部
                 mark,bounding_box,crop_image=load_and_align_data(rgb_frame,160,44)
@@ -151,6 +151,7 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
                             PicFrame = frame[ bounding_box[rec_position,1] - 50 if  bounding_box[rec_position,1] - 50 > 0 else 0 : frameHeight if bounding_box[rec_position,3] + 100 > frameHeight else bounding_box[rec_position,3] + 100  , bounding_box[rec_position,0] - 50 if bounding_box[rec_position,0] - 50 > 0 else 0 : frameWidth if  bounding_box[rec_position,2]+50 >= frameWidth else bounding_box[rec_position,2]+50]
                             facePicFrame = frame[bounding_box[rec_position,1] :bounding_box[rec_position,3]  ,bounding_box[rec_position,0]:bounding_box[rec_position,2]]
                             cv2.imwrite(faceCoverPath ,PicFrame)
+                            emotion = azureFaceDetect.detectFace(faceCoverPath)
                             # emotion = emotionDetect.detectEmotion(facePicFrame)
 
                             resizeFacePicFrame=cv2.resize(PicFrame,(400,480))
