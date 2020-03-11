@@ -41,10 +41,7 @@ def getEmotion(emotionStr):
 
 def detectFace(imgStream):
     print("!!!!!!!!!!!!!!!!!!!!!!!!azureStart!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-    # Get test image
-    print(imgStream)
-    test_image_array = glob.glob(imgStream)
-    image = open(test_image_array[0], 'r+b')
+    image = open(glob.glob(imgStream)[0], 'r+b')
     detected_faces  = face_client.face.detect_with_stream(image=image , returnFaceAttributes=['emotion'])
     print("get detect result from azure")
     if not detected_faces:
