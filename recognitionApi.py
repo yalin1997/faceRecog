@@ -1,3 +1,4 @@
+# encoding=utf-8
 import flask # api 依賴
 from concurrent.futures import ThreadPoolExecutor
 from flask import request,jsonify,render_template,redirect,send_from_directory,g,session,flash
