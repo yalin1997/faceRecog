@@ -1,3 +1,4 @@
+# encoding=utf-8
 from multiprocessing.managers import BaseManager
 from multiprocessing import RLock , Queue
 
