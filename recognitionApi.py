@@ -35,6 +35,7 @@ import os.path
 import uuid
 import sys
 import subprocess
+import processManager
 
 app = flask.Flask(__name__)
 
@@ -58,6 +59,8 @@ app.config["JSON_AS_ASCII"] = False
 
 model_Path = getDataService.getModelPath() # 取模型路徑 tuple list
 
+# get general var
+manager_client = processManager.ManagerClient(processManager.MANAGER_DOMAIN, processManager.MANAGER_PORT, processManager.MANAGER_AUTH_KEY)
 
 # flask Bootstrap randerer
 bootstrap = Bootstrap(app)
@@ -505,20 +508,29 @@ def videoManage():
 @app.route('/videoRecog' , methods = ['POST'])
 @login_required
 def videoRecog():
-    videoId = request.get_json(force=True)["videoId"]
-    if videoId and current_user.permission == 'manager':
-        result = getDataService.getVideoById(videoId)
-        classId = int(result[0][3])
-        memberList = getDataService.getStudentsPicture(classId)
-        if len(memberList) > 0:
-            '''with ThreadPoolExecutor() as executor: 
-                executor.submit(recogTask, videoId , str(result[0][2]) , str(result[0][8]) , result[0][5] , result[0][7] , classId )'''
-            recogTask(videoId , str(result[0][2]) , str(result[0][8]) , str(result[0][5]) , result[0][7] , classId)
-            return jsonify({'result':True})
+    runing = manager_client.getIsRuning()
+    lock = manager_client.get_open_qq_login_lock()
+    if not runing.get():
+        lock.acquire()
+        runing.set()
+        lock.release()
+        videoId = request.get_json(force=True)["videoId"]
+        if videoId and current_user.permission == 'manager':
+            result = getDataService.getVideoById(videoId)
+            classId = int(result[0][3])
+            memberList = getDataService.getStudentsPicture(classId)
+            if len(memberList) > 0:
+                '''with ThreadPoolExecutor() as executor: 
+                    executor.submit(recogTask, videoId , str(result[0][2]) , str(result[0][8]) , result[0][5] , result[0][7] , classId )'''
+                recogTask(videoId , str(result[0][2]) , str(result[0][8]) , str(result[0][5]) , result[0][7] , classId)
+                return jsonify({'result':True})
+            else:
+                return jsonify({'result':"沒有辨識目標，請加入學生"})
         else:
-            return jsonify({'result':"沒有辨識目標，請加入學生"})
+            return jsonify({'result':"權限不足"})
     else:
-        return jsonify({'result':"權限不足"})
+        return jsonify({'result':"尚有工作進行中，請完成後再試"})
+
 
 def recogTask(videoId ,filename, filePath , date , classNo, classId ):
     subprocess.Popen(["python","/home/nknu/文件/faceRecog/recog.py" , str(videoId) , filePath , filename , date , str(classNo) , str(classId)])
