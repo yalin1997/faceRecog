@@ -5,7 +5,7 @@ from multiprocessing import RLock , Queue
 
 MANAGER_PORT = 6000
 MANAGER_DOMAIN = '0.0.0.0'
-MANAGER_AUTH_KEY = 'nknuwe310a'
+MANAGER_AUTH_KEY = u'nknuwe310a'
 
 class QueueItem():
     def __init__(self, ):
