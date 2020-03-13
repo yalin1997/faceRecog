@@ -1,5 +1,5 @@
-from multiprocessing.managers import BaseManager , queue
-from multiprocessing import RLock
+from multiprocessing.managers import BaseManager
+from multiprocessing import RLock , Queue
 
 
 MANAGER_PORT = 6000
@@ -8,7 +8,7 @@ MANAGER_AUTH_KEY = 'nknuwe310a'
 
 class QueueItem():
     def __init__(self, ):
-        self.items = queue()
+        self.items = Queue()
 
     def set(self, value):
         self.items.put(value)
