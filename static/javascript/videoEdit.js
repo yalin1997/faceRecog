@@ -23,13 +23,13 @@ function deleteVideoEvent(){
 }
 
 function editEvent(){
-    if( $("#videoEdit").text() == "編輯"){
+    if( $("#videoEdit").text() == "編輯資料"){
         $("#editPanel").show();
         $("#videoEdit").text("取消修改");
     }
     else{
         $("#editPanel").hide();
-        $("#videoEdit").text("編輯");
+        $("#videoEdit").text("編輯資料");
     }
 }
 function editSubmitEvent(){

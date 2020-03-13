@@ -1,5 +1,6 @@
 $( document ).ready(function() {
     var task_id = WebUploader.Base.guid(); // 產生 task_id
+    var list = $('#thelist');
     var uploader = WebUploader.create({
         swf: './static/webuploader/Uploader.swf',
         server: '/uploadApart', // 上傳 URL
@@ -24,6 +25,10 @@ $( document ).ready(function() {
         var picType =  ['jpg', 'png', 'jpeg'];
         var videoType =  ['avi','mp4' ,'MOV' , 'MTS'];
         var fileType = getFileExtension3(file.name);
+        list.append( '<div id="' + file.id + '" class="item">' +
+        '<h4 class="info">' + file.name + '</h4>' +
+        '<p class="state">等待上傳...</p>' +
+        '</div>' );
         if(fileType != ""){
             if(picType.indexOf(fileType) != -1){
                 $("#picUploadMsg").show();
