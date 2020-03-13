@@ -1,4 +1,4 @@
-from multiprocessing.managers import BaseManager
+from multiprocessing.managers import BaseManager , queue
 from multiprocessing import RLock
 
 
@@ -8,7 +8,7 @@ MANAGER_AUTH_KEY = 'nknuwe310a'
 
 class QueueItem():
     def __init__(self, ):
-        self.items = Queue()
+        self.items = queue()
 
     def set(self, value):
         self.items.put(value)
