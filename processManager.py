@@ -27,7 +27,7 @@ class isRuning():
     def __init__(self , ):
         self.runing = False
     def set(self):
-        if this.runing :
+        if self.runing :
             self.runing = False
         else:
             self.runing = True
