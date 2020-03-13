@@ -1,11 +1,13 @@
-# encoding=utf-8
+
 from multiprocessing.managers import BaseManager
 from multiprocessing import RLock , Queue
 
 
 MANAGER_PORT = 6000
 MANAGER_DOMAIN = '0.0.0.0'
-MANAGER_AUTH_KEY = u'nknuwe310a'
+MANAGER_AUTH_KEY = b"nknuwe310a"
+class QueueManager(BaseManager):
+    pass
 
 class QueueItem():
     def __init__(self, ):
@@ -38,9 +40,9 @@ d = QueueItem()
 lock = RLock()
 runing = isRuning()
 
-BaseManager.register('queue', callable=lambda: d)
-BaseManager.register('open_qq_login_lock', callable=lambda: lock)
-BaseManager.register('isRuning' , callable=lambda: runing)
+QueueManager.register('queue', callable=lambda: d)
+QueueManager.register('open_qq_login_lock', callable=lambda: lock)
+QueueManager.register('isRuning' , callable=lambda: runing)
 class ManagerServer():
     
     # multiprocess Manager 服務Class
@@ -51,7 +53,7 @@ class ManagerServer():
         self.auth_key = auth_key
 
     def start_manager_server(self):
-        self.queue_manager = BaseManager(address=('', self.port), authkey=self.auth_key)
+        self.queue_manager = QueueManager(address=('', self.port), authkey=self.auth_key)
         # self.dict = self.queue_manager.dict()
         self.server = self.queue_manager.get_server()
 
@@ -70,7 +72,7 @@ class ManagerClient():
         self.port = port
         self.auth_key = auth_key
         # self.get_share_dict()
-        self.info_manager = BaseManager(address=(self.domain, self.port), authkey=self.auth_key)
+        self.info_manager = QueueManager(address=(self.domain, self.port), authkey=self.auth_key)
         self.info_manager.connect()
 
     def getQueue(self):
