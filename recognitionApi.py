@@ -40,17 +40,18 @@ import processManager
 
 app = flask.Flask(__name__)
 
-# 用常數避免多worker錯誤
-f = open('key.txt', 'r')
-app.secret_key = f.read()
+# 用常數避免多worker錯誤，讀取key.txt獲得
+with open('key.txt', 'r') as f
+    app.secret_key = f.read()
 
 UPLOAD_FOLDER = "/home/nknu/文件/faceRecog/static/upload"
 
+# 路徑定義
 embPath = "/face"
 videoPath = "/video"
 picturePath = "/picture"
 otherPicturePath = "/otherPicture"
-
+# 接受副檔名
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg','avi','mp4','mov','mts'])
 ALLOWED_PICTURE = set(['png', 'jpg', 'jpeg'])
 ALLOWED_VIDEO = set(['avi','mp4','mov' , 'mts'])
@@ -167,6 +168,7 @@ def logout():
     logout_user()
     return redirect(url_for('login'))
 
+# 允許重新導向的路徑
 def next_is_valid(url):
     validList = ['/videoManage',
     '/videoManage/delete',
@@ -430,7 +432,7 @@ def addClassMember():
 def addManager():
     if current_user.permission == 'manager':
         form = addManagerForm()
-        #  flask_wtf類中提供判斷是否表單提交過來的method，不需要自行利用request.method來做判斷
+        
         if request.method == 'POST':
             account = flask.request.form['account']
             email = flask.request.form['email']
@@ -787,6 +789,19 @@ def uploaded_file(filename):
         return send_from_directory(app.config['UPLOAD_FOLDER']+videoPath,filename)
     else:
         return send_from_directory(app.config['UPLOAD_FOLDER'],filename)
+
+# 取得資料
+@app.route('/download/<filename>')
+@login_required
+def uploaded_file(filename):
+    if allowed_picture(filename) :
+        print(filename)
+        return send_from_directory(app.config['UPLOAD_FOLDER']+embPath,filename , as_attachment=True)
+    elif allowed_video(filename):
+        return send_from_directory(app.config['UPLOAD_FOLDER']+videoPath,filename , as_attachment=True)
+    else:
+        return send_from_directory(app.config['UPLOAD_FOLDER'],filename , as_attachment=True)
+
 
 @app.route('/upload/others/<filename>')
 @login_required

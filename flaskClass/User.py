@@ -2,6 +2,7 @@ from flask_login import UserMixin,login_user
 import dbService.insertDbService as insertService
 from werkzeug.security import generate_password_hash
 
+# 自定義的User 配合 flask_login 使用來保存 user 的相關資料
 class User(UserMixin):
     def __init__(self,uid,account,password,email,lastname,firstname,permission):
         self.account = account

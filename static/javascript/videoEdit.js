@@ -2,6 +2,7 @@ $( document ).ready(function() {
     $("#videoDelete").click(deleteVideoEvent);
     $("#videoEdit").click(editEvent);
     $("#EditSubmit").click(editSubmitEvent);
+    $('#btnDownload').click(download)
 });
 
 function deleteVideoEvent(){
@@ -48,6 +49,18 @@ function editSubmitEvent(){
         }
     }).fail(function(res) { console.log(res);});
 }
+
+function download(id){
+    filename = id.split('/')[2]
+    $.ajax({
+        url: '/download/' + filename,
+        type: 'GET',
+        cache: false,
+        processData: false,
+        contentType: false
+    });
+}
+
 function pustInRecogQueue(videoId){
     $.ajax({
         type: 'POST',

@@ -30,10 +30,10 @@
                 </a>
                 <div class="dropdown-menu">
                     {% if current_user.permission == 'manager' %}
-                        <a class="dropdown-item" href="/manageClassGroup">管理班群</a>
-                        <a class="dropdown-item" href="/addClassGroup">新增班群</a>
+                        <a class="dropdown-item" href="/manageClassGroup">班級列表</a>
+                        <a class="dropdown-item" href="/addClassGroup">新增班級</a>
                     {% else %}
-                        <a class="dropdown-item" href="/manageClassGroup">查看班群</a>
+                        <a class="dropdown-item" href="/manageClassGroup">查看班級</a>
                     {% endif %}
                 </div>
             </li>

@@ -3,25 +3,16 @@ import glob
 import os
 
 def faceVideo(nameList,facePicturePath):
-    fps = 10.0    #保存视频的FPS，可以适当调整
+    fps = 10.0    #保存的FPS，可以调整
     for i in range(len(nameList)):
         fourcc = cv2.VideoWriter_fourcc(*'MJPG') 
-        videoWriter = cv2.VideoWriter('faceVideo' + nameList[i] + '.avi',fourcc,fps,(400,480))#最后一个是保存图片的尺寸 
+        videoWriter = cv2.VideoWriter('faceVideo' + nameList[i] + '.avi',fourcc,fps,(400,480))#最後是保存的圖片尺寸
         imgs=glob.glob(facePicturePath + nameList[i] + '*.png')
         for imgname in imgs: 
             frame = cv2.imread(imgname)
             resizePic=cv2.resize(frame,(400,480))
             videoWriter.write(resizePic)
         videoWriter.release()
-
-def test():
-    imgs=glob.glob('./testPic/pic.jpg')
-    img = cv2.imread(imgs[0])
-    resizePic = cv2.resize(img,(800,960))
-    print(resizePic.shape)
-    cv2.imshow('My Image',resizePic)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
 
 def getfaceVideoWithNameList(picFolder):
     nameList = []
