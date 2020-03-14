@@ -28,8 +28,9 @@ import tensorflow as tf
 import dbService.insertDbService as insertService
 import dbService.getEmbedService as getDataService
 import getEmb
+import processManager
 
-
+client = processManager.ManagerClient(processManager.MANAGER_DOMAIN, processManager.MANAGER_PORT, processManager.MANAGER_AUTH_KEY)
 
 # 參數分別為收到的檔案,資料庫取得之embs , facenet model 位置 , 比對庫中的名字
 def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date , classNo , classId):     
@@ -197,6 +198,11 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
             for item in faceVideoPath.keys():
                 print("videoFile : "+str(item))
                 os.system("ffmpeg -i "+item+" -vcodec libx264 "+faceVideoPath[item])
+            # 更新狀態
+            lock = client.get_open_qq_login_lock()
+            lock.acquire()
+            client.getIsRuning().set()
+            lock.release()
             
 
 def load_and_align_data(img, image_size, margin):
