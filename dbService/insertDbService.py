@@ -44,10 +44,10 @@ def insertRecogedUser(vid , uid):
     Connector.quit()
     return True
 
-
-def insertEmotionFrame(face_id , video_id , frame_no , emotion , frame_path):
+# 人臉與表情存進資料庫
+def insertEmotionFrame(face_id , video_id , user_id , frame_no , emotion , frame_path):
     Connector.connect()
-    sql = 'INSERT INTO recoged_user(face_id , video_id , frame_no , emotion , frame_path) VALUES({} , {} , {} , {} , {} ) RETURNING face_id'.format(face_id , video_id , frame_no , emotion , frame_path)
+    sql = 'INSERT INTO face_emotion(face_id , video_id , frame_no , emotion , frame_path) VALUES({} , {} , {} , {} , {} , {} ) RETURNING face_id'.format(face_id , video_id , user_id , frame_no , emotion , frame_path)
     returned_face_id = Connector.sqlExecuteWithReturn(sql)
     Connector.quit()
     print("INSERT RESULT :" + str(face_id == returned_face_id))

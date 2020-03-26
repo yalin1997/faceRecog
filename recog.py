@@ -44,35 +44,34 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
     compare_emb = emdList
     compare_num=len(compare_emb)
 
-    #capture =cv2.VideoCapture(video)
     capture =cv2.VideoCapture(uploadFile)
     # 使用 XVID 編碼
     fourcc = cv2.VideoWriter_fourcc(*"mp4v")
     fourcc4FaceVideo = cv2.VideoWriter_fourcc(*"mp4v")
+    # 臉部特寫fps
     fps4FaceVideo = 10.0
     width = int(capture.get(cv2.CAP_PROP_FRAME_WIDTH))
     height = int(capture.get(cv2.CAP_PROP_FRAME_HEIGHT))
     frameCounter = 0
-    # 建立 VideoWriter 物件，輸出影片至 output.avi，FPS 值為 20.0
-    videoUUID = str(uuid.uuid1())
-    videoNameTmp = 'output_'+videoUUID+'tmp.mp4'
-    videoName = 'output_'+videoUUID+'.mp4'
+    # 建立 VideoWriter 物件，輸出影片
+    videoNameTmp = 'output_'+videoId+'tmp.mp4'
+    videoName = 'output_'+videoId+'.mp4'
     filePath = "/home/nknu/文件/faceRecog/static/upload/"
     outputPathTmp = '/home/nknu/文件/faceRecog/static/upload/video/'+videoNameTmp
     outputPath = '/home/nknu/文件/faceRecog/static/upload/video/'+videoName
     outputUrl = '/upload/'+videoName
-    videoFramePath = filePath + 'otherPicture/video_' + videoId + '/' 
-
+    videoFramePath = filePath + 'otherPicture/video_' + videoId + '/'
+    faceFramePath = filePath + 'otherPicture/video_' + videoId + '/face/'
     coverPath = filePath +'otherPicture/cover_' + timeFrame + '.jpg'
     faceCoverPath = filePath +'otherPicture/faceCover_' + timeFrame + '.jpg'
     coverUrl =  '/upload/others/cover_' + timeFrame + '.jpg'
     faceCoverUrl = '/upload/others/faceCover_' + timeFrame + '.jpg'
-    if not os.path.isdir(videoFramePath):
-        os.mkdir(videoFramePath)
+    if not os.path.isdir(faceFramePath):
+        os.mkdir(faceFramePath)
     with tf.Graph().as_default():
         config = tf.ConfigProto(allow_soft_placement=True)
         config.gpu_options.allow_growth = True 
-        with tf.Session(config=config) as sess:     
+        with tf.Session(config=config) as sess:
             # Load the model 
             facenet.load_model(modelPath)
     
@@ -82,7 +81,6 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
             phase_train_placeholder = tf.get_default_graph().get_tensor_by_name("phase_train:0")
 
             out = cv2.VideoWriter(outputPathTmp, fourcc, 20.0, (width, height))
-            timer=0
             # 出現過的人名與產生臉部特寫影片的物件對照
             faceVideoDictionary = {}
             faceVideoPath = {}
@@ -112,7 +110,6 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
                 # 尋找臉部
                 mark,bounding_box,crop_image=load_and_align_data(rgb_frame,160,44)
 
-                #if(1):
                 if(mark):
                     feed_dict = { images_placeholder: crop_image, phase_train_placeholder:False }
                     emb = sess.run(embeddings, feed_dict=feed_dict)
@@ -157,6 +154,7 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
                                 emotion = emotionDetect.detectEmotion(facePicFrame)
 
                             resizeFacePicFrame=cv2.resize(PicFrame,(400,480))
+                            cv2.imwrite(videoFramePath+'faceFrame_'+ str(frameCounter) + '.jpg' , resizeFacePicFrame)
                             cv2.putText(
                                     resizeFacePicFrame,
                                     emotion, 
