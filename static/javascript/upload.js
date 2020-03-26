@@ -83,6 +83,28 @@ $( document ).ready(function() {
         $("#confirm").hide();
         uploader.upload();
     });
+
+    $("#confirm_user").click(function(){
+        var formData = new FormData($('#uploadForm')[0]);
+        $("#uploadPanel").html("<div class='lds-spinner' style='width:100%;height:100%'><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>")
+        $.ajax({
+            url: '/upload',
+            type: 'POST',
+            cache: false,
+            data:formData,
+            processData: false,
+            contentType: false
+        }).done(function(res) {
+            if(res.result == true){
+                alert("上傳成功");
+                window.location.reload(); 
+            }
+            else{
+                alert(res.result);
+            }
+        }).fail(function(res){
+            console.log(res);
+        });     
 });
 
 function getFileExtension3(filename) {
