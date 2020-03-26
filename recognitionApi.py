@@ -661,9 +661,9 @@ def upload():
         rightFace = flask.request.files['rightFace']
         upFace = flask.request.files['upFace']
         downFace = flask.request.files['downFace']
-        #faceLocateTask(face , leftFace , rightFace , upFace , downFace)
-        with ThreadPoolExecutor() as executor:
-            executor.submit(faceLocateTask , face , leftFace , rightFace , upFace , downFace)
+        faceLocateTask(face , leftFace , rightFace , upFace , downFace)
+        #with ThreadPoolExecutor() as executor:
+            #executor.submit(faceLocateTask , face , leftFace , rightFace , upFace , downFace)
         return jsonify({'result' : True})
     else:    
         permission = current_user.permission
