@@ -52,7 +52,10 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
     fps4FaceVideo = 10.0
     width = int(capture.get(cv2.CAP_PROP_FRAME_WIDTH))
     height = int(capture.get(cv2.CAP_PROP_FRAME_HEIGHT))
+    # 計算當前 frame 數
     frameCounter = 0
+    # 每隔多少 frame 處理一次
+    frameInterval  = 3
     # 建立 VideoWriter 物件，輸出影片
     videoNameTmp = 'output_'+videoId+'tmp.mp4'
     videoName = 'output_'+videoId+'.mp4'
@@ -80,13 +83,16 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
             embeddings = tf.get_default_graph().get_tensor_by_name("embeddings:0")
             phase_train_placeholder = tf.get_default_graph().get_tensor_by_name("phase_train:0")
 
-            out = cv2.VideoWriter(outputPathTmp, fourcc, 20.0, (width, height))
+            out = cv2.VideoWriter(outputPathTmp, fourcc, 10.0, (width, height))
             # 出現過的人名與產生臉部特寫影片的物件對照
             faceVideoDictionary = {}
             faceVideoPath = {}
             while (capture.isOpened()):
                 ret, frame = capture.read()
                 frameCounter = frameCounter + 1
+
+                if(frameCounter % frameInterval == 0):
+                    continue
 
                 if(not ret):
                     break
@@ -154,7 +160,11 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
                                 emotion = emotionDetect.detectEmotion(facePicFrame)
 
                             resizeFacePicFrame=cv2.resize(PicFrame,(400,480))
+                            # 存臉
                             cv2.imwrite(videoFramePath+'faceFrame_'+ str(frameCounter) + '.jpg' , resizeFacePicFrame)
+                            #寫進資料庫
+                            insertService.insertEmotionFrame(videoId , int(str(fin_obj[rec_position]).split('_')[1]) , frameCounter , emotion , videoFramePath+'faceFrame_'+ str(frameCounter) + '.jpg')
+                            # 圖上寫情緒
                             cv2.putText(
                                     resizeFacePicFrame,
                                     emotion, 
@@ -166,9 +176,9 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
                                     lineType = 2)
                             # 用相對應的寫入物件寫入
                             faceVideoDictionary[ str(fin_obj[rec_position])].write(resizeFacePicFrame)
-
+                        # 畫方框
                         cv2.rectangle(frame,(bounding_box[rec_position,0],bounding_box[rec_position,1]),(bounding_box[rec_position,2],bounding_box[rec_position,3]),(0, 255, 0), 2, 8, 0)
-
+                        # 圖上寫人名
                         cv2.putText(
                             frame,
                         fin_obj[rec_position], 
@@ -190,7 +200,7 @@ def main(videoId , uploadFile , fileName , emdList , modelPath , all_name , date
             out.release()
             for writer in faceVideoDictionary.keys():
                 faceVideoDictionary[writer].release()
-            print("finish and insert data!")
+            # 影片轉檔
             os.system("ffmpeg -i "+outputPathTmp+" -vcodec libx264 "+outputPath)
             insertService.editVideoInfo(videoId,outputUrl,outputPath,videoName,coverUrl)
             for item in faceVideoPath.keys():

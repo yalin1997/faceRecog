@@ -45,13 +45,15 @@ def insertRecogedUser(vid , uid):
     return True
 
 # 人臉與表情存進資料庫
-def insertEmotionFrame(face_id , video_id , user_id , frame_no , emotion , frame_path):
+def insertEmotionFrame( video_id , user_id , frame_no , emotion , frame_path):
     Connector.connect()
-    sql = 'INSERT INTO face_emotion(face_id , video_id , frame_no , emotion , frame_path) VALUES({} , {} , {} , {} , {} , {} ) RETURNING face_id'.format(face_id , video_id , user_id , frame_no , emotion , frame_path)
+    sql = 'INSERT INTO face_emotion( video_id , frame_no , emotion , frame_path) VALUES({} , {} , {} , {} , {} ) RETURNING face_id'.format(video_id , user_id , frame_no , emotion , frame_path)
     returned_face_id = Connector.sqlExecuteWithReturn(sql)
     Connector.quit()
-    print("INSERT RESULT :" + str(face_id == returned_face_id))
-    return face_id == returned_face_id
+    if returned_face_id:
+        return True
+    else:
+        return False
 
 # 修改影片
 def editVideoInfo(vid,videoPath,filePath,fileName,cover):
