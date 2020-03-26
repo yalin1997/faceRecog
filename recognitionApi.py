@@ -25,6 +25,8 @@ import dbService.getEmbedService as getDataService
 import dbService.loginService as loginService
 import dbService.insertDbService as insertService
 import json
+import logging
+import re
 from werkzeug.utils import secure_filename
 import os
 import base64
@@ -38,6 +40,7 @@ import sys
 import subprocess
 import processManager
 
+LOG = logging.getLogger(__name__)
 app = flask.Flask(__name__)
 
 # 用常數避免多worker錯誤，讀取key.txt獲得
@@ -82,6 +85,9 @@ faceDirectDic = {"face" : "正面" ,
    "up_face" : "上側臉" ,
     "down_face" : "下側臉"}
 
+# 串流分段大小
+MB = 1 << 20
+BUFF_SIZE = 10 * MB
 
 # 儲存檔案
 def saveUploadFile(uploadedFile):
