@@ -852,7 +852,7 @@ def get_range(request):
     else:
         return 0, None
     
-@app.route('/video/<filename>'))
+@app.route('/video/<filename>')
 def video(filename):
     path = os.path.join(app.config['UPLOAD_FOLDER']+videoPath , filename)
     start, end = get_range(request)
