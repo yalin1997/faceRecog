@@ -1,7 +1,7 @@
 # encoding=utf-8
 import flask # api 依賴
 from concurrent.futures import ThreadPoolExecutor
-from flask import request,jsonify,render_template,redirect,send_from_directory,g,session,flash
+from flask import request,jsonify,render_template,redirect,send_from_directory,g,session,flash,Response
 from flaskClass.loginForm import EmailPasswordForm
 from flaskClass.uploadForm import uploadForm,videoEditForm,userUploadForm
 from flaskClass.filterForm import videoFilter,pictureFilter,videoFilterUser,classGroupFilter,studentsFilter
