@@ -83,7 +83,6 @@ $( document ).ready(function() {
         $("#confirm").hide();
         uploader.upload();
     });
-
     $("#confirm_user").click(function(){
         var formData = new FormData($('#uploadForm')[0]);
         $("#uploadPanel").html("<div class='lds-spinner' style='width:100%;height:100%'><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>")
@@ -104,7 +103,8 @@ $( document ).ready(function() {
             }
         }).fail(function(res){
             console.log(res);
-        });     
+        });  
+    });   
 });
 
 function getFileExtension3(filename) {
