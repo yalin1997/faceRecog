@@ -41,7 +41,7 @@ import processManager
 app = flask.Flask(__name__)
 
 # 用常數避免多worker錯誤，讀取key.txt獲得
-with open('key.txt', 'r') as f
+with open('key.txt', 'r') as f:
     app.secret_key = f.read()
 
 UPLOAD_FOLDER = "/home/nknu/文件/faceRecog/static/upload"
