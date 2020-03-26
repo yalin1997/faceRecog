@@ -173,7 +173,7 @@ def login():
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for('login'))
+    return redirect(flask.url_for('login'))
 
 # 允許重新導向的路徑
 def next_is_valid(url):
@@ -352,50 +352,6 @@ def studentInfo():
         return render_template('studentInfo.html' , student = students(studentData[0][0] , str(studentData[0][1]) , str(studentData[0][2]) , str(studentData[0][3]) , str(studentData[0][4]) , "" , isDataComplete) ,
         faceUrlDic = faceUrlDic , msg = flashMsg , canUserEdit = canUserEdit , canManagerEdit = canManagerEdit)
 
-@app.route('/studentVideo' , methods = ['GET' , 'POST'])
-@login_required
-def studentVideo():
-    form = videoFilter()
-    if request.method == 'POST':
-        if current_user.permission == 'manager':
-            filterData = request.get_json(force=True)
-            studentId = str(filterData['studentId'])
-            classId = str(filterData['classId'])
-            sDate = str(filterData['sdate'])
-            eDate = str(filterData['edate'])
-            classNo = str(filterData['classNo'])
-            resultVideo = getDataService.getFocusVideo(studentId , classId , sDate , eDate , classNo)
-            matchData = []
-            for i in range(len(resultVideo)):
-                cover = str(resultVideo[i][1])
-                if resultVideo[i][1] == None :
-                    cover = "/upload/others/img_avatar.jpg"
-                matchData.append( {'id':resultVideo[i][0],'videoUrl': cover , 'isRecoged' : int(resultVideo[i][2]) , 'date': str(resultVideo[i][3]) , 'classNo' : str(resultVideo[i][4]) , 'videoName' : str(resultVideo[i][-1]) })
-            return jsonify({'allMatchData':matchData})
-    else:
-        # 產生初始畫面
-        classId = request.args.get('classId')
-        if current_user.permission == 'manager':
-            studentId = request.args.get('studentId')
-            resultVideo = getDataService.getFocusVideo(studentId , classId , None , None , None)
-            videoList = []
-            for i in range(len(resultVideo)):
-                videoCover = str(resultVideo[i][1])
-                if resultVideo[i][1] == None :
-                    videoCover = "/upload/others/img_avatar.jpg"
-                videoList.append(video(str(resultVideo[i][0]) , videoCover , int(resultVideo[i][5]) , str(resultVideo[i][6]) , resultVideo[i][3] , resultVideo[i][2] , int(resultVideo[i][4]) , str(resultVideo[i][-1]) ))
-                
-            return render_template("studentVideo.html" , videoData = videoList , form = form)
-        else:
-            studentId = current_user.id
-            resultVideo = getDataService.getFocusVideo(studentId , classId)
-            for i in range(len(resultVideo)):
-                videoCover = str(resultVideo[i][1])
-                if resultVideo[i][1] == None :
-                    videoCover = "/upload/others/img_avatar.jpg"
-                videoList.append(video(str(resultVideo[i][0]) , videoCover , int(resultVideo[i][5]) , str(resultVideo[i][6]) , resultVideo[i][3] , resultVideo[i][2] , int(resultVideo[i][4]) , str(resultVideo[i][-1]) ))
-            return render_template("studentVideo.html" , videoData = videoList , form = form)
-
 @app.route('/studentsEdit/delete' , methods = ['POST'])
 @login_required
 def studentsdelete():
@@ -531,33 +487,6 @@ def videoRecog():
     else:
             return jsonify({'result':"權限不足"})
 
-@app.route('/videoEdit',methods=['GET','POST'])
-@login_required
-def videoEdit():
-    editVideoForm = videoEditForm()
-      
-    if request.method == 'POST' and editVideoForm.validate_on_submit():
-        # 取得表單附檔
-        newVideo = flask.request.files['newVideo']
-        videoId = request.form.get('videoId')
-        saveResult = saveUploadFile(newVideo)
-
-        if saveResult :
-            insertService.editVideoInfo(videoId,'/upload/'+newVideo.filename,"")
-            result = {'result': True}
-            return jsonify(result)
-        else:
-            return "發生異常"
-    else:
-        videoId = request.args.get('videoId')  
-        videoData = getDataService.getVideoById(videoId)
-        editVideo = video(videoId,str(videoData[0][1]) , videoData[0][3] , str(videoData[0][4]) , videoData[0][5] ,  videoData[0][6] ,  videoData[0][7] , str(videoData[0][-1]))
-        recogedName = getDataService.getRecogName(int(videoId))
-        recogedNameList = []
-        for i in range(len(recogedName)):
-            recogedNameList.append(str(recogedName[i][0])+str(recogedName[i][1])+"_"+str(recogedName[i][2]))
-        permission = current_user.permission
-        return render_template('videoEdit.html',editVideo=editVideo,form=editVideoForm,permission = permission , recogedName=recogedNameList)
 
 @app.route('/videoEdit/delete',methods=['POST'])
 @login_required
@@ -593,51 +522,13 @@ def pictureManage():
     else:
         currentUserId = current_user.id
         currentPermission = current_user.permission
-        classId = request.args.get('classId') # todo
+        classId = request.args.get('classId')
         if currentPermission == 'manager':
             pictureList = getDataService.getAllPicture()
             return render_template('pictureManage.html',form=pictureFilterForm,pictureList=pictureList)
         else:
             pictureList = getDataService.getPicture(current_user.lastname,current_user.firstname)
             return render_template('pictureManageUser.html',form=pictureFilterForm,pictureList=pictureList)
-# todo
-@app.route('/pictureEdit',methods=['GET','POST'])
-@login_required
-def pictureEdit():
-    PictureEditForm = pictureEditForm()
-    if request.method == 'POST' and PictureEditForm.validate_on_submit():
-        file = flask.request.files['uploaded_file']
-        lastName = flask.request.form['lastName']
-        firstName = flask.request.form['firstName']
-        picture_id = flask.request.form['id']
-        if file :
-            filename = secure_filename(file.filename)
-            if allowed_picture(filename):
-                pictureName = lastName+'_'+firstName+'_'+str(uuid.uuid1())+'.jpg'
-                filePath = os.path.join(app.config["UPLOAD_FOLDER"]+picturePath,pictureName)
-                file.save(filePath)
-                faceDetect.detectSinglePicture(app.config["UPLOAD_FOLDER"]+picturePath,pictureName)
-                insertDbResult = insertService.editFaceInfo(picture_id,'/upload/'+pictureName,lastName,firstName)
-                if insertDbResult:  
-                    result = {'result': True}
-                    return jsonify(result)
-            
-                else:
-                    result = {'result': False}
-                    return jsonify(result)
-            else:
-                result = {'result': False}
-                return jsonify(result)
-        else:
-            if insertService.editFaceInfo(picture_id,"",lastName,firstName) :
-                return jsonify({'result':True})
-            else:
-                return jsonify({'result':False})
-    else:
-        pictureId = request.args.get('pictureId')
-        pictureResult = getDataService.getPictureById(pictureId)
-        editPicture = picture(str(pictureResult[0][3]),str(pictureResult[0][1]),str(pictureResult[0][2]),str(pictureResult[0][0]))
-        return render_template('/pictureEdit.html',picture=editPicture,form=PictureEditForm)
 
 @app.route('/pictureEdit/delete',methods=['POST'])
 @login_required
