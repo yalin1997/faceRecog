@@ -196,13 +196,6 @@ def next_is_valid(url):
     '/studentInfo']
     return url.split('?')[0] in validList
 
-@app.route('/addClassName',methods = ['POST'])
-@login_required
-def addNewClass():
-    requestJson = request.get_json()
-    newClass = requestJson['newClassName']
-    result = insertService.insertClassName(newClass)
-    return jsonify({'result':result})
 
 # 加入班群
 @app.route('/addClassGroup',methods = ['GET','POST'])
@@ -482,7 +475,7 @@ def videoManage():
             sDate = filterData['sdate']
             eDate = filterData['edate']
             classNo = filterData['classNo']
-            result = getDataService.getVideo(lastname , firstname , sDate , eDate , classNo , classId)
+            result = getDataService.getVideo(current_user.lastname , current_user.firstname , sDate , eDate , classNo , classId)
         matchData = []
         for i in range(len(result)):
             cover = str(result[i][1])
@@ -659,35 +652,46 @@ def pictureDelete():
     
 
 # 取得上傳檔案後將路徑與其他資訊存到 DB
-@app.route('/upload',methods=['GET'])
+@app.route('/upload',methods=['GET' , 'POST'])
 @login_required
 def upload():
-    permission = current_user.permission
-    if permission == 'manager':
-        uploadform = uploadForm()
-    else:
-        uploadform = userUploadForm()
-    if permission == 'manager':
-        classId = request.args.get('classId')
-        if classId:
-            classGroupResult = getDataService.getClassGroupById(int(classId))
-            return render_template('upload.html', form=uploadform , classGroup = classGroup(str(classGroupResult[0][0]) , str(classGroupResult[0][1]) , str(classGroupResult[0][2]),str(classGroupResult[0][3])))
+    if request.method == 'POST' and current_user.permission == 'user':
+        face = flask.request.files['face']
+        leftFace = flask.request.files['leftFace']
+        rightFace = flask.request.files['rightFace']
+        upFace = flask.request.files['upFace']
+        downFace = flask.request.files['downFace']
+        #faceLocateTask(face , leftFace , rightFace , upFace , downFace)
+        with ThreadPoolExecutor() as executor:
+            executor.submit(faceLocateTask , face , leftFace , rightFace , upFace , downFace)
+        return jsonify({'result' : True})
+    else:    
+        permission = current_user.permission
+        if permission == 'manager':
+            uploadform = uploadForm()
         else:
-            return render_template('upload.html', form=uploadform)
-    else:
-        isFaceExit = int(getDataService.getFaceCountByType(current_user.id , 'face')[0][0]) > 0
-        isLeftFaceExit = int(getDataService.getFaceCountByType(current_user.id , 'left_face')[0][0]) > 0
-        isRightFaceExit = int(getDataService.getFaceCountByType(current_user.id , 'right_face')[0][0]) > 0
-        isUpFaceExit = int(getDataService.getFaceCountByType(current_user.id , 'up_face')[0][0]) > 0
-        isDownFaceExit = int(getDataService.getFaceCountByType(current_user.id , 'down_face')[0][0]) > 0
-        print(str(isFaceExit))
-        return render_template('upload.html', form=uploadform ,
-            isFaceExit = isFaceExit,
-            isLeftFaceExit = isLeftFaceExit,
-            isRightFaceExit = isRightFaceExit,
-            isUpFaceExit = isUpFaceExit,
-            isDownFaceExit = isDownFaceExit
-        )
+            uploadform = userUploadForm()
+        if permission == 'manager':
+            classId = request.args.get('classId')
+            if classId:
+                classGroupResult = getDataService.getClassGroupById(int(classId))
+                return render_template('upload.html', form=uploadform , classGroup = classGroup(str(classGroupResult[0][0]) , str(classGroupResult[0][1]) , str(classGroupResult[0][2]),str(classGroupResult[0][3])))
+            else:
+                return render_template('upload.html', form=uploadform)
+        else:
+            isFaceExit = int(getDataService.getFaceCountByType(current_user.id , 'face')[0][0]) > 0
+            isLeftFaceExit = int(getDataService.getFaceCountByType(current_user.id , 'left_face')[0][0]) > 0
+            isRightFaceExit = int(getDataService.getFaceCountByType(current_user.id , 'right_face')[0][0]) > 0
+            isUpFaceExit = int(getDataService.getFaceCountByType(current_user.id , 'up_face')[0][0]) > 0
+            isDownFaceExit = int(getDataService.getFaceCountByType(current_user.id , 'down_face')[0][0]) > 0
+            print(str(isFaceExit))
+            return render_template('upload.html', form=uploadform ,
+                isFaceExit = isFaceExit,
+                isLeftFaceExit = isLeftFaceExit,
+                isRightFaceExit = isRightFaceExit,
+                isUpFaceExit = isUpFaceExit,
+                isDownFaceExit = isDownFaceExit
+            )
 
 # 取得上傳檔案後將路徑與其他資訊存到 DB
 @app.route('/uploadApart',methods=['POST'])
@@ -726,11 +730,7 @@ def uploadSuccess():
                         break
 
                     chunk += 1
-                    print("目录为: %s" % os.listdir(app.config["UPLOAD_FOLDER"])) 
                     os.remove(os.path.join(app.config["UPLOAD_FOLDER"] , filename))
-                    print("移除後: %s" %os.listdir(app.config["UPLOAD_FOLDER"]))
-            faceDetect.detectSinglePicture(app.config["UPLOAD_FOLDER"]+picturePath,pictureName)
-            result = insertService.insertFaceInfo(lastName,firstName,"/upload/"+pictureName)
         elif allowed_video(targetFileName):
                 filePath = os.path.join(app.config["UPLOAD_FOLDER"]+videoPath, targetFileName)
                 classId = request.args.get('classId')
