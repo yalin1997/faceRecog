@@ -27,6 +27,7 @@ import dbService.insertDbService as insertService
 import json
 import logging
 import re
+import mimetypes
 from werkzeug.utils import secure_filename
 import os
 import base64
