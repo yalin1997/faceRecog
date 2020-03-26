@@ -781,7 +781,7 @@ def faceLocateTask( face , leftFace , rightFace , upFace , downFace ):
 # 取得資料
 @app.route('/upload/<filename>')
 @login_required
-def uploaded_file(filename):
+def uploaded_large_file(filename):
     if allowed_picture(filename) :
         return send_from_directory(app.config['UPLOAD_FOLDER']+embPath,filename)
     elif allowed_video(filename):
@@ -794,7 +794,7 @@ def uploaded_file(filename):
 # 取得資料
 @app.route('/download/<filename>')
 @login_required
-def uploaded_file(filename):
+def download_file(filename):
     if allowed_picture(filename) :
         return send_from_directory(app.config['UPLOAD_FOLDER']+embPath,filename , as_attachment=True)
     elif allowed_video(filename):
