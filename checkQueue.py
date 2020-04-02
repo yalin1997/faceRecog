@@ -4,6 +4,7 @@ import time
 
 manager_client = processManager.ManagerClient(processManager.MANAGER_DOMAIN, processManager.MANAGER_PORT, processManager.MANAGER_AUTH_KEY)
 
+# 管理等待 Queue 並執行工作
 while(true):
     queue = manager_client.getQueue()
     runing = manager_client.getIsRuning()

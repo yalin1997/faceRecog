@@ -21,9 +21,11 @@ from flask_bootstrap import Bootstrap
 from flask_httpauth import HTTPBasicAuth
 from flask_login import LoginManager,login_required,login_user,logout_user,UserMixin,current_user
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
+
 import dbService.getEmbedService as getDataService
 import dbService.loginService as loginService
 import dbService.insertDbService as insertService
+
 import json
 import logging
 import re
@@ -60,18 +62,18 @@ ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg','avi','mp4','mov','mts'])
 ALLOWED_PICTURE = set(['png', 'jpg', 'jpeg'])
 ALLOWED_VIDEO = set(['avi','mp4','mov' , 'mts'])
 
+# flask 變數設定
+# 資料上傳路徑
 app.config["UPLOAD_FOLDER"] =UPLOAD_FOLDER
 app.config["JSON_AS_ASCII"] = False
 
-model_Path = getDataService.getModelPath() # 取模型路徑 tuple list
-
-# get general var
+# 拿到 manager 實體用來管理顯卡使用
 manager_client = processManager.ManagerClient(processManager.MANAGER_DOMAIN, processManager.MANAGER_PORT, processManager.MANAGER_AUTH_KEY)
 
-# flask Bootstrap randerer
+# flask bootstrap
 bootstrap = Bootstrap(app)
 
-#login
+#login 設定
 login_manager = LoginManager()
 login_manager.session_protection='strong'
 login_manager.login_view = 'login'
@@ -79,7 +81,7 @@ app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=680)
 login_manager.remember_cookie_duration=timedelta(days=1)
 login_manager.init_app(app)
 
-# general used var
+# 用作中文顯示臉部的角度
 faceDirectDic = {"face" : "正面" ,
  "left_face" : "左側臉" ,
   "right_face" : "右側臉" ,
@@ -109,35 +111,37 @@ def saveUploadFile(uploadedFile):
     else:
         return False
 
+# 檢查檔案是否允許
 def allowed_file(filename):
     print(str(filename))
     return '.' in filename and \
             filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS 
-
+# 檢查圖片是否允許
 def allowed_picture(filename):
     return '.' in filename and \
             filename.rsplit('.', 1)[1].lower() in ALLOWED_PICTURE
-
+# 檢查影片是否允許
 def allowed_video(filename):
     return '.' in filename and \
             filename.rsplit('.', 1)[1].lower() in ALLOWED_VIDEO
  
+# 登入使用者取得 id
 @login_manager.user_loader
 def user_loader(userId):
     return loginService.getUserById(userId)
 
+# 跟目錄
 @app.route('/',methods=['GET','POST'])
 def root():
     if current_user.is_authenticated:
         return redirect(flask.url_for('manageClassGroup'))
     else:
         return redirect(flask.url_for('login'))
-
+# 登入頁面
 @app.route('/login',methods=['GET','POST'])
 def login():
     form = EmailPasswordForm()
 
-    #  flask_wtf類中提供判斷是否表單提交過來的method，不需要自行利用request.method來做判斷
     if  request.method == 'POST' and form.validate_on_submit():
         
         account = form.account.data
@@ -151,8 +155,8 @@ def login():
                 flask.flash('Logged in successfully.')
                 session.permanent = True
                 nextUrl = request.args.get('next')
-                # next_is_valid should check if the user has valid
-                # permission to access the `next` url
+                # 確認重導向的網址是否允許
+                # 合格則導向
                 if nextUrl and not next_is_valid(nextUrl):
                     return flask.abort(400)
                 return flask.redirect(nextUrl or flask.url_for('manageClassGroup'))
@@ -165,7 +169,7 @@ def login():
     else:
         if current_user.is_authenticated:
             return redirect(flask.url_for('manageClassGroup'))
-        #  如果不是提交過來的表單，就是GET，這時候就回傳user.html網頁
+        #  如果不是提交過來的表單，就是GET，這時候就回傳login.html網頁
         return render_template('login.html', form=form)
     return True
 
@@ -204,11 +208,13 @@ def addClassGroup():
     form = addClassGroupForm()
     permission = current_user.permission
     if request.method == 'POST':
+        # 取得送來的資料
         className = flask.request.form['className']
         classYear = flask.request.form['classYear']
         classDay = flask.request.form['classDay']
         classStime =  flask.request.form['classStime']
         classEtime = flask.request.form['classEtime']
+        # 存資料庫
         result = insertService.insertClassName(className  , classYear , classDay , classStime , classEtime , current_user.id)
         if result :
             print(result[0][0])
@@ -229,10 +235,12 @@ def manageClassGroup():
     permission = current_user.permission
     classGroupFilterForm = classGroupFilter()
     if request.method == 'POST':
+        # 取得送來的資料
         filterData = request.get_json()
         className = filterData['className']
         classYear = filterData['classYear']
         classDay = filterData['classDay']
+        # 身分判斷，依據身分取得不同的資料
         if permission == 'manager':
             classGroupResult = getDataService.getClassGroup(className , classYear , classDay , current_user.id)
         else:
@@ -240,6 +248,7 @@ def manageClassGroup():
         matchData = []
         for i in range(len(classGroupResult)):
             matchData.append( {'id':str(classGroupResult[i][0]),'className': str(classGroupResult[i][1]), 'classYear': str(classGroupResult[i][2]),"classDay" : str(classGroupResult[i][3]),"permission":permission})
+        # 回傳JSON
         return jsonify({'allMatchData':matchData})
     else:
         # 產生學年
@@ -248,6 +257,7 @@ def manageClassGroup():
             classGroupFilterForm.classYear.choices.append((datetime.now().year-i-1911,datetime.now().year-i-1911))
         return render_template('/manageClassGroup.html',form = classGroupFilterForm)
 
+# 刪除班
 @app.route('/editClassGroup/delete',methods=['POST'])
 @login_required
 def deleteClassGroup():
@@ -259,6 +269,7 @@ def deleteClassGroup():
     else:
         return '權限不足'
 
+# 管理學生資料
 @app.route('/studentsManage' , methods = ['GET','POST'])
 @login_required
 def studentsManage():
@@ -272,7 +283,7 @@ def studentsManage():
             firstName = filterData['firstName']
         else:
             return "權限不足"
-
+        # 篩選資料
         studentsSerchResult = getDataService.getStudents(int(classId) , lastName , firstName)
         print(str(studentsSerchResult))
         matchData = []
@@ -286,6 +297,7 @@ def studentsManage():
             "account":str(studentsSerchResult[i].account),
             "isDataComplete":studentsSerchResult[i].isDataComplete
             })
+        # 回傳查詢結果
         return jsonify({'allMatchData':matchData})
     else:
         # 產生初始的畫面
@@ -297,12 +309,14 @@ def studentsManage():
         else:
             return redirect('/videoManage')
 
+# 特定學生資料頁面
 @app.route('/studentInfo' , methods = ['GET' , 'POST'])
 @login_required
 def studentInfo():
     if request.method == 'POST':
         editData =  request.get_json(force=True)
         studentId = editData['studentId']
+        # 改密碼判斷
         if 'newPassword' in editData and 'newPasswordConfirm' in editData:
             newPassword = str(editData['newPassword'])
             newPasswordConfirm = str(editData['newPasswordConfirm'])
@@ -312,6 +326,7 @@ def studentInfo():
             else :
                 return jsonify({'result':'確認密碼與密碼不相同'})
         else:
+            # 學生資料更改判斷
             if current_user.permission == 'manager':
                 email = str(editData['email'])
                 account = str(editData['account'])
@@ -325,7 +340,7 @@ def studentInfo():
                 email = str(editData['email'])
                 return jsonify({'result':insertService.editStudentInfo(studentId , email , "" , "" , "" , "")})
     else:
-        # 產生初始的畫面
+        # 產生初始的畫面，判斷臉部資料是否上傳完整
         faceUrlDic = {}
         studentId = request.args.get('studentId')
         studentData = getDataService.getUserDataById(studentId)
@@ -348,10 +363,9 @@ def studentInfo():
         else:
             flashMsg = "資料完整"
             isDataComplete = True
-        print(str(faceUrlDic))
         return render_template('studentInfo.html' , student = students(studentData[0][0] , str(studentData[0][1]) , str(studentData[0][2]) , str(studentData[0][3]) , str(studentData[0][4]) , "" , isDataComplete) ,
         faceUrlDic = faceUrlDic , msg = flashMsg , canUserEdit = canUserEdit , canManagerEdit = canManagerEdit)
-
+# 刪除學生
 @app.route('/studentsEdit/delete' , methods = ['POST'])
 @login_required
 def studentsdelete():
@@ -361,6 +375,7 @@ def studentsdelete():
     else:
         return jsonify({"result" : "權限不足"})
 
+# 加入班級成員
 @app.route('/addClassMember' , methods = ['GET' , 'POST'])
 @login_required
 def addClassMember():
@@ -383,6 +398,7 @@ def addClassMember():
     else:
         return render_template('/addClassMember.html',form = form)
 
+# 加入新的 manager
 @app.route('/addManager',methods = ['GET','POST'])
 @login_required
 def addManager():
@@ -411,6 +427,7 @@ def addManager():
     else:
         return jsonify({'result': "權限不足"})
 
+# 管理影片
 @app.route('/videoManage',methods=['GET','POST'])
 @login_required
 def videoManage():
@@ -424,6 +441,7 @@ def videoManage():
             sDate = filterData['sdate']
             eDate = filterData['edate']
             classNo = filterData['classNo']
+            # 搜尋影片
             result = getDataService.getVideo(lastName , firstName , sDate , eDate , classNo , classId)
         else:
             filterData = request.get_json(force=True)
@@ -438,6 +456,7 @@ def videoManage():
             if result[i][1] == "" :
                 cover = "/upload/others/img_avatar.jpg"
             matchData.append( {'id':result[i][0],'videoUrl': cover , 'isRecoged' : int(result[i][2]) , 'date': str(result[i][3]) , 'classNo' : str(result[i][4]) , 'videoName' : str(result[i][-1]) })
+        # 回傳搜尋結果
         return jsonify({'allMatchData':matchData})
     else:
         permission = current_user.permission
@@ -445,7 +464,7 @@ def videoManage():
         firstname = current_user.firstname
         classId = request.args.get('classId')
         if permission != "manager":
-            # 0 表示空值
+            # 0 表示空值，搜尋影片
             allVideo = getDataService.getVideo(lastname,firstname,"0","0","0",classId)
             videoFilterForm = videoFilterUser()
         else:
@@ -457,7 +476,7 @@ def videoManage():
             if allVideo[i][1] == None :
                 videoCover = "/upload/others/img_avatar.jpg"
             videoList.append(video(str(allVideo[i][0]) , videoCover , int(allVideo[i][5]) , str(allVideo[i][6]) , allVideo[i][3] , allVideo[i][2] , int(allVideo[i][4]) , str(allVideo[i][-1]) ))
-    
+        # 把搜尋結果放到回傳的 html 中呈現
         if permission == "manager":
             return render_template('videoManage.html',form = videoFilterForm , videoData = videoList , classId = classId)
         else:
@@ -487,7 +506,7 @@ def videoRecog():
     else:
             return jsonify({'result':"權限不足"})
 
-
+# 刪除影片
 @app.route('/videoEdit/delete',methods=['POST'])
 @login_required
 def videoDelete():
@@ -499,6 +518,7 @@ def videoDelete():
     else:
         return '權限不足'
 
+# 照片管理
 @app.route('/pictureManage',methods=['GET','POST'])
 @login_required
 def pictureManage():
@@ -530,6 +550,7 @@ def pictureManage():
             pictureList = getDataService.getPicture(current_user.lastname,current_user.firstname)
             return render_template('pictureManageUser.html',form=pictureFilterForm,pictureList=pictureList)
 
+# 刪除照片
 @app.route('/pictureEdit/delete',methods=['POST'])
 @login_required
 def pictureDelete():
@@ -552,9 +573,8 @@ def upload():
         rightFace = flask.request.files['rightFace']
         upFace = flask.request.files['upFace']
         downFace = flask.request.files['downFace']
+        # 擷取人臉
         faceLocateTask(face , leftFace , rightFace , upFace , downFace)
-        #with ThreadPoolExecutor() as executor:
-            #executor.submit(faceLocateTask , face , leftFace , rightFace , upFace , downFace)
         return jsonify({'result' : True})
     else:    
         permission = current_user.permission
@@ -570,6 +590,7 @@ def upload():
             else:
                 return render_template('upload.html', form=uploadform)
         else:
+            # 取得存在的照片並在網頁呈現
             isFaceExit = int(getDataService.getFaceCountByType(current_user.id , 'face')[0][0]) > 0
             isLeftFaceExit = int(getDataService.getFaceCountByType(current_user.id , 'left_face')[0][0]) > 0
             isRightFaceExit = int(getDataService.getFaceCountByType(current_user.id , 'right_face')[0][0]) > 0
@@ -596,6 +617,7 @@ def uploadApart():
     upload_file.save(os.path.join(app.config["UPLOAD_FOLDER"] , filename))
     return jsonify({'result' : True})
 
+# 上傳成功後執行
 @app.route('/uploadSuccess',methods=['GET','POST'])
 @login_required
 def uploadSuccess():
@@ -610,6 +632,7 @@ def uploadSuccess():
             firstName = request.args.get('firstName')
             pictureName = lastName+'_'+firstName+'_'+str(uuid.uuid1())+'.jpg'
             filePath = os.path.join(app.config["UPLOAD_FOLDER"]+picturePath, pictureName)
+            # 組合影片分段，然後刪除組合過的分段
             with open(filePath , 'wb') as target_file:
                 while True:
                     try:
@@ -640,9 +663,8 @@ def uploadSuccess():
                             break
 
                         chunk += 1
-                        print("目录为: %s" % os.listdir(app.config["UPLOAD_FOLDER"])) 
                         os.remove(os.path.join(app.config["UPLOAD_FOLDER"] , filename))
-                        print("移除後: %s" %os.listdir(app.config["UPLOAD_FOLDER"]))
+                        
                 result = insertService.InsertVideoInfo(dateTime,
                     classNo,
                     classId,
@@ -657,6 +679,7 @@ def uploadSuccess():
     else:
         return jsonify({'result' : "不被允許的檔案"})
 
+# 找臉部
 def faceLocateTask( face , leftFace , rightFace , upFace , downFace ):
     faceDict = {'face':face,'left_face':leftFace,'right_face':rightFace,'up_face':upFace,'down_face':downFace}
     for key in faceDict.keys():
